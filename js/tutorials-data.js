@@ -11,10 +11,10 @@
  */
 export const projectCategories = [
   {
-    id: "programs",
-    title: "Programs & Standalone Applications",
+    id: "software",
+    title: "Software",
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>`,
-    description: "Desktop software, standalone managers, CAD acoustics tools, and Raspberry Pi system software.",
+    description: "Desktop software, standalone mod managers, CAD acoustics tools, and Raspberry Pi software.",
     projects: [
       {
         id: "ffx-mod-manager",
@@ -52,10 +52,10 @@ export const projectCategories = [
     ]
   },
   {
-    id: "mods",
-    title: "Game Mods & Mod Loaders",
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 2 18 2 18 6 6 6 6 2"/><rect width="20" height="14" x="2" y="6" rx="2"/><line x1="6" x2="6.01" y1="13" y2="13"/><line x1="10" x2="10.01" y1="13" y2="13"/><line x1="15" x2="19" y1="12" y2="12"/><line x1="17" x2="17" y1="10" y2="14"/></svg>`,
-    description: "Native C++ memory loaders, game hooks, and Java-based sandbox mods.",
+    id: "loaders",
+    title: "Loaders",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+    description: "Native C++ memory hook engines and executable patchers for classic PC titles.",
     projects: [
       {
         id: "ffviise-mod-loader",
@@ -65,7 +65,15 @@ export const projectCategories = [
         tech: ["C++", "Win32 API", "Game Hooks"],
         githubUrl: "https://github.com/odinj2010/FFVIISE_Mod_Loader",
         guideUrl: "#/tutorials/game-modding/ffvii-steam/ffviise-loader"
-      },
+      }
+    ]
+  },
+  {
+    id: "mods",
+    title: "Mods",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 2 18 2 18 6 6 6 6 2"/><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="6" x2="6.01" y1="13" y2="13"/><line x1="10" x2="10.01" y1="13" y2="13"/><line x1="15" x2="19" y1="12" y2="12"/><line x1="17" x2="17" y1="10" y2="14"/></svg>`,
+    description: "In-game gameplay modifications, new dimensions, and resource systems.",
+    projects: [
       {
         id: "riftlink",
         title: "RiftLink (Minecraft 1.21.1)",
@@ -86,8 +94,8 @@ export const projectCategories = [
   },
   {
     id: "tools",
-    title: "Reverse Engineering & Asset Tools",
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+    title: "Tools",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
     description: "Asset converters, 3D glTF extractors, archive unpackers, and binary disassembly tools.",
     projects: [
       {
@@ -151,10 +159,10 @@ export const projectCategories = [
     ]
   },
   {
-    id: "ai-ml",
-    title: "AI & Machine Learning",
+    id: "ai",
+    title: "AI",
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
-    description: "Hierarchical reinforcement learning algorithms and autonomous agents interacting with retro game environments.",
+    description: "Hierarchical reinforcement learning algorithms and autonomous game playing agents.",
     projects: [
       {
         id: "pokemon-yellow-ai",
