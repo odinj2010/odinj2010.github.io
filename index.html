@@ -20,30 +20,26 @@
   <!-- Sticky Top Navigation Header -->
   <header class="site-header">
     <div class="container header-container">
-      <a href="#" class="brand-link">
+      <a href="#/" class="brand-link">
         <span class="brand-icon">NFG</span>
         <span>Jonathan Roberts <span style="color: var(--text-muted); font-weight: normal; font-size: 0.9em;">(NfgOdin)</span></span>
       </a>
 
-      <!-- Desktop & Mobile Navigation Links -->
+      <!-- Desktop & Mobile Navigation Links (SPA Routes) -->
       <nav>
         <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <ul class="nav-menu" id="nav-menu">
-          <li><a href="#" class="nav-link active">Home</a></li>
-          <li><a href="#about" class="nav-link">About Me</a></li>
-          <li><a href="#projects" class="nav-link">Projects &amp; Tools</a></li>
-          <li><a href="#tutorials" class="nav-link">Guides &amp; Tutorials</a></li>
+          <li><a href="#/" class="nav-link active">Home</a></li>
+          <li><a href="#/projects" class="nav-link">Projects</a></li>
+          <li><a href="#/tutorials" class="nav-link">Tutorials</a></li>
+          <li><a href="#/about" class="nav-link">About Me</a></li>
         </ul>
       </nav>
 
-      <!-- Search & GitHub Actions -->
+      <!-- GitHub Action -->
       <div class="header-actions">
-        <div class="search-container">
-          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="global-search" class="search-input" placeholder="Search projects &amp; guides..." aria-label="Search projects and guides">
-        </div>
         <a href="https://github.com/odinj2010" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub Profile">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
           <span>GitHub</span>
@@ -52,141 +48,140 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <main>
-    <section class="hero-section">
-      <div class="container hero-content">
-        <div class="hero-badge">
-          <span class="hero-badge-pulse"></span>
-          <span>NFG Ecosystem // Jonathan Roberts (NfgOdin)</span>
-        </div>
-        <h1 class="hero-title">
-          Building <span class="gradient-text">game modding toolchains</span>, audio software &amp; exploring technology.
-        </h1>
-        <p class="hero-description">
-          A lifelong fascination with computers sparked from salvaging an abandoned desktop in the desert at age 13. From beating Final Fantasy VII on the PS1 in the late 90s to building custom mod managers, 3D glTF converters, audio CAD suites, and exploring modern programming with Java, C#, C++, and Python.
-        </p>
-        <div class="hero-cta-group">
-          <a href="#projects" class="btn btn-primary">
-            View My Real Projects &rarr;
-          </a>
-          <a href="#about" class="btn btn-secondary">
-            Read My Story
-          </a>
-          <a href="#tutorials" class="btn btn-secondary">
-            Technical Guides
-          </a>
-        </div>
+  <!-- Main Multi-View Shell -->
+  <main class="view-container">
 
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-number">1998</span>
-            <span class="stat-label">FFVII on PS1 Beat</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">2007</span>
-            <span class="stat-label">Custom eBay PC Built</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">Java &amp; C#</span>
-            <span class="stat-label">College Background</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">Cisco &amp; Google</span>
-            <span class="stat-label">Networking &amp; Security</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Authentic About Me Section -->
-    <section id="about" class="section">
+    <!-- ====================================================================
+         1. DEDICATED SCREEN: HOME (#/)
+         ==================================================================== -->
+    <div id="view-home" class="page-view active">
       <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Background &amp; Journey</span>
-          <h2 class="section-title">About Jonathan Roberts</h2>
-          <p class="section-subtitle">
-            The hands-on story of how a rescued desert PC, JRPGs, and networking shaped a 24-year obsession with computing.
+        <section class="hero-section">
+          <div class="hero-badge">
+            <span class="hero-badge-pulse"></span>
+            <span>Jonathan Roberts (NfgOdin / NFG)</span>
+          </div>
+          <h1 class="hero-title">
+            Crafting <span class="gradient-text">game modding engines</span>, audio CAD &amp; software tools.
+          </h1>
+          <p class="hero-description">
+            From discovering an abandoned computer in the desert at age 13 and beating Final Fantasy VII in the late 90s, to writing native C++ mod loaders, Python 3D reverse-engineering tools, and acoustics software. Explore my dedicated project hubs and technical guides below.
           </p>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.75rem;">
-          <div class="project-card">
-            <div style="color: var(--accent-blue); margin-bottom: 0.75rem;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
-            </div>
-            <h3 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--text-primary);">The Wilderness Salvage (Age 13)</h3>
-            <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
-              My journey didn't start in a pristine tech lab. When I was 13, I found an abandoned computer tower out in the desert wilderness. I brought it home, tinkered with the hardware, swapped cables, and figured out how to bring it to life running Windows 98. That hands-on curiosity ignited a fire for understanding how machines work.
-            </p>
+          <div class="hero-cta-group">
+            <a href="#/projects" class="btn btn-primary">
+              Explore Projects &rarr;
+            </a>
+            <a href="#/tutorials" class="btn btn-secondary">
+              Tutorial Guides
+            </a>
+            <a href="#/about" class="btn btn-secondary">
+              My Background
+            </a>
           </div>
 
-          <div class="project-card">
-            <div style="color: var(--accent-purple); margin-bottom: 0.75rem;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 2 18 2 18 6 6 6 6 2"/><rect width="20" height="14" x="2" y="6" rx="2"/><line x1="6" x2="6.01" y1="13" y2="13"/><line x1="10" x2="10.01" y1="13" y2="13"/><line x1="15" x2="19" y1="12" y2="12"/><line x1="17" x2="17" y1="10" y2="14"/></svg>
-            </div>
-            <h3 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--text-primary);">RPGs, FFVII &amp; MMORPGs</h3>
-            <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
-              The very first RPG I ever completed was Final Fantasy VII on the original PlayStation back in 1998–1999. It holds a permanent place in my heart and directly inspired my drive to build modding tools and reverse-engineering utilities for it decades later. In 2007, I bought parts on eBay to build my own custom gaming PC from scratch, diving headfirst into MMORPGs.
-            </p>
-          </div>
+          <!-- Quick Navigation Section Cards -->
+          <div class="portal-cards-grid">
+            <a href="#/projects" class="portal-card">
+              <div class="portal-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+              </div>
+              <h2 class="portal-title">Projects Hub</h2>
+              <p class="portal-desc">
+                Browse dedicated subcategories for Standalone Programs, Game Mod Loaders, 3D glTF extractors, and Audio CAD.
+              </p>
+              <span class="portal-action">Enter Projects Screen &rarr;</span>
+            </a>
 
-          <div class="project-card">
-            <div style="color: var(--accent-green); margin-bottom: 0.75rem;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            </div>
-            <h3 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--text-primary);">Skills, Systems &amp; Education</h3>
-            <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
-              I took college-level Java Programming and C# Programming courses, and earned a Cisco Networking certificate through college-level courses taken in high school. I've also completed training and certifications in Google Cybersecurity, giving me a solid foundation in systems architecture, networking protocols, security fundamentals, and software creation.
-            </p>
+            <a href="#/tutorials" class="portal-card">
+              <div class="portal-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+              <h2 class="portal-title">Tutorial Guides</h2>
+              <p class="portal-desc">
+                Deep multi-level walkthroughs for FFVIISE Mod Loader, converting legacy 7th Heaven .iro files, and enclosure tuning.
+              </p>
+              <span class="portal-action">Browse Tutorials &rarr;</span>
+            </a>
+
+            <a href="#/about" class="portal-card">
+              <div class="portal-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              </div>
+              <h2 class="portal-title">About Jonathan</h2>
+              <p class="portal-desc">
+                The full story: desert computer rescue, Windows 98, beating FFVII on PS1, custom PC builds, and networking credentials.
+              </p>
+              <span class="portal-action">Read Bio &amp; Journey &rarr;</span>
+            </a>
           </div>
-        </div>
+        </section>
       </div>
-    </section>
+    </div>
 
-    <!-- Real Projects Showcase Section -->
-    <section id="projects" class="section">
+    <!-- ====================================================================
+         2. DEDICATED SCREEN: PROJECTS (#/projects & #/projects/:category)
+         ==================================================================== -->
+    <div id="view-projects" class="page-view">
       <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Portfolio &amp; Repositories</span>
-          <h2 class="section-title">Projects &amp; Open Source</h2>
-          <p class="section-subtitle">
-            Authentic software, game tools, and hardware utilities actively maintained and published on GitHub.
+        <header class="page-screen-header">
+          <span class="section-tag" style="font-size: 0.8rem; font-weight: 700; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.4rem;">
+            Dedicated Directory
+          </span>
+          <h1 class="hero-title" style="font-size: 2.4rem; margin-bottom: 0.5rem;">Projects &amp; Repositories</h1>
+          <p class="section-subtitle" style="color: var(--text-secondary); font-size: 1.05rem;">
+            Select a subcategory below to explore programs, game mods, asset extractors, and audio tools.
           </p>
-        </div>
+        </header>
 
-        <!-- Filter Tags -->
-        <div class="filter-bar" id="project-filter-tags">
-          <!-- Dynamic Filter Buttons injected via app.js -->
-        </div>
-
-        <!-- Projects Grid -->
-        <div class="projects-grid" id="projects-grid">
-          <!-- Dynamic Project Cards injected via app.js -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Hierarchical Tutorial Engine -->
-    <section id="tutorials" class="section">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Knowledge Engine</span>
-          <h2 class="section-title">Guides &amp; Technical Walkthroughs</h2>
-          <p class="section-subtitle">
-            Step-by-step documentation for installing mod loaders, converting legacy formats, and acoustic enclosure tuning.
-          </p>
-        </div>
-
-        <!-- Tutorial Engine Interactive Shell -->
-        <div class="tutorial-engine">
-          <div class="tutorial-nav-bar">
+        <!-- Projects Dedicated Drilldown Shell -->
+        <div class="drilldown-shell">
+          <div class="drilldown-nav-bar">
             <!-- Dynamic Breadcrumbs -->
-            <nav class="breadcrumbs" id="tutorial-breadcrumbs" aria-label="Tutorial breadcrumb trail">
-              <!-- Rendered dynamically by app.js -->
+            <nav class="breadcrumbs" id="project-breadcrumbs">
+              <!-- Rendered via js/app.js -->
             </nav>
 
-            <div class="tutorial-actions-bar">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <input type="text" id="project-search" class="search-input" placeholder="Search category..." style="padding: 0.35rem 0.85rem; font-size: 0.82rem; width: 160px;">
+              <button id="project-back-btn" class="nav-back-btn" style="display: none;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                All Categories
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Projects Content Viewport -->
+          <div class="drilldown-viewport" id="project-viewport">
+            <!-- Injected via js/app.js: Category Selection Cards OR Project Cards -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         3. DEDICATED SCREEN: TUTORIALS (#/tutorials)
+         ==================================================================== -->
+    <div id="view-tutorials" class="page-view">
+      <div class="container">
+        <header class="page-screen-header">
+          <span class="section-tag" style="font-size: 0.8rem; font-weight: 700; color: var(--accent-purple); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.4rem;">
+            Knowledge Engine
+          </span>
+          <h1 class="hero-title" style="font-size: 2.4rem; margin-bottom: 0.5rem;">Technical Guides &amp; Tutorials</h1>
+          <p class="section-subtitle" style="color: var(--text-secondary); font-size: 1.05rem;">
+            Step-by-step documentation for installing mod loaders, converting legacy IRO files, and tuning subwoofer enclosures.
+          </p>
+        </header>
+
+        <!-- Tutorials Dedicated Drilldown Shell -->
+        <div class="drilldown-shell">
+          <div class="drilldown-nav-bar">
+            <!-- Dynamic Breadcrumbs -->
+            <nav class="breadcrumbs" id="tutorial-breadcrumbs">
+              <!-- Rendered via js/app.js -->
+            </nav>
+
+            <div>
               <button id="tutorial-back-btn" class="nav-back-btn" style="display: none;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Back Up One Level
@@ -194,13 +189,78 @@
             </div>
           </div>
 
-          <!-- Content Viewport -->
-          <div class="tutorial-content-viewport" id="tutorial-viewport">
-            <!-- Dynamic Drill-Down Views (Categories -> Sub-categories -> Guides -> Full Reader) -->
+          <!-- Dynamic Tutorial Viewport -->
+          <div class="drilldown-viewport" id="tutorial-viewport">
+            <!-- Injected via js/app.js: Categories -> Subcategories -> Guides -> Full Reader -->
           </div>
         </div>
       </div>
-    </section>
+    </div>
+
+    <!-- ====================================================================
+         4. DEDICATED SCREEN: ABOUT ME (#/about)
+         ==================================================================== -->
+    <div id="view-about" class="page-view">
+      <div class="container">
+        <header class="page-screen-header">
+          <span class="section-tag" style="font-size: 0.8rem; font-weight: 700; color: var(--accent-green); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.4rem;">
+            Biography &amp; Background
+          </span>
+          <h1 class="hero-title" style="font-size: 2.4rem; margin-bottom: 0.5rem;">About Jonathan Roberts</h1>
+          <p class="section-subtitle" style="color: var(--text-secondary); font-size: 1.05rem;">
+            Tinkerer, software developer, and lifelong gamer.
+          </p>
+        </header>
+
+        <div style="display: flex; flex-direction: column; gap: 2rem; max-width: 900px; margin: 0 auto;">
+          <!-- Story Card 1 -->
+          <article class="project-card" style="padding: 2.25rem;">
+            <div style="color: var(--accent-blue); margin-bottom: 1rem;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+            </div>
+            <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary);">The Wilderness Computer Salvage (Age 13)</h2>
+            <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem; margin-bottom: 1rem;">
+              My lifelong fascination with computers didn't start in a computer science academy or from an off-the-shelf retail purchase. When I was 13 years old, I stumbled across an abandoned, discarded computer tower left out in the desert wilderness.
+            </p>
+            <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem;">
+              Instead of passing it by, I dragged it home. Without formal training, I opened the case, studied the ribbon cables, cleaned the components, and troubleshot the motherboard and drives until I successfully brought the system to life running Windows 98. Rescuing that machine gave me a deep appreciation for understanding what happens underneath the hood of computing hardware.
+            </p>
+          </article>
+
+          <!-- Story Card 2 -->
+          <article class="project-card" style="padding: 2.25rem;">
+            <div style="color: var(--accent-purple); margin-bottom: 1rem;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 2 18 2 18 6 6 6 6 2"/><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="6" x2="6.01" y1="13" y2="13"/><line x1="10" x2="10.01" y1="13" y2="13"/><line x1="15" x2="19" y1="12" y2="12"/><line x1="17" x2="17" y1="10" y2="14"/></svg>
+            </div>
+            <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary);">Gaming Roots: Final Fantasy VII &amp; MMORPGs</h2>
+            <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem; margin-bottom: 1rem;">
+              I have always had a deep love for RPGs. The very first RPG I ever completed was Final Fantasy VII on the original PlayStation back in 1998 or 1999. It left an indelible mark on my imagination, storytelling sensibilities, and love for technical gaming mechanics.
+            </p>
+            <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem;">
+              In 2007, I took my hardware knowledge to the next level by buying individual parts on eBay and assembling my own custom gaming PC from scratch. That machine unlocked a brand new world for me: MMORPGs, online gaming communities, and eventually the desire to mod, hook, and modernize classic titles like Final Fantasy VII and X.
+            </p>
+          </article>
+
+          <!-- Story Card 3 -->
+          <article class="project-card" style="padding: 2.25rem;">
+            <div style="color: var(--accent-green); margin-bottom: 1rem;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary);">Technical Skills &amp; Credentials</h2>
+            <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem; margin-bottom: 1rem;">
+              Over the years I have balanced self-taught low-level engineering with focused coursework:
+            </p>
+            <ul style="list-style: disc; padding-left: 1.5rem; color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem;">
+              <li><strong>Programming Courses</strong>: College-level coursework in Java Programming and C# Programming.</li>
+              <li><strong>Networking</strong>: Cisco Networking Certificate from taking the college course in high school.</li>
+              <li><strong>Cybersecurity</strong>: Google Cybersecurity online coursework and certifications.</li>
+              <li><strong>Languages &amp; Toolchains</strong>: C++20, Python 3, Java, Win32 API, glTF 2.0 3D Pipelines, Linux / Raspberry Pi 5.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- Site Footer -->
@@ -209,10 +269,9 @@
       <p>&copy; 2026 Jonathan Roberts (NfgOdin / NFG). All rights reserved.</p>
       <ul class="footer-links">
         <li><a href="https://github.com/odinj2010" target="_blank" rel="noopener noreferrer">GitHub Profile</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#tutorials">Guides</a></li>
-        <li><a href="#">Top &uarr;</a></li>
+        <li><a href="#/projects">Projects</a></li>
+        <li><a href="#/tutorials">Tutorials</a></li>
+        <li><a href="#/about">About Me</a></li>
       </ul>
     </div>
   </footer>

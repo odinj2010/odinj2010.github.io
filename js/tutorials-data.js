@@ -1,119 +1,181 @@
 /* ==========================================================================
    AUTHENTIC DATA STORE (js/tutorials-data.js)
    --------------------------------------------------------------------------
-   Real projects, genuine biography, and authentic technical guides for:
-   Jonathan Roberts (NfgOdin / NFG)
+   Structured hierarchical data for Jonathan Roberts (NfgOdin / NFG):
+   1. Projects grouped into Dedicated Categories & Subcategories
+   2. Tutorials with 3+ level nested drilldown
    ========================================================================== */
 
 /**
- * Real Projects Showcase Data directly from Jonathan's actual repositories
+ * Categorized Projects Hierarchy for dedicated screens
  */
-export const projectsData = [
+export const projectCategories = [
   {
-    id: "ffviise-mod-loader",
-    title: "FFVIISE Mod Loader",
-    category: "Game Modding",
-    status: "Released",
-    description: "A lightweight, portable, and high-performance native mod loader for the Final Fantasy VII Steam Edition re-release.",
-    tech: ["C++", "Win32", "Game Modding"],
-    githubUrl: "https://github.com/odinj2010/FFVIISE_Mod_Loader",
-    liveUrl: "#tutorials/game-modding/ffvii-steam/ffviise-loader"
+    id: "programs",
+    title: "Programs & Standalone Applications",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>`,
+    description: "Desktop software, standalone managers, CAD acoustics tools, and Raspberry Pi system software.",
+    projects: [
+      {
+        id: "ffx-mod-manager",
+        title: "FFX-Mod-Manager",
+        status: "Released",
+        description: "A clean, fast, and secure standalone desktop mod manager for Final Fantasy X / X-2 HD Remaster on Steam. Handles automated mod injection and profile switching.",
+        tech: ["Python", "GUI Tooling", "Steam Modding"],
+        githubUrl: "https://github.com/odinj2010/FFX-Mod-Manager"
+      },
+      {
+        id: "runebox",
+        title: "RuneBox - Audio CAD & Acoustics Lab",
+        status: "Active",
+        description: "Commercial-grade car audio subwoofer enclosure CAD & acoustics laboratory featuring pure Python 3D vector visualization, wiring schematics, and precision cut sheets.",
+        tech: ["Python", "3D Vector Graphics", "Acoustics CAD"],
+        githubUrl: "https://github.com/odinj2010/RuneBox",
+        guideUrl: "#/tutorials/audio-engineering/runebox-cad/enclosure-tuning"
+      },
+      {
+        id: "sbc-core",
+        title: "SBC-Core",
+        status: "Active",
+        description: "Core utility suite, daemon controller, and hardware interface system built specifically for Raspberry Pi 5 single-board computer environments.",
+        tech: ["Python", "Raspberry Pi 5", "Linux / Hardware"],
+        githubUrl: "https://github.com/odinj2010/SBC-Core"
+      },
+      {
+        id: "digit-ai",
+        title: "digit.ai",
+        status: "Active",
+        description: "Desktop companion application and local assistant interface built for desktop productivity.",
+        tech: ["Python", "Desktop App"],
+        githubUrl: "https://github.com/odinj2010/digit.ai"
+      }
+    ]
   },
   {
-    id: "7th-heaven-converter",
-    title: "7thHeavenToFFVIIModLoader",
-    category: "Game Modding",
-    status: "Released",
-    description: "Specialized conversion tool that converts legacy IRO mod packages from 7th Heaven into unpacked formats compatible with the FFVII Mod Loader.",
-    tech: ["Python", "Archive Extraction", "File IO"],
-    githubUrl: "https://github.com/odinj2010/7thHeavenToFFVIIModLoader",
-    liveUrl: "#tutorials/game-modding/ffvii-steam/7thheaven-migration"
+    id: "mods",
+    title: "Game Mods & Mod Loaders",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 2 18 2 18 6 6 6 6 2"/><rect width="20" height="14" x="2" y="6" rx="2"/><line x1="6" x2="6.01" y1="13" y2="13"/><line x1="10" x2="10.01" y1="13" y2="13"/><line x1="15" x2="19" y1="12" y2="12"/><line x1="17" x2="17" y1="10" y2="14"/></svg>`,
+    description: "Native C++ memory loaders, game hooks, and Java-based sandbox mods.",
+    projects: [
+      {
+        id: "ffviise-mod-loader",
+        title: "FFVIISE Mod Loader",
+        status: "Released",
+        description: "A lightweight, portable, and high-performance native mod loader for the Final Fantasy VII Steam Edition re-release, bypassing third-party overhead.",
+        tech: ["C++", "Win32 API", "Game Hooks"],
+        githubUrl: "https://github.com/odinj2010/FFVIISE_Mod_Loader",
+        guideUrl: "#/tutorials/game-modding/ffvii-steam/ffviise-loader"
+      },
+      {
+        id: "riftlink",
+        title: "RiftLink (Minecraft 1.21.1)",
+        status: "Active",
+        description: "A modern gameplay, dimensional mechanics, and custom utility mod developed for Minecraft 1.21.1 on the NeoForge mod loader platform.",
+        tech: ["Java", "NeoForge", "Minecraft 1.21.1"],
+        githubUrl: "https://github.com/odinj2010/RiftLink"
+      },
+      {
+        id: "sticky-resources",
+        title: "StickyResources",
+        status: "Active",
+        description: "Custom Java-based gameplay enhancement and resource management mod for Minecraft.",
+        tech: ["Java", "Game Modding"],
+        githubUrl: "https://github.com/odinj2010/StickyResources"
+      }
+    ]
   },
   {
-    id: "ffx-mod-manager",
-    title: "FFX-Mod-Manager",
-    category: "Game Modding",
-    status: "Released",
-    description: "A clean, fast, and secure standalone mod manager specifically built for Final Fantasy X / X-2 HD Remaster on Steam.",
-    tech: ["Python", "GUI Tooling", "Steam Modding"],
-    githubUrl: "https://github.com/odinj2010/FFX-Mod-Manager"
+    id: "tools",
+    title: "Reverse Engineering & Asset Tools",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+    description: "Asset converters, 3D glTF extractors, archive unpackers, and binary disassembly tools.",
+    projects: [
+      {
+        id: "7th-heaven-converter",
+        title: "7thHeavenToFFVIIModLoader",
+        status: "Released",
+        description: "Archive extraction and manifest conversion utility translating legacy .iro files from 7th Heaven into native directory trees ready for FFVII Mod Loader.",
+        tech: ["Python", "IRO Archives", "Data Extraction"],
+        githubUrl: "https://github.com/odinj2010/7thHeavenToFFVIIModLoader",
+        guideUrl: "#/tutorials/game-modding/ffvii-steam/7thheaven-migration"
+      },
+      {
+        id: "ffx-phyre-tool",
+        title: "FFX-Phyre-Tool",
+        status: "Released",
+        description: "A modern utility to seamlessly extract and repack 3D models and textures for Final Fantasy X/X-2 HD Remaster using the modern glTF 2.0 open standard.",
+        tech: ["Python", "glTF 2.0", "PhyreEngine 3D"],
+        githubUrl: "https://github.com/odinj2010/FFX-Phyre-Tool",
+        guideUrl: "#/tutorials/game-modding/ffx-modding/phyre-gltf-export"
+      },
+      {
+        id: "ffviise-modding-tool",
+        title: "FFVIISE Modding Tool",
+        status: "Released",
+        description: "Dedicated authoring and packing tool for configuring mods targeting the 2026 Steam edition of Final Fantasy VII.",
+        tech: ["Python", "Asset Packing", "Steam Edition"],
+        githubUrl: "https://github.com/odinj2010/FFVIISE_Modding_Tool"
+      },
+      {
+        id: "ffx-audio-tool",
+        title: "FFX_Audio_Tool",
+        status: "Completed",
+        description: "Stream extraction and conversion tool for proprietary audio banks inside Final Fantasy X / X-2 HD Remaster.",
+        tech: ["Python", "Audio Extraction", "Binary Parsing"],
+        githubUrl: "https://github.com/odinj2010/FFX_Audio_Tool"
+      },
+      {
+        id: "ffx-shop-tool",
+        title: "FFX_Shop_Tool",
+        status: "Completed",
+        description: "Binary data parser and editor for merchant inventories and shop tables in Final Fantasy X.",
+        tech: ["Python", "Game Data Tables"],
+        githubUrl: "https://github.com/odinj2010/FFX_Shop_Tool"
+      },
+      {
+        id: "ffx-sphere-grid-tool",
+        title: "FFX_Sphere_Grid_Tool",
+        status: "Completed",
+        description: "Parser and custom editor for the iconic Final Fantasy X Sphere Grid layout and character progression nodes.",
+        tech: ["Python", "Binary Editor"],
+        githubUrl: "https://github.com/odinj2010/FFX_Sphere_Grid_Tool"
+      },
+      {
+        id: "ffx-ai-tool",
+        title: "FFX_AI_Tool",
+        status: "Completed",
+        description: "Script decompiler and behavior inspector for enemy battle AI routines in Final Fantasy X.",
+        tech: ["Python", "Bytecode Decompilation"],
+        githubUrl: "https://github.com/odinj2010/FFX_AI_Tool"
+      }
+    ]
   },
   {
-    id: "ffx-phyre-tool",
-    title: "FFX-Phyre-Tool",
-    category: "Game Modding",
-    status: "Released",
-    description: "A modern utility to seamlessly extract and repack 3D models and textures for Final Fantasy X/X-2 HD Remaster using the modern glTF 2.0 open standard.",
-    tech: ["Python", "glTF 2.0", "3D Models & Textures"],
-    githubUrl: "https://github.com/odinj2010/FFX-Phyre-Tool"
-  },
-  {
-    id: "runebox",
-    title: "RuneBox - Audio CAD & Acoustics Lab",
-    category: "Audio & Hardware",
-    status: "Active Projects",
-    description: "Commercial-grade car audio subwoofer enclosure CAD and acoustics simulation suite featuring 3D vector visualization, multi-subwoofer wiring schematics, and precision fabrication cut sheets.",
-    tech: ["Python", "3D Acoustics & CAD", "Audio Engineering"],
-    githubUrl: "https://github.com/odinj2010/RuneBox"
-  },
-  {
-    id: "riftlink",
-    title: "RiftLink (Minecraft Mod)",
-    category: "Game Modding",
-    status: "Active Projects",
-    description: "A modern gameplay and dimension mechanics mod developed for Minecraft 1.21.1 running on the NeoForge mod loader.",
-    tech: ["Java", "NeoForge", "Minecraft 1.21.1"],
-    githubUrl: "https://github.com/odinj2010/RiftLink"
-  },
-  {
-    id: "pokemon-yellow-ai",
-    title: "PokemonYellow-HRL-AI",
-    category: "Machine Learning & AI",
-    status: "Completed",
-    description: "Hierarchical Reinforcement Learning (HRL) framework training an intelligent autonomous agent to navigate, battle, and beat Pokémon Yellow on Game Boy emulation.",
-    tech: ["Python", "Reinforcement Learning", "Emulation API"],
-    githubUrl: "https://github.com/odinj2010/PokemonYellow-HRL-AI"
-  },
-  {
-    id: "sbc-core",
-    title: "SBC-Core (Raspberry Pi 5)",
-    category: "Audio & Hardware",
-    status: "Active Projects",
-    description: "Core utility suite and hardware interface system purpose-built for Raspberry Pi 5 single-board computer environments.",
-    tech: ["Python", "Raspberry Pi 5", "Linux / Hardware"],
-    githubUrl: "https://github.com/odinj2010/SBC-Core"
-  },
-  {
-    id: "ffx-suite",
-    title: "FFX Reverse Engineering Suite (Audio, Shop, AI)",
-    category: "Game Modding",
-    status: "Completed",
-    description: "Comprehensive modular reverse engineering toolchain for Final Fantasy X covering sound extraction (FFX_Audio_Tool), sphere grid data (FFX_Sphere_Grid_Tool), merchant inventories (FFX_Shop_Tool), and enemy AI behavior (FFX_AI_Tool).",
-    tech: ["Python", "Binary Parsing", "Data Extraction"],
-    githubUrl: "https://github.com/odinj2010/FFX_Audio_Tool"
+    id: "ai-ml",
+    title: "AI & Machine Learning",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
+    description: "Hierarchical reinforcement learning algorithms and autonomous agents interacting with retro game environments.",
+    projects: [
+      {
+        id: "pokemon-yellow-ai",
+        title: "PokemonYellow-HRL-AI",
+        status: "Completed",
+        description: "Hierarchical Reinforcement Learning (HRL) framework training an intelligent autonomous agent to navigate, battle, and beat Pokémon Yellow via Game Boy emulation hooks.",
+        tech: ["Python", "Reinforcement Learning", "Gym / Emulation API"],
+        githubUrl: "https://github.com/odinj2010/PokemonYellow-HRL-AI"
+      }
+    ]
   }
 ];
 
 /**
- * Filter tags matching Jonathan's genuine projects
- */
-export const projectFilterTags = [
-  "All",
-  "Game Modding",
-  "Audio & Hardware",
-  "Machine Learning & AI",
-  "Active Projects",
-  "Completed"
-];
-
-/**
- * Real Hierarchical Tutorial Engine Data Tree
+ * Hierarchical Tutorial Engine Data Tree
  */
 export const tutorialCategories = [
   {
     id: "game-modding",
     title: "Final Fantasy Modding & Tools",
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 2 18 2 18 6 6 6 6 2"/><rect width="20" height="14" x="2" y="6" rx="2"/><line x1="6" x2="6.01" y1="13" y2="13"/><line x1="10" x2="10.01" y1="13" y2="13"/><line x1="15" x2="19" y1="12" y2="12"/><line x1="17" x2="17" y1="10" y2="14"/></svg>`,
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 2 18 2 18 6 6 6 6 2"/><rect width="20" height="14" x="2" y="6" rx="2"/><line x1="6" x2="6.01" y1="13" y2="13"/><line x1="10" x2="10.01" y1="13" y2="13"/><line x1="15" x2="19" y1="12" y2="12"/><line x1="17" x2="17" y1="10" y2="14"/></svg>`,
     summary: "Practical guides and technical documentation for FFVIISE Mod Loader, FFX Phyre 3D models, and 7th Heaven conversions.",
     subcategories: [
       {
@@ -177,8 +239,8 @@ python convert.py --input "path/to/mod.iro" --output "path/to/mods/ExtractedMod"
                 },
                 callout: {
                   type: "tip",
-                  title: "Mod Order",
-                  content: "Be sure to extract texture and audio mods into distinct folders inside your /mods folder for clear separation."
+                  title: "Mod Separation",
+                  content: "Be sure to extract texture and audio mods into distinct folders inside your /mods folder for clean organization."
                 }
               }
             ]
@@ -217,7 +279,7 @@ python phyre_tool.py --extract "model.phyre" --out "exported_model.gltf"`
   {
     id: "audio-engineering",
     title: "Audio Engineering & Hardware CAD",
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
     summary: "Acoustics modeling, subwoofer enclosure CAD design, and hardware interfacing.",
     subcategories: [
       {
@@ -230,7 +292,7 @@ python phyre_tool.py --extract "model.phyre" --out "exported_model.gltf"`
             title: "Simulating Port Velocity & Box Volume in RuneBox",
             readingTime: "8 min read",
             difficulty: "Intermediate",
-            summary: "Learn how RuneBox calculates acoustic compliance, port resonant frequencies, and generate fabrication cut sheets.",
+            summary: "Learn how RuneBox calculates acoustic compliance, port resonant frequencies, and generates fabrication cut sheets.",
             steps: [
               {
                 title: "1. The Mathematics of Enclosure Tuning",

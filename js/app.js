@@ -1,24 +1,29 @@
 /* ==========================================================================
-   PORTFOLIO & TUTORIAL ENGINE APPLICATION LOGIC (js/app.js)
+   MULTI-VIEW SPA ROUTER & DRILLDOWN ENGINE (js/app.js)
    --------------------------------------------------------------------------
-   - Hash-based SPA router supporting direct links to tutorials
-   - Interactive Project Filtering with search integration
-   - 3+ Level Hierarchical Tutorial Drill-Down Engine
-   - Dynamic breadcrumb generation
-   - Clipboard copy utilities for code blocks
+   - Zero-reload dedicated page views: Home, Projects, Tutorials, About
+   - Dedicated nested category drilldown for Projects:
+       #/projects -> Category Cards -> Project Cards
+   - Dedicated nested drilldown for Tutorials:
+       #/tutorials -> Category Cards -> Subcategories -> Guides -> Reader
+   - Full breadcrumb trail & browser back/forward navigation support
    ========================================================================== */
 
-import { projectsData, projectFilterTags, tutorialCategories } from './tutorials-data.js';
+import { projectCategories, tutorialCategories } from './tutorials-data.js';
 
 class App {
   constructor() {
-    this.currentFilter = 'All';
-    this.searchQuery = '';
+    this.currentView = 'home';
     
-    // Tutorial Engine State:
-    // level: 1 (Main Categories) | 2 (Sub-categories) | 3 (Guides list) | 4 (Full Guide Reader)
+    // Project Drilldown State
+    this.projectState = {
+      categoryId: null,
+      searchQuery: ''
+    };
+
+    // Tutorial Drilldown State
     this.tutorialState = {
-      level: 1,
+      level: 1, // 1: Categories, 2: Subcategories, 3: Guides List, 4: Reader
       categoryId: null,
       subcategoryId: null,
       guideId: null
@@ -26,24 +31,33 @@ class App {
 
     this.initElements();
     this.bindEvents();
-    this.renderProjects();
     this.handleRouting();
   }
 
   initElements() {
-    // Nav & Search
+    // Nav elements
     this.navMenu = document.getElementById('nav-menu');
     this.mobileNavToggle = document.getElementById('mobile-nav-toggle');
-    this.globalSearch = document.getElementById('global-search');
-    
-    // Projects Container & Filters
-    this.filterContainer = document.getElementById('project-filter-tags');
-    this.projectsGrid = document.getElementById('projects-grid');
-    
-    // Tutorial Engine Elements
+    this.navLinks = document.querySelectorAll('.nav-link');
+
+    // Page view containers
+    this.views = {
+      home: document.getElementById('view-home'),
+      projects: document.getElementById('view-projects'),
+      tutorials: document.getElementById('view-tutorials'),
+      about: document.getElementById('view-about')
+    };
+
+    // Projects elements
+    this.projectBreadcrumbs = document.getElementById('project-breadcrumbs');
+    this.projectViewport = document.getElementById('project-viewport');
+    this.projectBackBtn = document.getElementById('project-back-btn');
+    this.projectSearchInput = document.getElementById('project-search');
+
+    // Tutorials elements
+    this.tutorialBreadcrumbs = document.getElementById('tutorial-breadcrumbs');
     this.tutorialViewport = document.getElementById('tutorial-viewport');
-    this.breadcrumbsContainer = document.getElementById('tutorial-breadcrumbs');
-    this.navBackBtn = document.getElementById('tutorial-back-btn');
+    this.tutorialBackBtn = document.getElementById('tutorial-back-btn');
   }
 
   bindEvents() {
@@ -54,177 +68,256 @@ class App {
       });
     }
 
-    // Global Search filter across projects & tutorials
-    if (this.globalSearch) {
-      this.globalSearch.addEventListener('input', (e) => {
-        this.searchQuery = e.target.value.toLowerCase().trim();
-        this.renderProjects();
-      });
-    }
-
     // Hash change routing
     window.addEventListener('hashchange', () => this.handleRouting());
 
-    // Tutorial Back Button
-    if (this.navBackBtn) {
-      this.navBackBtn.addEventListener('click', () => this.navigateTutorialBack());
+    // Back buttons
+    if (this.projectBackBtn) {
+      this.projectBackBtn.addEventListener('click', () => {
+        window.location.hash = '#/projects';
+      });
     }
 
-    // Render Project Filter Buttons
-    this.renderFilterTags();
+    if (this.tutorialBackBtn) {
+      this.tutorialBackBtn.addEventListener('click', () => this.navigateTutorialBack());
+    }
+
+    // Projects Search
+    if (this.projectSearchInput) {
+      this.projectSearchInput.addEventListener('input', (e) => {
+        this.projectState.searchQuery = e.target.value.toLowerCase().trim();
+        this.renderProjectsView();
+      });
+    }
   }
 
   /* ==========================================================================
-     PROJECTS & ACHIEVEMENTS LOGIC
+     HASH ROUTING CONTROLLER
      ========================================================================== */
-  renderFilterTags() {
-    if (!this.filterContainer) return;
-    this.filterContainer.innerHTML = projectFilterTags.map(tag => `
-      <button class="filter-btn ${tag === this.currentFilter ? 'active' : ''}" data-filter="${tag}">
-        ${tag}
-      </button>
-    `).join('');
+  handleRouting() {
+    // Close mobile menu if open
+    if (this.navMenu) this.navMenu.classList.remove('open');
 
-    this.filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        this.currentFilter = btn.getAttribute('data-filter');
-        this.filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        this.renderProjects();
-      });
+    const hash = window.location.hash || '#/';
+    const cleanHash = hash.replace(/^#\/?/, ''); // strip leading #/
+    const parts = cleanHash.split('/').filter(Boolean);
+    const mainSection = parts[0] || 'home';
+
+    // Highlight active nav item
+    this.navLinks.forEach(link => {
+      const href = link.getAttribute('href').replace(/^#\/?/, '');
+      if ((mainSection === 'home' && (href === '' || href === 'home')) || href === mainSection) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+
+    // Switch screen views
+    if (mainSection === 'projects') {
+      this.switchView('projects');
+      const categoryId = parts[1] || null;
+      this.projectState.categoryId = categoryId;
+      this.renderProjectBreadcrumbs();
+      this.renderProjectsView();
+    } else if (mainSection === 'tutorials') {
+      this.switchView('tutorials');
+      const catId = parts[1] || null;
+      const subId = parts[2] || null;
+      const guideId = parts[3] || null;
+
+      if (guideId) {
+        this.tutorialState = { level: 4, categoryId: catId, subcategoryId: subId, guideId };
+      } else if (subId) {
+        this.tutorialState = { level: 3, categoryId: catId, subcategoryId: subId, guideId: null };
+      } else if (catId) {
+        this.tutorialState = { level: 2, categoryId: catId, subcategoryId: null, guideId: null };
+      } else {
+        this.tutorialState = { level: 1, categoryId: null, subcategoryId: null, guideId: null };
+      }
+
+      this.renderTutorialBreadcrumbs();
+      this.renderTutorialView();
+    } else if (mainSection === 'about') {
+      this.switchView('about');
+    } else {
+      this.switchView('home');
+    }
+
+    // Scroll to top of window on screen change
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  switchView(viewName) {
+    this.currentView = viewName;
+    Object.keys(this.views).forEach(key => {
+      const el = this.views[key];
+      if (el) {
+        if (key === viewName) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('active');
+        }
+      }
     });
   }
 
-  renderProjects() {
-    if (!this.projectsGrid) return;
+  /* ==========================================================================
+     DEDICATED PROJECTS DRILLDOWN VIEW
+     ========================================================================== */
+  renderProjectBreadcrumbs() {
+    if (!this.projectBreadcrumbs) return;
+    const { categoryId } = this.projectState;
+    const category = projectCategories.find(c => c.id === categoryId);
 
-    let filtered = projectsData.filter(proj => {
-      const matchesFilter = (this.currentFilter === 'All') || (proj.category === this.currentFilter);
-      const matchesSearch = !this.searchQuery || 
-        proj.title.toLowerCase().includes(this.searchQuery) ||
-        proj.description.toLowerCase().includes(this.searchQuery) ||
-        proj.tech.some(t => t.toLowerCase().includes(this.searchQuery));
-      return matchesFilter && matchesSearch;
-    });
+    // Toggle Back button
+    if (this.projectBackBtn) {
+      this.projectBackBtn.style.display = category ? 'inline-flex' : 'none';
+    }
 
-    if (filtered.length === 0) {
-      this.projectsGrid.innerHTML = `
-        <div class="empty-state" style="grid-column: 1 / -1;">
-          <div class="empty-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </div>
-          <h3>No matching projects found</h3>
-          <p>Try searching for another keyword or clearing active filters.</p>
+    let crumbs = [
+      { label: 'Projects', hash: '#/projects', active: !category }
+    ];
+
+    if (category) {
+      crumbs.push({
+        label: category.title,
+        hash: `#/projects/${category.id}`,
+        active: true
+      });
+    }
+
+    this.projectBreadcrumbs.innerHTML = crumbs.map((crumb, idx) => {
+      const isLast = idx === crumbs.length - 1;
+      const sep = !isLast ? `<span class="breadcrumb-separator">/</span>` : '';
+      if (crumb.active) {
+        return `<span class="breadcrumb-item active">${crumb.label}</span>${sep}`;
+      }
+      return `<a href="${crumb.hash}" class="breadcrumb-item">${crumb.label}</a>${sep}`;
+    }).join('');
+  }
+
+  renderProjectsView() {
+    if (!this.projectViewport) return;
+    const { categoryId, searchQuery } = this.projectState;
+
+    // LEVEL 1: Top-Level Project Categories
+    if (!categoryId) {
+      this.projectViewport.innerHTML = `
+        <div class="cards-grid">
+          ${projectCategories.map(cat => `
+            <a href="#/projects/${cat.id}" class="category-card">
+              <div class="category-icon">${cat.icon}</div>
+              <h3 class="category-title">${cat.title}</h3>
+              <p class="category-desc">${cat.description}</p>
+              <div class="category-badge-count">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                ${cat.projects.length} Projects &rarr;
+              </div>
+            </a>
+          `).join('')}
         </div>
       `;
       return;
     }
 
-    this.projectsGrid.innerHTML = filtered.map(proj => {
-      const statusClass = `status-${proj.status.toLowerCase().replace(/\s+/g, '-')}`;
-      return `
-        <article class="project-card">
-          <div class="card-top">
-            <h3 class="card-title">${proj.title}</h3>
-            <span class="status-badge ${statusClass}">${proj.status}</span>
-          </div>
-          <p class="card-desc">${proj.description}</p>
-          <div class="tech-tag-list">
-            ${proj.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
-          </div>
-          <div class="card-footer">
-            ${proj.githubUrl ? `
-              <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="card-link">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-                Source Repository
-              </a>
-            ` : '<span></span>'}
-            ${proj.liveUrl ? `
-              <a href="${proj.liveUrl}" class="card-link">
-                View Documentation &rarr;
-              </a>
-            ` : ''}
-          </div>
-        </article>
+    // LEVEL 2: Projects inside Selected Category
+    const category = projectCategories.find(c => c.id === categoryId);
+    if (!category) {
+      this.projectViewport.innerHTML = `
+        <div class="empty-state">
+          <h3>Category not found</h3>
+          <p>The requested project category does not exist.</p>
+          <a href="#/projects" class="btn btn-secondary" style="margin-top: 1rem;">Back to Categories</a>
+        </div>
       `;
-    }).join('');
+      return;
+    }
+
+    let filtered = category.projects.filter(p => {
+      if (!searchQuery) return true;
+      return p.title.toLowerCase().includes(searchQuery) ||
+             p.description.toLowerCase().includes(searchQuery) ||
+             p.tech.some(t => t.toLowerCase().includes(searchQuery));
+    });
+
+    if (filtered.length === 0) {
+      this.projectViewport.innerHTML = `
+        <div class="empty-state">
+          <h3>No matching projects found</h3>
+          <p>Try searching for a different keyword.</p>
+        </div>
+      `;
+      return;
+    }
+
+    this.projectViewport.innerHTML = `
+      <div class="cards-grid">
+        ${filtered.map(proj => {
+          const statusClass = `status-${proj.status.toLowerCase().replace(/\s+/g, '-')}`;
+          return `
+            <article class="project-card">
+              <div class="card-top">
+                <h3 class="card-title">${proj.title}</h3>
+                <span class="status-badge ${statusClass}">${proj.status}</span>
+              </div>
+              <p class="card-desc">${proj.description}</p>
+              <div class="tech-tag-list">
+                ${proj.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+              </div>
+              <div class="card-footer">
+                ${proj.githubUrl ? `
+                  <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="card-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                    GitHub Repo
+                  </a>
+                ` : '<span></span>'}
+                ${proj.guideUrl ? `
+                  <a href="${proj.guideUrl}" class="card-link">
+                    View Guide &rarr;
+                  </a>
+                ` : ''}
+              </div>
+            </article>
+          `;
+        }).join('')}
+      </div>
+    `;
   }
 
   /* ==========================================================================
-     HASH ROUTING & STATE CONTROLLER
+     DEDICATED TUTORIALS DRILLDOWN VIEW
      ========================================================================== */
-  handleRouting() {
-    const hash = window.location.hash.slice(1); // remove '#'
-    
-    // Tutorial Route Pattern: tutorials/{categoryId}/{subcategoryId}/{guideId}
-    if (hash.startsWith('tutorials')) {
-      const parts = hash.split('/').filter(Boolean);
-      // parts[0] is 'tutorials'
-      const categoryId = parts[1] || null;
-      const subcategoryId = parts[2] || null;
-      const guideId = parts[3] || null;
-
-      if (guideId) {
-        this.setTutorialState(4, categoryId, subcategoryId, guideId);
-      } else if (subcategoryId) {
-        this.setTutorialState(3, categoryId, subcategoryId, null);
-      } else if (categoryId) {
-        this.setTutorialState(2, categoryId, null, null);
-      } else {
-        this.setTutorialState(1, null, null, null);
-      }
-
-      // Scroll to tutorial engine container if navigating via link
-      const engineEl = document.getElementById('tutorials');
-      if (engineEl && parts.length > 1) {
-        engineEl.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      // Default to root Level 1 tutorial state
-      this.setTutorialState(1, null, null, null);
-    }
-  }
-
-  setTutorialState(level, categoryId, subcategoryId, guideId) {
-    this.tutorialState = { level, categoryId, subcategoryId, guideId };
-    this.renderBreadcrumbs();
-    this.renderTutorialView();
-  }
-
   navigateTutorialBack() {
     const { level, categoryId, subcategoryId } = this.tutorialState;
     if (level === 4) {
-      window.location.hash = `#tutorials/${categoryId}/${subcategoryId}`;
+      window.location.hash = `#/tutorials/${categoryId}/${subcategoryId}`;
     } else if (level === 3) {
-      window.location.hash = `#tutorials/${categoryId}`;
+      window.location.hash = `#/tutorials/${categoryId}`;
     } else if (level === 2) {
-      window.location.hash = `#tutorials`;
+      window.location.hash = `#/tutorials`;
     }
   }
 
-  /* ==========================================================================
-     HIERARCHICAL TUTORIAL ENGINE VIEW RENDERING
-     ========================================================================== */
-  renderBreadcrumbs() {
-    if (!this.breadcrumbsContainer) return;
+  renderTutorialBreadcrumbs() {
+    if (!this.tutorialBreadcrumbs) return;
     const { level, categoryId, subcategoryId, guideId } = this.tutorialState;
     const category = tutorialCategories.find(c => c.id === categoryId);
     const subcategory = category?.subcategories?.find(s => s.id === subcategoryId);
     const guide = subcategory?.guides?.find(g => g.id === guideId);
 
-    // Toggle Back button visibility
-    if (this.navBackBtn) {
-      this.navBackBtn.style.display = level > 1 ? 'inline-flex' : 'none';
+    if (this.tutorialBackBtn) {
+      this.tutorialBackBtn.style.display = level > 1 ? 'inline-flex' : 'none';
     }
 
     let crumbs = [
-      { label: 'Tutorials', hash: '#tutorials', active: level === 1 }
+      { label: 'Tutorials', hash: '#/tutorials', active: level === 1 }
     ];
 
     if (category && level >= 2) {
       crumbs.push({
         label: category.title,
-        hash: `#tutorials/${category.id}`,
+        hash: `#/tutorials/${category.id}`,
         active: level === 2
       });
     }
@@ -232,7 +325,7 @@ class App {
     if (subcategory && level >= 3) {
       crumbs.push({
         label: subcategory.title,
-        hash: `#tutorials/${category.id}/${subcategory.id}`,
+        hash: `#/tutorials/${category.id}/${subcategory.id}`,
         active: level === 3
       });
     }
@@ -240,18 +333,18 @@ class App {
     if (guide && level === 4) {
       crumbs.push({
         label: guide.title,
-        hash: `#tutorials/${category.id}/${subcategory.id}/${guide.id}`,
+        hash: `#/tutorials/${category.id}/${subcategory.id}/${guide.id}`,
         active: true
       });
     }
 
-    this.breadcrumbsContainer.innerHTML = crumbs.map((crumb, idx) => {
+    this.tutorialBreadcrumbs.innerHTML = crumbs.map((crumb, idx) => {
       const isLast = idx === crumbs.length - 1;
-      const separator = !isLast ? `<span class="breadcrumb-separator">/</span>` : '';
+      const sep = !isLast ? `<span class="breadcrumb-separator">/</span>` : '';
       if (crumb.active) {
-        return `<span class="breadcrumb-item active">${crumb.label}</span>${separator}`;
+        return `<span class="breadcrumb-item active">${crumb.label}</span>${sep}`;
       }
-      return `<a href="${crumb.hash}" class="breadcrumb-item">${crumb.label}</a>${separator}`;
+      return `<a href="${crumb.hash}" class="breadcrumb-item">${crumb.label}</a>${sep}`;
     }).join('');
   }
 
@@ -260,119 +353,85 @@ class App {
     const { level, categoryId, subcategoryId, guideId } = this.tutorialState;
 
     if (level === 1) {
-      this.renderLevel1Categories();
+      // Level 1: Categories
+      this.tutorialViewport.innerHTML = `
+        <div class="cards-grid">
+          ${tutorialCategories.map(cat => `
+            <a href="#/tutorials/${cat.id}" class="category-card">
+              <div class="category-icon">${cat.icon}</div>
+              <h3 class="category-title">${cat.title}</h3>
+              <p class="category-desc">${cat.summary}</p>
+              <div class="category-badge-count">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                ${cat.subcategories.length} Sub-categories & Guides &rarr;
+              </div>
+            </a>
+          `).join('')}
+        </div>
+      `;
     } else if (level === 2) {
-      this.renderLevel2Subcategories(categoryId);
+      // Level 2: Subcategories
+      const category = tutorialCategories.find(c => c.id === categoryId);
+      if (!category) return;
+      this.tutorialViewport.innerHTML = `
+        <div class="cards-grid">
+          ${category.subcategories.map(sub => `
+            <a href="#/tutorials/${category.id}/${sub.id}" class="category-card">
+              <h3 class="category-title">${sub.title}</h3>
+              <p class="category-desc">${sub.description}</p>
+              <div class="category-badge-count">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                ${sub.guides.length} Technical Guides &rarr;
+              </div>
+            </a>
+          `).join('')}
+        </div>
+      `;
     } else if (level === 3) {
-      this.renderLevel3GuidesList(categoryId, subcategoryId);
+      // Level 3: Guides List
+      const category = tutorialCategories.find(c => c.id === categoryId);
+      const subcategory = category?.subcategories?.find(s => s.id === subcategoryId);
+      if (!subcategory) return;
+
+      this.tutorialViewport.innerHTML = `
+        <div class="guides-list">
+          ${subcategory.guides.map(guide => `
+            <a href="#/tutorials/${category.id}/${subcategory.id}/${guide.id}" class="guide-list-item">
+              <div class="guide-info">
+                <h4 class="guide-item-title">${guide.title}</h4>
+                <p class="category-desc" style="margin: 0;">${guide.summary}</p>
+                <div class="guide-item-meta">
+                  <span class="difficulty-badge">${guide.difficulty}</span>
+                  <span>•</span>
+                  <span>${guide.readingTime}</span>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                Read Guide &rarr;
+              </span>
+            </a>
+          `).join('')}
+        </div>
+      `;
     } else if (level === 4) {
+      // Level 4: Full Reader
       this.renderLevel4GuideReader(categoryId, subcategoryId, guideId);
     }
   }
 
-  /**
-   * LEVEL 1: Main Category Cards
-   */
-  renderLevel1Categories() {
-    this.tutorialViewport.innerHTML = `
-      <div class="categories-grid">
-        ${tutorialCategories.map(cat => `
-          <div class="category-card" onclick="location.hash='#tutorials/${cat.id}'">
-            <div class="category-icon">${cat.icon}</div>
-            <h3 class="category-title">${cat.title}</h3>
-            <p class="category-desc">${cat.summary}</p>
-            <div class="category-badge-count">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-              ${cat.subcategories.length} Sub-categories & Guides &rarr;
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
-
-  /**
-   * LEVEL 2: Sub-Categories within Selected Category
-   */
-  renderLevel2Subcategories(categoryId) {
-    const category = tutorialCategories.find(c => c.id === categoryId);
-    if (!category) {
-      this.renderNotFound("Category not found");
-      return;
-    }
-
-    this.tutorialViewport.innerHTML = `
-      <div class="subcategories-grid">
-        ${category.subcategories.map(sub => `
-          <div class="category-card" onclick="location.hash='#tutorials/${category.id}/${sub.id}'">
-            <h3 class="category-title">${sub.title}</h3>
-            <p class="category-desc">${sub.description}</p>
-            <div class="category-badge-count">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              ${sub.guides.length} Technical Guides &rarr;
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
-
-  /**
-   * LEVEL 3: Guides List within Sub-Category
-   */
-  renderLevel3GuidesList(categoryId, subcategoryId) {
-    const category = tutorialCategories.find(c => c.id === categoryId);
-    const subcategory = category?.subcategories?.find(s => s.id === subcategoryId);
-    
-    if (!subcategory) {
-      this.renderNotFound("Sub-category not found");
-      return;
-    }
-
-    this.tutorialViewport.innerHTML = `
-      <div class="guides-list">
-        ${subcategory.guides.map(guide => `
-          <div class="guide-list-item" onclick="location.hash='#tutorials/${category.id}/${subcategory.id}/${guide.id}'">
-            <div class="guide-info">
-              <h4 class="guide-item-title">${guide.title}</h4>
-              <p class="category-desc" style="margin: 0;">${guide.summary}</p>
-              <div class="guide-item-meta">
-                <span class="difficulty-badge">${guide.difficulty}</span>
-                <span>•</span>
-                <span>${guide.readingTime}</span>
-              </div>
-            </div>
-            <span class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
-              Read Guide &rarr;
-            </span>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
-
-  /**
-   * LEVEL 4: Full Step-by-Step Tutorial Reader
-   */
   renderLevel4GuideReader(categoryId, subcategoryId, guideId) {
     const category = tutorialCategories.find(c => c.id === categoryId);
     const subcategory = category?.subcategories?.find(s => s.id === subcategoryId);
     const guide = subcategory?.guides?.find(g => g.id === guideId);
 
-    if (!guide) {
-      this.renderNotFound("Tutorial guide not found");
-      return;
-    }
+    if (!guide) return;
 
     let stepsHtml = guide.steps.map(step => {
       let calloutHtml = '';
       if (step.callout) {
         calloutHtml = `
           <div class="callout callout-${step.callout.type}">
-            <div class="callout-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-              ${step.callout.title}
-            </div>
+            <div class="callout-title">${step.callout.title}</div>
             <div class="callout-content">${step.callout.content}</div>
           </div>
         `;
@@ -384,11 +443,10 @@ class App {
         codeHtml = `
           <div class="code-block-container">
             <div class="code-block-header">
-              <span>${step.codeBlock.filename || 'Code Snippet'}</span>
+              <span>${step.codeBlock.filename || 'Snippet'}</span>
               <div style="display: flex; align-items: center; gap: 0.75rem;">
                 <span class="code-language-tag">${step.codeBlock.language}</span>
                 <button class="copy-code-btn" data-code="${encodeURIComponent(step.codeBlock.code)}">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                   Copy
                 </button>
               </div>
@@ -411,7 +469,7 @@ class App {
     this.tutorialViewport.innerHTML = `
       <article class="tutorial-reader">
         <header class="reader-header">
-          <div class="reader-meta-bar">
+          <div class="reader-meta-bar" style="margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.85rem;">
             <span class="difficulty-badge">${guide.difficulty}</span>
             <span>•</span>
             <span>${guide.readingTime}</span>
@@ -427,46 +485,19 @@ class App {
     `;
 
     // Attach copy button handlers
-    this.attachCopyHandlers();
-  }
-
-  attachCopyHandlers() {
     const copyButtons = this.tutorialViewport.querySelectorAll('.copy-code-btn');
     copyButtons.forEach(btn => {
       btn.addEventListener('click', async () => {
         const rawCode = decodeURIComponent(btn.getAttribute('data-code'));
         try {
           await navigator.clipboard.writeText(rawCode);
-          const originalText = btn.innerHTML;
-          btn.innerHTML = `
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            Copied!
-          `;
-          btn.classList.add('copied');
-          setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.classList.remove('copied');
-          }, 2000);
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
         } catch (err) {
-          console.error("Failed to copy code to clipboard: ", err);
+          console.error(err);
         }
       });
     });
-  }
-
-  renderNotFound(message) {
-    this.tutorialViewport.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-        </div>
-        <h3>${message}</h3>
-        <p>The requested guide or category could not be resolved in the data registry.</p>
-        <button class="btn btn-secondary" onclick="location.hash='#tutorials'" style="margin-top: 1rem;">
-          Return to All Tutorials
-        </button>
-      </div>
-    `;
   }
 
   escapeHtml(str) {
@@ -479,7 +510,7 @@ class App {
   }
 }
 
-// Bootstrap on DOM Ready
+// Start application
 document.addEventListener('DOMContentLoaded', () => {
   new App();
 });
