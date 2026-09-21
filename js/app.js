@@ -472,6 +472,7 @@ class App {
       </header>
       ${cardsHtml}
     `;
+  }
 
   /* ==========================================================================
      TUTORIALS EXPLORER (SIDEBAR + READER)
