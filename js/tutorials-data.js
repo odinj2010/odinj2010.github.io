@@ -71,7 +71,8 @@ export const projectTree = [
             status: "Active",
             description: "A clean, fast, and secure standalone desktop mod manager for Final Fantasy X / X-2 HD Remaster on Steam. Handles automated mod injection and profile switching.",
             tech: ["Python", "GUI Tooling", "Steam Modding"],
-            githubUrl: "https://github.com/odinj2010/FFX-Mod-Manager"
+            githubUrl: "https://github.com/odinj2010/FFX-Mod-Manager",
+            nexusUrl: "https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/327"
           },
           {
             id: "runebox",
@@ -116,12 +117,13 @@ export const projectTree = [
         projects: [
           {
             id: "ffviise-mod-loader",
-            title: "FFVIISE Mod Loader",
+            title: "Final Fantasy VII Mod Loader (2026 Re-release Steam Edition)",
             platform: "Final Fantasy VII",
             status: "Active",
             description: "A lightweight, portable, and high-performance native mod loader for the Final Fantasy VII Steam Edition re-release, bypassing third-party overhead.",
-            tech: ["C++", "Win32 API", "Game Hooks"],
+            tech: ["C++", "Win32 API", "Game Hooks", "Memory Injection"],
             githubUrl: "https://github.com/odinj2010/FFVIISE_Mod_Loader",
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7/mods/157",
             guideUrl: "#/tutorials/modding/loaders/ffviise-loader"
           }
         ]
@@ -154,16 +156,6 @@ export const projectTree = [
             curseforgeUrl: "https://www.curseforge.com/minecraft/mc-mods/sticky-resources"
           },
           {
-            id: "ffvii-161",
-            title: "7th Heaven to FFVIISE Mod Loader Converter Utility",
-            platform: "Final Fantasy VII",
-            game: "Final Fantasy VII",
-            status: "Active",
-            description: "Automated conversion tool enabling legacy 7th Heaven mod catalogs and IRO structures to run seamlessly on the native FFVIISE Mod Loader.",
-            tech: ["Python", "IRO Archives", "Conversion Tool"],
-            nexusUrl: "https://www.nexusmods.com/finalfantasy7/mods/161"
-          },
-          {
             id: "ffvii-159",
             title: "Final Fantasy VII Difficulty Mod (2026 Re-release Steam Edition)",
             platform: "Final Fantasy VII",
@@ -184,26 +176,6 @@ export const projectTree = [
             nexusUrl: "https://www.nexusmods.com/finalfantasy7/mods/158"
           },
           {
-            id: "ffvii-157",
-            title: "Final Fantasy VII Mod Loader (2026 Re-release Steam Edition)",
-            platform: "Final Fantasy VII",
-            game: "Final Fantasy VII",
-            status: "Active",
-            description: "Native DLL-based mod engine and memory injection loader targeting the modern Steam re-release of FFVII.",
-            tech: ["C++", "Memory Hook", "Win32 API"],
-            nexusUrl: "https://www.nexusmods.com/finalfantasy7/mods/157"
-          },
-          {
-            id: "ffx-327",
-            title: "Spira Mod Manager (Final Fantasy X and X-2 HD Remastered Mod Manager)",
-            platform: "Final Fantasy X/X-2 HD Remaster",
-            game: "Final Fantasy X / X-2",
-            status: "Active",
-            description: "Dedicated mod management tool enabling easy installation, conflict detection, profile switching, and order control for FFX and X-2 HD Remastered.",
-            tech: ["Mod Manager", "VFS Injection", "FFX/X-2"],
-            nexusUrl: "https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/327"
-          },
-          {
             id: "ffx-321",
             title: "Spiras Trials - Custom Difficulty and Rewards",
             platform: "Final Fantasy X/X-2 HD Remaster",
@@ -222,16 +194,6 @@ export const projectTree = [
             description: "Aesthetic localization rework adjusting spell tiers and battle abilities back to classic vintage naming nomenclature (Bolt/Bolt2/Bolt3, Fire/Fire2/Fire3).",
             tech: ["Text Rework", "Localization", "FFX/X-2"],
             nexusUrl: "https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/320"
-          },
-          {
-            id: "ffx-315",
-            title: "FFX Phyre Tool",
-            platform: "Final Fantasy X/X-2 HD Remaster",
-            game: "Final Fantasy X / X-2",
-            status: "Active",
-            description: "High-performance extractor and compiler for PhyreEngine binary model archives and textures, enabling custom 3D asset workflows and blender exports.",
-            tech: ["Python", "glTF 2.0", "PhyreEngine 3D"],
-            nexusUrl: "https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/315"
           },
           {
             id: "ff8-101",
@@ -431,22 +393,24 @@ export const projectTree = [
           },
           {
             id: "ffx-phyre-tool",
-            title: "FFX-Phyre-Tool (glTF 2.0)",
+            title: "FFX Phyre Tool",
             platform: "Final Fantasy X",
             status: "Active",
-            description: "Extract and repack 3D models and textures from Final Fantasy X/X-2 HD Remaster directly into the modern open glTF 2.0 standard for Blender workflows.",
+            description: "High-performance extractor and compiler for PhyreEngine binary model archives and textures directly into modern open glTF 2.0 standard for Blender workflows.",
             tech: ["Python", "glTF 2.0", "PhyreEngine 3D"],
             githubUrl: "https://github.com/odinj2010/FFX-Phyre-Tool",
+            nexusUrl: "https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/315",
             guideUrl: "#/tutorials/modding/tools/phyre-gltf-export"
           },
           {
             id: "7th-heaven-converter",
-            title: "7thHeavenToFFVIIModLoader",
+            title: "7th Heaven to FFVIISE Mod Loader Converter Utility",
             platform: "Final Fantasy VII",
             status: "Active",
-            description: "Automated archive extraction and manifest conversion utility translating legacy 7th Heaven .iro files into native unpacked folder structures.",
-            tech: ["Python", "IRO Archives", "Data Extraction"],
+            description: "Automated archive extraction and conversion utility translating legacy 7th Heaven .iro files into native unpacked folder structures for the FFVIISE Mod Loader.",
+            tech: ["Python", "IRO Archives", "Conversion Tool"],
             githubUrl: "https://github.com/odinj2010/7thHeavenToFFVIIModLoader",
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7/mods/161",
             guideUrl: "#/tutorials/modding/tools/7thheaven-migration"
           },
           {
