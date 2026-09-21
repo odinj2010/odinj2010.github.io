@@ -152,49 +152,264 @@ export const projectTree = [
             curseforgeUrl: "https://www.curseforge.com/minecraft/mc-mods/sticky-resources"
           },
           {
-            id: "ff7-nexus-mods",
-            title: "FFVII Nexus Mods",
+            id: "ffvii-161",
+            title: "7th Heaven to FFVIISE Mod Loader Converter Utility",
             platform: "Final Fantasy VII",
+            game: "Final Fantasy VII",
             status: "Active",
-            description: "Custom loaders, conversion tools, overlays, and difficulty rebalances for Final Fantasy VII (2026 Steam Edition).<br><br><b>Included Mods:</b><ul style='margin: 0.5rem 0 0 1.25rem; padding: 0;'><li><a href='https://www.nexusmods.com/finalfantasy7/mods/161' target='_blank' style='color: var(--accent);'>7th Heaven to FFVIISE Mod Loader Converter Utility</a></li><li><a href='https://www.nexusmods.com/finalfantasy7/mods/159' target='_blank' style='color: var(--accent);'>Final Fantasy VII Difficulty Mod (2026 Re-release Steam Edition)</a></li><li><a href='https://www.nexusmods.com/finalfantasy7/mods/158' target='_blank' style='color: var(--accent);'>Final Fantasy VII Mod Loader - Battle Overlay Plugin</a></li><li><a href='https://www.nexusmods.com/finalfantasy7/mods/157' target='_blank' style='color: var(--accent);'>Final Fantasy VII Mod Loader (2026 Re-release Steam Edition)</a></li></ul>",
-            tech: ["Game Mods", "Nexus Mods", "FFVII"],
-            nexusUrl: "https://www.nexusmods.com/profile/NfgOdin"
+            description: "Automated conversion tool enabling legacy 7th Heaven mod catalogs and IRO structures to run seamlessly on the native FFVIISE Mod Loader.",
+            tech: ["Python", "IRO Archives", "Conversion Tool"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7/mods/161"
           },
           {
-            id: "ffx-nexus-mods",
-            title: "FFX/X-2 HD Remaster Mods",
+            id: "ffvii-159",
+            title: "Final Fantasy VII Difficulty Mod (2026 Re-release Steam Edition)",
+            platform: "Final Fantasy VII",
+            game: "Final Fantasy VII",
+            status: "Active",
+            description: "Custom balance overhaul retuning encounter dynamics, enemy AI behaviors, and stats for the 2026 Steam re-release.",
+            tech: ["Game Balance", "Enemy AI", "FFVII Mod"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7/mods/159"
+          },
+          {
+            id: "ffvii-158",
+            title: "Final Fantasy VII Mod Loader - Battle Overlay Plugin",
+            platform: "Final Fantasy VII",
+            game: "Final Fantasy VII",
+            status: "Active",
+            description: "Real-time in-game battle telemetry and tactical statistics overlay rendered directly over active combat scenes.",
+            tech: ["C++", "DirectX Hook", "UI Overlay"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7/mods/158"
+          },
+          {
+            id: "ffvii-157",
+            title: "Final Fantasy VII Mod Loader (2026 Re-release Steam Edition)",
+            platform: "Final Fantasy VII",
+            game: "Final Fantasy VII",
+            status: "Active",
+            description: "Native DLL-based mod engine and memory injection loader targeting the modern Steam re-release of FFVII.",
+            tech: ["C++", "Memory Hook", "Win32 API"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7/mods/157"
+          },
+          {
+            id: "ffx-327",
+            title: "Final Fantasy X/X-2 HD Remaster Mod #327",
             platform: "Final Fantasy X/X-2 HD Remaster",
+            game: "Final Fantasy X / X-2",
             status: "Active",
-            description: "Custom enhancements and modifications for Final Fantasy X/X-2 HD Remaster on Nexus Mods.<br><br><b>Included Mods:</b><br><a href='https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/327' target='_blank' style='color: var(--accent);'>Mod #327</a> &bull; <a href='https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/321' target='_blank' style='color: var(--accent);'>Mod #321</a> &bull; <a href='https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/320' target='_blank' style='color: var(--accent);'>Mod #320</a> &bull; <a href='https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/315' target='_blank' style='color: var(--accent);'>Mod #315</a>",
-            tech: ["Game Mods", "Nexus Mods", "FFX/X-2"],
-            nexusUrl: "https://www.nexusmods.com/profile/NfgOdin"
+            description: "Custom enhancement and asset modification for Final Fantasy X/X-2 HD Remaster.",
+            tech: ["Game Mod", "FFX/X-2", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/327"
           },
           {
-            id: "ff8-nexus-mods",
-            title: "FFVIII Remastered Mods",
+            id: "ffx-321",
+            title: "Final Fantasy X/X-2 HD Remaster Mod #321",
+            platform: "Final Fantasy X/X-2 HD Remaster",
+            game: "Final Fantasy X / X-2",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy X/X-2 HD Remaster.",
+            tech: ["Game Mod", "FFX/X-2", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/321"
+          },
+          {
+            id: "ffx-320",
+            title: "Final Fantasy X/X-2 HD Remaster Mod #320",
+            platform: "Final Fantasy X/X-2 HD Remaster",
+            game: "Final Fantasy X / X-2",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy X/X-2 HD Remaster.",
+            tech: ["Game Mod", "FFX/X-2", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/320"
+          },
+          {
+            id: "ffx-315",
+            title: "Final Fantasy X/X-2 HD Remaster Mod #315",
+            platform: "Final Fantasy X/X-2 HD Remaster",
+            game: "Final Fantasy X / X-2",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy X/X-2 HD Remaster.",
+            tech: ["Game Mod", "FFX/X-2", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/315"
+          },
+          {
+            id: "ff8-101",
+            title: "Final Fantasy VIII Remastered Mod #101",
             platform: "Final Fantasy VIII Remastered",
+            game: "Final Fantasy VIII",
             status: "Active",
-            description: "Custom enhancements and modifications for Final Fantasy VIII Remastered.<br><br><b>Included Mods:</b><br><a href='https://www.nexusmods.com/finalfantasy8remastered/mods/101' target='_blank' style='color: var(--accent);'>Mod #101</a> &bull; <a href='https://www.nexusmods.com/finalfantasy8remastered/mods/100' target='_blank' style='color: var(--accent);'>Mod #100</a> &bull; <a href='https://www.nexusmods.com/finalfantasy8remastered/mods/99' target='_blank' style='color: var(--accent);'>Mod #99</a> &bull; <a href='https://www.nexusmods.com/finalfantasy8remastered/mods/98' target='_blank' style='color: var(--accent);'>Mod #98</a> &bull; <a href='https://www.nexusmods.com/finalfantasy8remastered/mods/97' target='_blank' style='color: var(--accent);'>Mod #97</a> &bull; <a href='https://www.nexusmods.com/finalfantasy8remastered/mods/96' target='_blank' style='color: var(--accent);'>Mod #96</a> &bull; <a href='https://www.nexusmods.com/finalfantasy8remastered/mods/95' target='_blank' style='color: var(--accent);'>Mod #95</a>",
-            tech: ["Game Mods", "Nexus Mods", "FFVIII"],
-            nexusUrl: "https://www.nexusmods.com/profile/NfgOdin"
+            description: "Custom enhancement and asset modification for Final Fantasy VIII Remastered.",
+            tech: ["Game Mod", "FFVIII Remastered", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy8remastered/mods/101"
           },
           {
-            id: "skyrim-nexus-mods",
-            title: "Skyrim SE Mods",
+            id: "ff8-100",
+            title: "Final Fantasy VIII Remastered Mod #100",
+            platform: "Final Fantasy VIII Remastered",
+            game: "Final Fantasy VIII",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VIII Remastered.",
+            tech: ["Game Mod", "FFVIII Remastered", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy8remastered/mods/100"
+          },
+          {
+            id: "ff8-99",
+            title: "Final Fantasy VIII Remastered Mod #99",
+            platform: "Final Fantasy VIII Remastered",
+            game: "Final Fantasy VIII",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VIII Remastered.",
+            tech: ["Game Mod", "FFVIII Remastered", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy8remastered/mods/99"
+          },
+          {
+            id: "ff8-98",
+            title: "Final Fantasy VIII Remastered Mod #98",
+            platform: "Final Fantasy VIII Remastered",
+            game: "Final Fantasy VIII",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VIII Remastered.",
+            tech: ["Game Mod", "FFVIII Remastered", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy8remastered/mods/98"
+          },
+          {
+            id: "ff8-97",
+            title: "Final Fantasy VIII Remastered Mod #97",
+            platform: "Final Fantasy VIII Remastered",
+            game: "Final Fantasy VIII",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VIII Remastered.",
+            tech: ["Game Mod", "FFVIII Remastered", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy8remastered/mods/97"
+          },
+          {
+            id: "ff8-96",
+            title: "Final Fantasy VIII Remastered Mod #96",
+            platform: "Final Fantasy VIII Remastered",
+            game: "Final Fantasy VIII",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VIII Remastered.",
+            tech: ["Game Mod", "FFVIII Remastered", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy8remastered/mods/96"
+          },
+          {
+            id: "ff8-95",
+            title: "Final Fantasy VIII Remastered Mod #95",
+            platform: "Final Fantasy VIII Remastered",
+            game: "Final Fantasy VIII",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VIII Remastered.",
+            tech: ["Game Mod", "FFVIII Remastered", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy8remastered/mods/95"
+          },
+          {
+            id: "skyrim-158649",
+            title: "Skyrim Special Edition Mod #158649",
             platform: "Skyrim SE",
+            game: "Skyrim SE",
             status: "Active",
-            description: "Custom enhancements for The Elder Scrolls V: Skyrim Special Edition.<br><br><b>Included Mods:</b><br><a href='https://www.nexusmods.com/skyrimspecialedition/mods/158649' target='_blank' style='color: var(--accent);'>Mod #158649</a>",
-            tech: ["Game Mods", "Nexus Mods", "Skyrim SE"],
-            nexusUrl: "https://www.nexusmods.com/profile/NfgOdin"
+            description: "Custom enhancement and modification for The Elder Scrolls V: Skyrim Special Edition.",
+            tech: ["Game Mod", "Skyrim SE", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/skyrimspecialedition/mods/158649"
           },
           {
-            id: "ff7r-nexus-mods",
-            title: "FFVII Remake Mods",
+            id: "ff7r-1429",
+            title: "Final Fantasy VII Remake Mod #1429",
             platform: "Final Fantasy VII Remake",
+            game: "Final Fantasy VII Remake",
             status: "Active",
-            description: "An extensive collection of custom modifications for Final Fantasy VII Remake.<br><br><b>Included Mods:</b><br><a href='https://www.nexusmods.com/finalfantasy7remake/mods/1429' target='_blank' style='color: var(--accent);'>Mod #1429</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1426' target='_blank' style='color: var(--accent);'>Mod #1426</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1425' target='_blank' style='color: var(--accent);'>Mod #1425</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1424' target='_blank' style='color: var(--accent);'>Mod #1424</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1423' target='_blank' style='color: var(--accent);'>Mod #1423</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1421' target='_blank' style='color: var(--accent);'>Mod #1421</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1420' target='_blank' style='color: var(--accent);'>Mod #1420</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1419' target='_blank' style='color: var(--accent);'>Mod #1419</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1417' target='_blank' style='color: var(--accent);'>Mod #1417</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1415' target='_blank' style='color: var(--accent);'>Mod #1415</a>",
-            tech: ["Game Mods", "Nexus Mods", "FFVII Remake"],
-            nexusUrl: "https://www.nexusmods.com/profile/NfgOdin"
+            description: "Custom enhancement and asset modification for Final Fantasy VII Remake.",
+            tech: ["Game Mod", "FFVII Remake", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7remake/mods/1429"
+          },
+          {
+            id: "ff7r-1426",
+            title: "Final Fantasy VII Remake Mod #1426",
+            platform: "Final Fantasy VII Remake",
+            game: "Final Fantasy VII Remake",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VII Remake.",
+            tech: ["Game Mod", "FFVII Remake", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7remake/mods/1426"
+          },
+          {
+            id: "ff7r-1425",
+            title: "Final Fantasy VII Remake Mod #1425",
+            platform: "Final Fantasy VII Remake",
+            game: "Final Fantasy VII Remake",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VII Remake.",
+            tech: ["Game Mod", "FFVII Remake", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7remake/mods/1425"
+          },
+          {
+            id: "ff7r-1424",
+            title: "Final Fantasy VII Remake Mod #1424",
+            platform: "Final Fantasy VII Remake",
+            game: "Final Fantasy VII Remake",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VII Remake.",
+            tech: ["Game Mod", "FFVII Remake", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7remake/mods/1424"
+          },
+          {
+            id: "ff7r-1423",
+            title: "Final Fantasy VII Remake Mod #1423",
+            platform: "Final Fantasy VII Remake",
+            game: "Final Fantasy VII Remake",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VII Remake.",
+            tech: ["Game Mod", "FFVII Remake", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7remake/mods/1423"
+          },
+          {
+            id: "ff7r-1421",
+            title: "Final Fantasy VII Remake Mod #1421",
+            platform: "Final Fantasy VII Remake",
+            game: "Final Fantasy VII Remake",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VII Remake.",
+            tech: ["Game Mod", "FFVII Remake", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7remake/mods/1421"
+          },
+          {
+            id: "ff7r-1420",
+            title: "Final Fantasy VII Remake Mod #1420",
+            platform: "Final Fantasy VII Remake",
+            game: "Final Fantasy VII Remake",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VII Remake.",
+            tech: ["Game Mod", "FFVII Remake", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7remake/mods/1420"
+          },
+          {
+            id: "ff7r-1419",
+            title: "Final Fantasy VII Remake Mod #1419",
+            platform: "Final Fantasy VII Remake",
+            game: "Final Fantasy VII Remake",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VII Remake.",
+            tech: ["Game Mod", "FFVII Remake", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7remake/mods/1419"
+          },
+          {
+            id: "ff7r-1417",
+            title: "Final Fantasy VII Remake Mod #1417",
+            platform: "Final Fantasy VII Remake",
+            game: "Final Fantasy VII Remake",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VII Remake.",
+            tech: ["Game Mod", "FFVII Remake", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7remake/mods/1417"
+          },
+          {
+            id: "ff7r-1415",
+            title: "Final Fantasy VII Remake Mod #1415",
+            platform: "Final Fantasy VII Remake",
+            game: "Final Fantasy VII Remake",
+            status: "Active",
+            description: "Custom enhancement and asset modification for Final Fantasy VII Remake.",
+            tech: ["Game Mod", "FFVII Remake", "Nexus Mods"],
+            nexusUrl: "https://www.nexusmods.com/finalfantasy7remake/mods/1415"
           }
         ]
       },
