@@ -26,6 +26,7 @@ class App {
       categoryId: null,
       subcategoryId: null,
       guideId: null,
+      activePlatform: 'All', // 'All' or platform filter
       searchQuery: ''
     };
 
@@ -522,9 +523,63 @@ class App {
     }).join('');
   }
 
+  // Helper to gather all guides under the currently active tutorial category/subcategory
+  getCurrentScopeGuides() {
+    const { categoryId, subcategoryId } = this.tutorialState;
+    let guides = [];
+
+    if (categoryId) {
+      const category = tutorialTree.find(c => c.id === categoryId);
+      if (category) {
+        if (subcategoryId) {
+          const sub = category.subcategories.find(s => s.id === subcategoryId);
+          if (sub) {
+            guides = sub.guides.map(g => ({ ...g, catId: category.id, subId: sub.id }));
+          }
+        } else {
+          category.subcategories.forEach(sub => {
+            guides.push(...sub.guides.map(g => ({ ...g, catId: category.id, subId: sub.id })));
+          });
+        }
+      }
+    } else {
+      tutorialTree.forEach(cat => {
+        cat.subcategories.forEach(sub => {
+          guides.push(...sub.guides.map(g => ({ ...g, catId: cat.id, subId: sub.id })));
+        });
+      });
+    }
+    return guides;
+  }
+
   renderTutorialSidebar() {
     if (!this.tutorialSidebar) return;
-    const { categoryId, subcategoryId, guideId } = this.tutorialState;
+    const { categoryId, subcategoryId, guideId, activePlatform } = this.tutorialState;
+
+    // Gather available platforms within current tutorial scope
+    const currentGuides = this.getCurrentScopeGuides();
+    const platformsSet = new Set();
+    currentGuides.forEach(g => {
+      const plat = g.platform || g.game;
+      if (plat) platformsSet.add(plat);
+    });
+    const availablePlatforms = ['All', ...Array.from(platformsSet)];
+
+    // Reset if active platform is not available in new category scope
+    if (activePlatform !== 'All' && !platformsSet.has(activePlatform)) {
+      this.tutorialState.activePlatform = 'All';
+    }
+
+    const platformPillsHtml = availablePlatforms.length > 2 ? `
+      <div class="sidebar-heading" style="margin-top: 0.85rem;">Platform / Game</div>
+      <div class="sidebar-platform-group">
+        ${availablePlatforms.map(plat => `
+          <button type="button" class="sidebar-platform-btn ${plat === this.tutorialState.activePlatform ? 'active' : ''}" data-platform="${plat}">
+            <span>${plat === 'All' ? 'All Platforms' : plat}</span>
+          </button>
+        `).join('')}
+      </div>
+    ` : '';
 
     this.tutorialSidebar.innerHTML = `
       <div class="sidebar-heading">Navigation</div>
@@ -537,7 +592,9 @@ class App {
         </a>
       </div>
 
-      <div class="sidebar-heading" style="margin-top: 0.75rem;">Categories</div>
+      ${platformPillsHtml}
+
+      <div class="sidebar-heading" style="margin-top: 0.85rem;">Categories</div>
       <div class="sidebar-nav-group">
         ${tutorialTree.map(cat => {
           const isCurrentCat = categoryId === cat.id;
@@ -566,11 +623,20 @@ class App {
         }).join('')}
       </div>
     `;
+
+    // Attach click listeners to sidebar platform buttons
+    this.tutorialSidebar.querySelectorAll('.sidebar-platform-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.tutorialState.activePlatform = btn.getAttribute('data-platform');
+        this.renderTutorialSidebar();
+        this.renderTutorialContent();
+      });
+    });
   }
 
   renderTutorialContent() {
     if (!this.tutorialViewport) return;
-    const { categoryId, subcategoryId, guideId, searchQuery } = this.tutorialState;
+    const { categoryId, subcategoryId, guideId, activePlatform, searchQuery } = this.tutorialState;
 
     // Full Guide Reader
     if (guideId && categoryId && subcategoryId) {
@@ -613,6 +679,12 @@ class App {
       });
     }
 
+    // Filter by Platform
+    if (activePlatform && activePlatform !== 'All') {
+      allGuides = allGuides.filter(g => (g.platform || g.game) === activePlatform);
+    }
+
+    // Filter by Search Query
     if (searchQuery) {
       allGuides = allGuides.filter(g => 
         g.title.toLowerCase().includes(searchQuery) ||
@@ -625,31 +697,34 @@ class App {
       guidesListHtml = `
         <div class="empty-state">
           <h3>No matching tutorials found</h3>
-          <p>Try searching for a different guide.</p>
+          <p>Try selecting "All Platforms" or clearing your search term.</p>
         </div>
       `;
     } else {
       guidesListHtml = `
         <div class="guides-list">
-          ${allGuides.map(guide => `
-            <a href="#/tutorials/${guide.catId}/${guide.subId}/${guide.id}" class="guide-list-item">
-              <div class="guide-info">
-                <div style="display: flex; align-items: center; gap: 0.6rem;">
-                  <h4 class="guide-item-title">${guide.title}</h4>
-                  ${guide.game ? `<span class="filter-game-badge">${guide.game}</span>` : ''}
+          ${allGuides.map(guide => {
+            const platformTag = guide.platform || guide.game;
+            return `
+              <a href="#/tutorials/${guide.catId}/${guide.subId}/${guide.id}" class="guide-list-item">
+                <div class="guide-info">
+                  <div style="display: flex; align-items: center; gap: 0.6rem;">
+                    <h4 class="guide-item-title">${guide.title}</h4>
+                    ${platformTag ? `<span class="filter-game-badge">${platformTag}</span>` : ''}
+                  </div>
+                  <p class="category-desc" style="margin: 0.25rem 0 0;">${guide.summary}</p>
+                  <div class="guide-item-meta">
+                    <span class="difficulty-badge">${guide.difficulty}</span>
+                    <span>•</span>
+                    <span>${guide.readingTime}</span>
+                  </div>
                 </div>
-                <p class="category-desc" style="margin: 0.25rem 0 0;">${guide.summary}</p>
-                <div class="guide-item-meta">
-                  <span class="difficulty-badge">${guide.difficulty}</span>
-                  <span>•</span>
-                  <span>${guide.readingTime}</span>
-                </div>
-              </div>
-              <span class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
-                Read &rarr;
-              </span>
-            </a>
-          `).join('')}
+                <span class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                  Read &rarr;
+                </span>
+              </a>
+            `;
+          }).join('')}
         </div>
       `;
     }
@@ -704,11 +779,13 @@ class App {
       `;
     }).join('');
 
+    const platformTag = guide.platform || guide.game;
+
     this.tutorialViewport.innerHTML = `
       <article class="tutorial-reader">
         <header class="reader-header">
           <div class="reader-meta-bar" style="margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.85rem;">
-            ${guide.game ? `<span class="filter-game-badge" style="margin-right: 0.5rem;">${guide.game}</span>` : ''}
+            ${platformTag ? `<span class="filter-game-badge" style="margin-right: 0.5rem;">${platformTag}</span>` : ''}
             <span class="difficulty-badge">${guide.difficulty}</span>
             <span>•</span>
             <span>${guide.readingTime}</span>
