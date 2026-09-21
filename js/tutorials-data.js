@@ -181,15 +181,48 @@ export const projectCategories = [
  */
 export const tutorialCategories = [
   {
-    id: "game-modding",
-    title: "Final Fantasy Modding & Tools",
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 2 18 2 18 6 6 6 6 2"/><rect width="20" height="14" x="2" y="6" rx="2"/><line x1="6" x2="6.01" y1="13" y2="13"/><line x1="10" x2="10.01" y1="13" y2="13"/><line x1="15" x2="19" y1="12" y2="12"/><line x1="17" x2="17" y1="10" y2="14"/></svg>`,
-    summary: "Practical guides and technical documentation for FFVIISE Mod Loader, FFX Phyre 3D models, and 7th Heaven conversions.",
+    id: "software",
+    title: "Software",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>`,
+    summary: "Guides for desktop software, acoustics CAD, and Raspberry Pi system setup.",
+    subcategories: [
+      {
+        id: "runebox-cad",
+        title: "RuneBox Acoustics Lab",
+        description: "Designing high-precision subwoofer enclosures, port tuning, and wiring configurations.",
+        guides: [
+          {
+            id: "enclosure-tuning",
+            title: "Simulating Port Velocity & Box Volume in RuneBox",
+            readingTime: "8 min read",
+            difficulty: "Intermediate",
+            summary: "Learn how RuneBox calculates acoustic compliance, port resonant frequencies, and generates fabrication cut sheets.",
+            steps: [
+              {
+                title: "1. The Mathematics of Enclosure Tuning",
+                description: "Subwoofer box design requires balancing net internal volume, driver displacement, and port resonance to avoid turbulence and achieve optimal frequency response curves.",
+                callout: {
+                  type: "tip",
+                  title: "Acoustic Modeling",
+                  content: "RuneBox computes pure 3D vector visualizations alongside Thiele/Small parameter response curves."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "loaders",
+    title: "Loaders",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+    summary: "Walkthroughs for native memory hook loaders and executable patchers.",
     subcategories: [
       {
         id: "ffvii-steam",
-        title: "Final Fantasy VII Steam Edition",
-        description: "Official guides for deploying the native C++ FFVIISE mod loader and converting legacy IRO packages.",
+        title: "FFVIISE Mod Loader",
+        description: "Official guides for deploying the native C++ FFVIISE mod loader in Final Fantasy VII Steam Edition.",
         guides: [
           {
             id: "ffviise-loader",
@@ -224,7 +257,54 @@ export const tutorialCategories = [
                 description: "Drop your extracted mod folders into the newly created <code>mods</code> directory. You can use 7thHeavenToFFVIIModLoader to convert existing .iro archives."
               }
             ]
-          },
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "mods",
+    title: "Mods",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 2 18 2 18 6 6 6 6 2"/><rect width="20" height="14" x="2" y="6" rx="2"/><line x1="6" x2="6.01" y1="13" y2="13"/><line x1="10" x2="10.01" y1="13" y2="13"/><line x1="15" x2="19" y1="12" y2="12"/><line x1="17" x2="17" y1="10" y2="14"/></svg>`,
+    summary: "Installation and configuration guides for gameplay mods and sandbox mechanics.",
+    subcategories: [
+      {
+        id: "riftlink-setup",
+        title: "RiftLink Mod Setup",
+        description: "Configuring NeoForge 1.21.1 and installing RiftLink dimensional mechanics.",
+        guides: [
+          {
+            id: "installing-riftlink",
+            title: "Installing RiftLink on NeoForge",
+            readingTime: "4 min read",
+            difficulty: "Beginner",
+            summary: "Quick guide to adding RiftLink to your NeoForge Minecraft profile.",
+            steps: [
+              {
+                title: "1. Prerequisites",
+                description: "Ensure you have Minecraft 1.21.1 and the compatible NeoForge loader installed in your launcher."
+              },
+              {
+                title: "2. Placing the Mod",
+                description: "Drop the downloaded RiftLink `.jar` file directly into your `.minecraft/mods` directory."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "tools",
+    title: "Tools",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+    summary: "Step-by-step guides for asset extractors, 3D glTF converters, and archive tools.",
+    subcategories: [
+      {
+        id: "7th-heaven-conversion",
+        title: "7thHeavenToFFVIIModLoader",
+        description: "Converting classic 7th Heaven .iro packages into unpacked folder structures.",
+        guides: [
           {
             id: "7thheaven-migration",
             title: "Converting IRO Mods with 7thHeavenToFFVIIModLoader",
@@ -257,8 +337,8 @@ python convert.py --input "path/to/mod.iro" --output "path/to/mods/ExtractedMod"
       },
       {
         id: "ffx-modding",
-        title: "Final Fantasy X / X-2 HD Remaster",
-        description: "Tools for extracting, managing, and exporting 3D assets to glTF 2.0.",
+        title: "FFX-Phyre-Tool",
+        description: "Extracting, managing, and exporting 3D models and textures to glTF 2.0.",
         guides: [
           {
             id: "phyre-gltf-export",
@@ -285,31 +365,26 @@ python phyre_tool.py --extract "model.phyre" --out "exported_model.gltf"`
     ]
   },
   {
-    id: "audio-engineering",
-    title: "Audio Engineering & Hardware CAD",
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
-    summary: "Acoustics modeling, subwoofer enclosure CAD design, and hardware interfacing.",
+    id: "ai",
+    title: "AI",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
+    summary: "Reinforcement learning workflows, local model execution, and AI tooling guides.",
     subcategories: [
       {
-        id: "runebox-cad",
-        title: "RuneBox Acoustics Lab",
-        description: "Designing high-precision subwoofer enclosures, port tuning, and wiring configurations.",
+        id: "rl-gameboy",
+        title: "Pokemon Yellow HRL Framework",
+        description: "Training autonomous reinforcement learning agents in Game Boy emulated environments.",
         guides: [
           {
-            id: "enclosure-tuning",
-            title: "Simulating Port Velocity & Box Volume in RuneBox",
-            readingTime: "8 min read",
+            id: "hrl-environment-setup",
+            title: "Setting Up the Pokemon Yellow Gym Environment",
+            readingTime: "7 min read",
             difficulty: "Intermediate",
-            summary: "Learn how RuneBox calculates acoustic compliance, port resonant frequencies, and generates fabrication cut sheets.",
+            summary: "Configuring the emulator interface and reward functions for hierarchical RL training.",
             steps: [
               {
-                title: "1. The Mathematics of Enclosure Tuning",
-                description: "Subwoofer box design requires balancing net internal volume, driver displacement, and port resonance to avoid turbulence and achieve optimal frequency response curves.",
-                callout: {
-                  type: "tip",
-                  title: "Acoustic Modeling",
-                  content: "RuneBox computes pure 3D vector visualizations alongside Thiele/Small parameter response curves."
-                }
+                title: "1. Emulation Bridge",
+                description: "The agent interfaces with the Game Boy memory bus using Python hooks to read game state, battle status, and player coordinates directly."
               }
             ]
           }
