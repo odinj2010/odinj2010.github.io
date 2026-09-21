@@ -1,105 +1,42 @@
-# OdinJ.dev // Flagship Ecosystem & Tutorial Hub
+# Jonathan Roberts (NfgOdin) // NFG Main Ecosystem
 
-Modern, high-performance static website and hierarchical knowledge base built with vanilla HTML5, CSS3, and modern ES6+ JavaScript. Designed for zero-dependency hosting on GitHub Pages at [https://odinj2010.github.io](https://odinj2010.github.io).
-
----
-
-## 🌟 Key Features
-
-1. **Modern Dark Aesthetic**:
-   - Palette: `#0d1117`, `#161b22`, border `#30363d`, with subtle cyan/purple ambient glows (`#58a6ff`, `#bc8cff`).
-   - Glassmorphic card elevations with smooth hover transitions and clean typography.
-   - Fully responsive design scaling across mobile devices up to 4K displays.
-
-2. **Projects & Achievements Showcase**:
-   - Interactive live category filtering (`Active Projects`, `Completed`, `Game Modding`, `Audio / Hardware`, `Tools`).
-   - Real-time search query filtering across titles, descriptions, and tech stacks.
-   - Status badges (`Released`, `Beta`, `Alpha`, `In Development`) with direct links to repositories and tutorials.
-
-3. **Hierarchical Tutorial Engine (Deep Nested Drill-Down)**:
-   - **Level 1 (Main Category)**: Game Modding, Audio & Hardware Engineering, Developer Tools.
-   - **Level 2 (Sub-Category)**: e.g. Final Fantasy VII 2026 Steam Edition, Real-Time Audio DSP, etc.
-   - **Level 3 (Guides List)**: Browse guides with metadata (reading time, difficulty ratings).
-   - **Level 4 (Full Guide Reader)**: Dynamic step-by-step rendering with copyable code snippets, syntax containers, and alert callouts (`[!NOTE]`, `[!TIP]`, `[!WARNING]`).
-   - **Dynamic Breadcrumb Navigation**: Seamless deep linking with URL hash routes (e.g., `#tutorials/game-modding/ffvii-steam/installing-mod-loader`).
+Personal portfolio, open-source project showcase, and technical tutorial hub for **Jonathan Roberts** (`NfgOdin` / `NFG`), deployed to GitHub Pages at [https://odinj2010.github.io](https://odinj2010.github.io).
 
 ---
 
-## 📁 Project File Structure
+## 🎮 About Jonathan Roberts
+- **Alias / Handle**: NfgOdin (NFG)
+- **Background**: Lifelong technologist who brought his first computer to life at age 13 after salvaging an abandoned desktop from the desert wilderness and getting it running on Windows 98.
+- **Interests**: RPGs (beat Final Fantasy VII on PS1 in 1998/1999), MMORPGs, hardware customization, game modding, acoustics/subwoofer CAD modeling, and machine learning.
+- **Education & Credentials**:
+  - College coursework in Java and C# programming
+  - Cisco Networking Certification (College coursework in high school)
+  - Google Cybersecurity certifications
 
-```text
-.
-├── index.html              # Core single-page semantic layout
-├── styles.css              # Dark aesthetic, glassmorphism, responsive CSS
-├── js/
-│   ├── tutorials-data.js   # Extensible data hierarchy for projects & tutorials
-│   └── app.js              # Routing, breadcrumbs, search, and copy triggers
-├── README.md               # Architecture documentation
-└── .antigravity/
-    └── AGENTS.md           # Engineering specifications
+---
+
+## 🛠️ Authentic Featured Projects
+All featured projects directly map to active public repositories on GitHub:
+
+- **[FFVIISE_Mod_Loader](https://github.com/odinj2010/FFVIISE_Mod_Loader)**: Lightweight, high-performance C++ mod loader for the Final Fantasy VII Steam Edition.
+- **[7thHeavenToFFVIIModLoader](https://github.com/odinj2010/7thHeavenToFFVIIModLoader)**: Python tool converting legacy 7th Heaven `.iro` mod archives into native unpacked directory structures.
+- **[FFX-Mod-Manager](https://github.com/odinj2010/FFX-Mod-Manager)**: Standalone mod manager for Final Fantasy X / X-2 HD Remaster on Steam.
+- **[FFX-Phyre-Tool](https://github.com/odinj2010/FFX-Phyre-Tool)**: Extracting and repacking 3D models and textures for FFX/X-2 HD using the glTF 2.0 open standard.
+- **[RuneBox](https://github.com/odinj2010/RuneBox)**: Commercial-grade car audio subwoofer enclosure CAD and acoustics simulation laboratory with 3D vector visualization.
+- **[RiftLink](https://github.com/odinj2010/RiftLink)**: Minecraft 1.21.1 mod built on the NeoForge mod loader.
+- **[PokemonYellow-HRL-AI](https://github.com/odinj2010/PokemonYellow-HRL-AI)**: Hierarchical Reinforcement Learning framework training an AI agent to beat Pokémon Yellow.
+- **[SBC-Core](https://github.com/odinj2010/SBC-Core)**: Raspberry Pi 5 core utility and hardware control system.
+
+---
+
+## 🚀 Adding New Projects or Guides
+
+To add or modify projects and guides, edit [js/tutorials-data.js](file:///c:/Users/jonat/Documents/Antigravity%20Projects/Nfg_Website/js/tutorials-data.js).
+
+### Deployment
+To push updates live to your GitHub Pages site:
+```bash
+git add .
+git commit -m "feat: content updates"
+git push origin main
 ```
-
----
-
-## 🚀 Adding New Projects or Tutorials
-
-All project and tutorial data is centralized in `js/tutorials-data.js`.
-
-### Adding a Project:
-Add an entry to `projectsData`:
-```javascript
-{
-  id: "my-new-project",
-  title: "Project Name",
-  category: "Game Modding", // Must match one of projectFilterTags
-  status: "Released",        // Alpha | Beta | Released | In Development
-  description: "Brief overview of what this project does.",
-  tech: ["C++20", "DirectX"],
-  githubUrl: "https://github.com/odinj2010/my-new-project"
-}
-```
-
-### Adding a Tutorial:
-In `tutorialCategories`, locate or create a main category and subcategory, then append to `guides`:
-```javascript
-{
-  id: "my-custom-guide",
-  title: "Guide Title",
-  readingTime: "5 min read",
-  difficulty: "Intermediate",
-  summary: "Summary of the tutorial.",
-  steps: [
-    {
-      title: "1. Getting Started",
-      description: "Step details with <code>inline code</code>.",
-      codeBlock: {
-        language: "bash",
-        filename: "script.sh",
-        code: "echo 'Hello World'"
-      },
-      callout: {
-        type: "tip", // note | tip | warning
-        title: "Helpful Hint",
-        content: "Callout explanation."
-      }
-    }
-  ]
-}
-```
-
----
-
-## 🌐 Deploying to GitHub Pages
-
-1. Push your changes to the `main` branch:
-   ```bash
-   git add .
-   git commit -m "feat: updates to website content"
-   git push origin main
-   ```
-2. In GitHub, navigate to **Settings** $\rightarrow$ **Pages**.
-3. Under **Build and deployment**:
-   - **Source**: `Deploy from a branch`
-   - **Branch**: `main`
-   - **Folder**: `/ (root)`
-4. Save. GitHub Pages will build and serve your site at `https://odinj2010.github.io`.
