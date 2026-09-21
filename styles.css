@@ -670,29 +670,42 @@ body {
   background: var(--bg-tertiary);
 }
 
-.sidebar-platform-btn.active {
-  background: rgba(88, 166, 255, 0.18);
-  border-color: var(--accent-blue);
-  color: var(--accent-blue);
+.sidebar-platform-btn.state-include {
+  background: rgba(46, 160, 67, 0.18);
+  border-color: #3fb950;
+  color: #3fb950;
   font-weight: 700;
 }
 
-.sidebar-platform-btn.active[data-platform="nexus"] {
-  background: rgba(218, 142, 53, 0.18);
+.sidebar-platform-btn.state-include[data-platform="nexus"] {
+  background: rgba(218, 142, 53, 0.2);
   border-color: #da8e35;
   color: #da8e35;
 }
 
-.sidebar-platform-btn.active[data-platform="curseforge"] {
-  background: rgba(241, 100, 54, 0.18);
+.sidebar-platform-btn.state-include[data-platform="curseforge"] {
+  background: rgba(241, 100, 54, 0.2);
   border-color: #f16436;
   color: #f16436;
 }
 
-.sidebar-platform-btn.active[data-platform="github"] {
-  background: rgba(240, 246, 252, 0.15);
+.sidebar-platform-btn.state-include[data-platform="github"] {
+  background: rgba(240, 246, 252, 0.18);
   border-color: var(--text-primary);
   color: var(--text-primary);
+}
+
+.sidebar-platform-btn.state-exclude {
+  background: rgba(248, 81, 73, 0.18);
+  border-color: #f85149;
+  color: #f85149;
+  font-weight: 700;
+}
+
+.filter-state-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.15rem;
 }
 
 .sidebar-sub-list.open {

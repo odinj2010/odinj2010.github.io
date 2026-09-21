@@ -65,16 +65,6 @@ export const projectTree = [
         description: "Standalone GUI software and engineering workstations.",
         projects: [
           {
-            id: "ffx-mod-manager",
-            title: "Spira Mod Manager (Final Fantasy X and X-2 HD Remastered Mod Manager)",
-            platform: "Final Fantasy X",
-            status: "Active",
-            description: "A clean, fast, and secure standalone desktop mod manager for Final Fantasy X / X-2 HD Remaster on Steam. Handles automated mod injection and profile switching.",
-            tech: ["Python", "GUI Tooling", "Steam Modding"],
-            githubUrl: "https://github.com/odinj2010/FFX-Mod-Manager",
-            nexusUrl: "https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/327"
-          },
-          {
             id: "runebox",
             title: "RuneBox - Audio CAD & Acoustics Lab",
             platform: "Audio CAD",
@@ -383,6 +373,16 @@ export const projectTree = [
         description: "Custom unpackers, 3D glTF extractors, and game data editors built to author mods.",
         projects: [
           {
+            id: "spira-mod-manager",
+            title: "Spira Mod Manager (Final Fantasy X and X-2 HD Remastered Mod Manager)",
+            platform: "Final Fantasy X",
+            status: "Active",
+            description: "Dedicated mod management tool enabling easy installation, conflict detection, profile switching, and order control for FFX and X-2 HD Remastered.",
+            tech: ["Python", "Mod Manager", "VFS Injection", "FFX/X-2"],
+            githubUrl: "https://github.com/odinj2010/FFX-Mod-Manager",
+            nexusUrl: "https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/327"
+          },
+          {
             id: "ffx-sphere-grid-tool",
             title: "FFX Sphere Grid Tool",
             platform: "Final Fantasy X",
@@ -424,7 +424,7 @@ export const projectTree = [
           },
           {
             id: "ffx-audio-tool",
-            title: "FFX_Audio_Tool",
+            title: "FFX Audio Tool",
             platform: "Final Fantasy X",
             status: "Active",
             description: "Stream extraction and conversion tool for proprietary audio banks inside Final Fantasy X / X-2 HD Remaster.",
@@ -433,7 +433,7 @@ export const projectTree = [
           },
           {
             id: "ffx-shop-tool",
-            title: "FFX_Shop_Tool",
+            title: "FFX Shop Tool",
             platform: "Final Fantasy X",
             status: "Active",
             description: "Binary data parser and inventory editor for shop tables and merchants in Final Fantasy X.",
@@ -442,7 +442,7 @@ export const projectTree = [
           },
           {
             id: "ffx-ai-tool",
-            title: "FFX_AI_Tool",
+            title: "FFX AI Tool",
             platform: "Final Fantasy X",
             status: "Active",
             description: "Bytecode decompiler and behavior script inspector for battle enemy AI routines in Final Fantasy X.",
