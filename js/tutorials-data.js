@@ -148,7 +148,8 @@ export const projectTree = [
             status: "Active",
             description: "Custom Java-based gameplay enhancement and resource automation mod for Minecraft.",
             tech: ["Java", "Minecraft Modding"],
-            githubUrl: "https://github.com/odinj2010/StickyResources"
+            githubUrl: "https://github.com/odinj2010/StickyResources",
+            curseforgeUrl: "https://www.curseforge.com/minecraft/mc-mods/sticky-resources"
           }
         ]
       },
