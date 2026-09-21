@@ -125,17 +125,7 @@
          ==================================================================== -->
     <div id="view-projects" class="page-view">
       <div class="container">
-        <header class="page-screen-header">
-          <span class="section-tag" style="font-size: 0.8rem; font-weight: 700; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.4rem;">
-            Dedicated Directory
-          </span>
-          <h1 class="hero-title" style="font-size: 2.4rem; margin-bottom: 0.5rem;">Projects &amp; Repositories</h1>
-          <p class="section-subtitle" style="color: var(--text-secondary); font-size: 1.05rem;">
-            Select a category below: Software, Loaders, Mods, Tools, or AI.
-          </p>
-        </header>
-
-        <!-- Projects Dedicated Drilldown Shell -->
+        <!-- Projects Explorer Shell with Left Side Menu -->
         <div class="drilldown-shell">
           <div class="drilldown-nav-bar">
             <!-- Dynamic Breadcrumbs -->
@@ -144,17 +134,18 @@
             </nav>
 
             <div style="display: flex; align-items: center; gap: 0.75rem;">
-              <input type="text" id="project-search" class="search-input" placeholder="Search category..." style="padding: 0.35rem 0.85rem; font-size: 0.82rem; width: 160px;">
-              <button id="project-back-btn" class="nav-back-btn" style="display: none;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                All Categories
-              </button>
+              <input type="text" id="project-search" class="search-input" placeholder="Search projects..." style="padding: 0.35rem 0.85rem; font-size: 0.82rem; width: 180px;">
             </div>
           </div>
 
-          <!-- Dynamic Projects Content Viewport -->
-          <div class="drilldown-viewport" id="project-viewport">
-            <!-- Injected via js/app.js: Category Selection Cards OR Project Cards -->
+          <!-- Split Explorer Layout: Left Sidebar + Right Content Area -->
+          <div class="explorer-layout">
+            <aside class="explorer-sidebar" id="project-sidebar">
+              <!-- Rendered via js/app.js: Categories & Subcategories Tree -->
+            </aside>
+            <section class="explorer-main" id="project-viewport">
+              <!-- Rendered via js/app.js: About this category + Game Filter Pills + Project Cards -->
+            </section>
           </div>
         </div>
       </div>
@@ -165,17 +156,7 @@
          ==================================================================== -->
     <div id="view-tutorials" class="page-view">
       <div class="container">
-        <header class="page-screen-header">
-          <span class="section-tag" style="font-size: 0.8rem; font-weight: 700; color: var(--accent-purple); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.4rem;">
-            Knowledge Engine
-          </span>
-          <h1 class="hero-title" style="font-size: 2.4rem; margin-bottom: 0.5rem;">Technical Guides &amp; Tutorials</h1>
-          <p class="section-subtitle" style="color: var(--text-secondary); font-size: 1.05rem;">
-            Step-by-step documentation for installing mod loaders, converting legacy IRO files, and tuning subwoofer enclosures.
-          </p>
-        </header>
-
-        <!-- Tutorials Dedicated Drilldown Shell -->
+        <!-- Tutorials Explorer Shell with Left Side Menu -->
         <div class="drilldown-shell">
           <div class="drilldown-nav-bar">
             <!-- Dynamic Breadcrumbs -->
@@ -183,17 +164,19 @@
               <!-- Rendered via js/app.js -->
             </nav>
 
-            <div>
-              <button id="tutorial-back-btn" class="nav-back-btn" style="display: none;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                Back Up One Level
-              </button>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <input type="text" id="tutorial-search" class="search-input" placeholder="Search guides..." style="padding: 0.35rem 0.85rem; font-size: 0.82rem; width: 180px;">
             </div>
           </div>
 
-          <!-- Dynamic Tutorial Viewport -->
-          <div class="drilldown-viewport" id="tutorial-viewport">
-            <!-- Injected via js/app.js: Categories -> Subcategories -> Guides -> Full Reader -->
+          <!-- Split Explorer Layout: Left Sidebar + Right Content Area -->
+          <div class="explorer-layout">
+            <aside class="explorer-sidebar" id="tutorial-sidebar">
+              <!-- Rendered via js/app.js: Categories & Subcategories Tree -->
+            </aside>
+            <section class="explorer-main" id="tutorial-viewport">
+              <!-- Rendered via js/app.js: Guides list or Full Reader -->
+            </section>
           </div>
         </div>
       </div>

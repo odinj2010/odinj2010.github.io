@@ -1,32 +1,32 @@
 /* ==========================================================================
-   MULTI-VIEW SPA ROUTER & DRILLDOWN ENGINE (js/app.js)
+   MULTI-VIEW SPA ROUTER & SIDEBAR EXPLORER ENGINE (js/app.js)
    --------------------------------------------------------------------------
    - Zero-reload dedicated page views: Home, Projects, Tutorials, About
-   - Dedicated nested category drilldown for Projects:
-       #/projects -> Category Cards -> Project Cards
-   - Dedicated nested drilldown for Tutorials:
-       #/tutorials -> Category Cards -> Subcategories -> Guides -> Reader
-   - Full breadcrumb trail & browser back/forward navigation support
+   - Interactive Left Sidebar with category / subcategory tree
+   - Interactive Game Filter Pills: "All Games", "Final Fantasy VII", "Final Fantasy X", "Minecraft", etc.
+   - Live search within sidebar and category view
    ========================================================================== */
 
-import { projectCategories, tutorialCategories } from './tutorials-data.js';
+import { projectTree, tutorialTree } from './tutorials-data.js';
 
 class App {
   constructor() {
     this.currentView = 'home';
     
-    // Project Drilldown State
+    // Project Explorer State
     this.projectState = {
-      categoryId: null,
+      categoryId: null,      // e.g. "modding", "software", "ai" (null = All)
+      subcategoryId: null,   // e.g. "loaders", "mods", "tools" (null = All in Category)
+      activeGame: 'All',     // "All" or game filter
       searchQuery: ''
     };
 
-    // Tutorial Drilldown State
+    // Tutorial Explorer State
     this.tutorialState = {
-      level: 1, // 1: Categories, 2: Subcategories, 3: Guides List, 4: Reader
       categoryId: null,
       subcategoryId: null,
-      guideId: null
+      guideId: null,
+      searchQuery: ''
     };
 
     this.initElements();
@@ -50,14 +50,15 @@ class App {
 
     // Projects elements
     this.projectBreadcrumbs = document.getElementById('project-breadcrumbs');
+    this.projectSidebar = document.getElementById('project-sidebar');
     this.projectViewport = document.getElementById('project-viewport');
-    this.projectBackBtn = document.getElementById('project-back-btn');
     this.projectSearchInput = document.getElementById('project-search');
 
     // Tutorials elements
     this.tutorialBreadcrumbs = document.getElementById('tutorial-breadcrumbs');
+    this.tutorialSidebar = document.getElementById('tutorial-sidebar');
     this.tutorialViewport = document.getElementById('tutorial-viewport');
-    this.tutorialBackBtn = document.getElementById('tutorial-back-btn');
+    this.tutorialSearchInput = document.getElementById('tutorial-search');
   }
 
   bindEvents() {
@@ -71,22 +72,19 @@ class App {
     // Hash change routing
     window.addEventListener('hashchange', () => this.handleRouting());
 
-    // Back buttons
-    if (this.projectBackBtn) {
-      this.projectBackBtn.addEventListener('click', () => {
-        window.location.hash = '#/projects';
-      });
-    }
-
-    if (this.tutorialBackBtn) {
-      this.tutorialBackBtn.addEventListener('click', () => this.navigateTutorialBack());
-    }
-
     // Projects Search
     if (this.projectSearchInput) {
       this.projectSearchInput.addEventListener('input', (e) => {
         this.projectState.searchQuery = e.target.value.toLowerCase().trim();
-        this.renderProjectsView();
+        this.renderProjectsContent();
+      });
+    }
+
+    // Tutorials Search
+    if (this.tutorialSearchInput) {
+      this.tutorialSearchInput.addEventListener('input', (e) => {
+        this.tutorialState.searchQuery = e.target.value.toLowerCase().trim();
+        this.renderTutorialContent();
       });
     }
 
@@ -145,7 +143,6 @@ class App {
     if (submitBtn && amountInput) {
       submitBtn.addEventListener('click', () => {
         const val = parseFloat(amountInput.value) || 5;
-        // PayPal.me redirect link format: https://paypal.me/NFG/<amount>
         const paypalUrl = `https://www.paypal.com/paypalme/NFG/${val}`;
         window.open(paypalUrl, '_blank', 'noopener,noreferrer');
       });
@@ -156,15 +153,14 @@ class App {
      HASH ROUTING CONTROLLER
      ========================================================================== */
   handleRouting() {
-    // Close mobile menu if open
     if (this.navMenu) this.navMenu.classList.remove('open');
 
     const hash = window.location.hash || '#/';
-    const cleanHash = hash.replace(/^#\/?/, ''); // strip leading #/
+    const cleanHash = hash.replace(/^#\/?/, '');
     const parts = cleanHash.split('/').filter(Boolean);
     const mainSection = parts[0] || 'home';
 
-    // Highlight active nav item
+    // Highlight active nav link
     this.navLinks.forEach(link => {
       const href = link.getAttribute('href').replace(/^#\/?/, '');
       if ((mainSection === 'home' && (href === '' || href === 'home')) || href === mainSection) {
@@ -174,38 +170,32 @@ class App {
       }
     });
 
-    // Switch screen views
     if (mainSection === 'projects') {
       this.switchView('projects');
-      const categoryId = parts[1] || null;
-      this.projectState.categoryId = categoryId;
+      const catId = parts[1] || null;
+      const subId = parts[2] || null;
+      this.projectState.categoryId = catId;
+      this.projectState.subcategoryId = subId;
       this.renderProjectBreadcrumbs();
-      this.renderProjectsView();
+      this.renderProjectSidebar();
+      this.renderProjectsContent();
     } else if (mainSection === 'tutorials') {
       this.switchView('tutorials');
       const catId = parts[1] || null;
       const subId = parts[2] || null;
       const guideId = parts[3] || null;
-
-      if (guideId) {
-        this.tutorialState = { level: 4, categoryId: catId, subcategoryId: subId, guideId };
-      } else if (subId) {
-        this.tutorialState = { level: 3, categoryId: catId, subcategoryId: subId, guideId: null };
-      } else if (catId) {
-        this.tutorialState = { level: 2, categoryId: catId, subcategoryId: null, guideId: null };
-      } else {
-        this.tutorialState = { level: 1, categoryId: null, subcategoryId: null, guideId: null };
-      }
-
+      this.tutorialState.categoryId = catId;
+      this.tutorialState.subcategoryId = subId;
+      this.tutorialState.guideId = guideId;
       this.renderTutorialBreadcrumbs();
-      this.renderTutorialView();
+      this.renderTutorialSidebar();
+      this.renderTutorialContent();
     } else if (mainSection === 'about') {
       this.switchView('about');
     } else {
       this.switchView('home');
     }
 
-    // Scroll to top of window on screen change
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -224,17 +214,13 @@ class App {
   }
 
   /* ==========================================================================
-     DEDICATED PROJECTS DRILLDOWN VIEW
+     PROJECTS EXPLORER (SIDEBAR + GAME FILTERS + CONTENT)
      ========================================================================== */
   renderProjectBreadcrumbs() {
     if (!this.projectBreadcrumbs) return;
-    const { categoryId } = this.projectState;
-    const category = projectCategories.find(c => c.id === categoryId);
-
-    // Toggle Back button
-    if (this.projectBackBtn) {
-      this.projectBackBtn.style.display = category ? 'inline-flex' : 'none';
-    }
+    const { categoryId, subcategoryId } = this.projectState;
+    const category = projectTree.find(c => c.id === categoryId);
+    const subcategory = category?.subcategories?.find(s => s.id === subcategoryId);
 
     let crumbs = [
       { label: 'Projects', hash: '#/projects', active: !category }
@@ -244,6 +230,14 @@ class App {
       crumbs.push({
         label: category.title,
         hash: `#/projects/${category.id}`,
+        active: !subcategory
+      });
+    }
+
+    if (subcategory) {
+      crumbs.push({
+        label: subcategory.title,
+        hash: `#/projects/${category.id}/${subcategory.id}`,
         active: true
       });
     }
@@ -258,140 +252,210 @@ class App {
     }).join('');
   }
 
-  renderProjectsView() {
-    if (!this.projectViewport) return;
-    const { categoryId, searchQuery } = this.projectState;
+  renderProjectSidebar() {
+    if (!this.projectSidebar) return;
+    const { categoryId, subcategoryId } = this.projectState;
 
-    // LEVEL 1: Top-Level Project Categories
-    if (!categoryId) {
-      this.projectViewport.innerHTML = `
-        <div class="cards-grid">
-          ${projectCategories.map(cat => `
-            <a href="#/projects/${cat.id}" class="category-card">
-              <div class="category-icon">${cat.icon}</div>
-              <h3 class="category-title">${cat.title}</h3>
-              <p class="category-desc">${cat.description}</p>
-              <div class="category-badge-count">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                ${cat.projects.length} Projects &rarr;
-              </div>
-            </a>
-          `).join('')}
-        </div>
-      `;
-      return;
-    }
+    this.projectSidebar.innerHTML = `
+      <div class="sidebar-heading">Navigation</div>
+      <div class="sidebar-nav-group">
+        <a href="#/projects" class="sidebar-cat-btn ${!categoryId ? 'active' : ''}">
+          <span class="sidebar-cat-content">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+            All Projects
+          </span>
+        </a>
+      </div>
 
-    // LEVEL 2: Projects inside Selected Category
-    const category = projectCategories.find(c => c.id === categoryId);
-    if (!category) {
-      this.projectViewport.innerHTML = `
-        <div class="empty-state">
-          <h3>Category not found</h3>
-          <p>The requested project category does not exist.</p>
-          <a href="#/projects" class="btn btn-secondary" style="margin-top: 1rem;">Back to Categories</a>
-        </div>
-      `;
-      return;
-    }
-
-    let filtered = category.projects.filter(p => {
-      if (!searchQuery) return true;
-      return p.title.toLowerCase().includes(searchQuery) ||
-             p.description.toLowerCase().includes(searchQuery) ||
-             p.tech.some(t => t.toLowerCase().includes(searchQuery));
-    });
-
-    if (filtered.length === 0) {
-      this.projectViewport.innerHTML = `
-        <div class="empty-state">
-          <h3>No matching projects found</h3>
-          <p>Try searching for a different keyword.</p>
-        </div>
-      `;
-      return;
-    }
-
-    this.projectViewport.innerHTML = `
-      <div class="cards-grid">
-        ${filtered.map(proj => {
-          const statusClass = `status-${proj.status.toLowerCase().replace(/\s+/g, '-')}`;
+      <div class="sidebar-heading" style="margin-top: 0.75rem;">Categories</div>
+      <div class="sidebar-nav-group">
+        ${projectTree.map(cat => {
+          const isCurrentCat = categoryId === cat.id;
           return `
-            <article class="project-card">
-              <div class="card-top">
-                <h3 class="card-title">${proj.title}</h3>
-                <span class="status-badge ${statusClass}">${proj.status}</span>
+            <div>
+              <a href="#/projects/${cat.id}" class="sidebar-cat-btn ${isCurrentCat && !subcategoryId ? 'active' : ''} ${isCurrentCat ? 'expanded' : ''}">
+                <span class="sidebar-cat-content">
+                  ${cat.icon}
+                  ${cat.title}
+                </span>
+                <svg class="sidebar-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+              <div class="sidebar-sub-list ${isCurrentCat ? 'open' : ''}">
+                ${cat.subcategories.map(sub => {
+                  const isCurrentSub = isCurrentCat && subcategoryId === sub.id;
+                  return `
+                    <a href="#/projects/${cat.id}/${sub.id}" class="sidebar-sub-link ${isCurrentSub ? 'active' : ''}">
+                      <span>${sub.title}</span>
+                      <span class="category-badge-count">${sub.projects.length}</span>
+                    </a>
+                  `;
+                }).join('')}
               </div>
-              <p class="card-desc">${proj.description}</p>
-              <div class="tech-tag-list">
-                ${proj.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
-              </div>
-              <div class="card-footer">
-                ${proj.githubUrl ? `
-                  <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="card-link">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-                    GitHub Repo
-                  </a>
-                ` : '<span></span>'}
-                ${proj.guideUrl ? `
-                  <a href="${proj.guideUrl}" class="card-link">
-                    View Guide &rarr;
-                  </a>
-                ` : ''}
-              </div>
-            </article>
+            </div>
           `;
         }).join('')}
       </div>
     `;
   }
 
-  /* ==========================================================================
-     DEDICATED TUTORIALS DRILLDOWN VIEW
-     ========================================================================== */
-  navigateTutorialBack() {
-    const { level, categoryId, subcategoryId } = this.tutorialState;
-    if (level === 4) {
-      window.location.hash = `#/tutorials/${categoryId}/${subcategoryId}`;
-    } else if (level === 3) {
-      window.location.hash = `#/tutorials/${categoryId}`;
-    } else if (level === 2) {
-      window.location.hash = `#/tutorials`;
+  renderProjectsContent() {
+    if (!this.projectViewport) return;
+    const { categoryId, subcategoryId, activeGame, searchQuery } = this.projectState;
+
+    let targetTitle = "All Projects & Tools";
+    let targetDesc = "Explore software tools, game modding frameworks, and AI experiments built by NfgOdin.";
+    let allProjects = [];
+
+    if (categoryId) {
+      const category = projectTree.find(c => c.id === categoryId);
+      if (category) {
+        if (subcategoryId) {
+          const sub = category.subcategories.find(s => s.id === subcategoryId);
+          if (sub) {
+            targetTitle = `${category.title} // ${sub.title}`;
+            targetDesc = sub.description;
+            allProjects = sub.projects;
+          }
+        } else {
+          targetTitle = category.title;
+          targetDesc = category.description;
+          category.subcategories.forEach(sub => allProjects.push(...sub.projects));
+        }
+      }
+    } else {
+      projectTree.forEach(cat => {
+        cat.subcategories.forEach(sub => allProjects.push(...sub.projects));
+      });
     }
+
+    // Collect Unique Game / Platform tags
+    const gamesSet = new Set();
+    allProjects.forEach(p => { if (p.game) gamesSet.add(p.game); });
+    const availableGames = ['All', ...Array.from(gamesSet)];
+
+    // Filter by Game Pill
+    let filtered = allProjects;
+    if (activeGame !== 'All') {
+      filtered = filtered.filter(p => p.game === activeGame);
+    }
+
+    // Filter by Search Query
+    if (searchQuery) {
+      filtered = filtered.filter(p => 
+        p.title.toLowerCase().includes(searchQuery) ||
+        p.description.toLowerCase().includes(searchQuery) ||
+        p.tech.some(t => t.toLowerCase().includes(searchQuery))
+      );
+    }
+
+    // Render Filter Pills HTML
+    const pillsHtml = availableGames.length > 2 ? `
+      <div class="filter-pills-row">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-right: 0.25rem;">Game / Platform:</span>
+        ${availableGames.map(game => `
+          <button type="button" class="filter-pill ${game === activeGame ? 'active' : ''}" data-game="${game}">
+            ${game}
+          </button>
+        `).join('')}
+      </div>
+    ` : '';
+
+    // Render Cards HTML
+    let cardsHtml = '';
+    if (filtered.length === 0) {
+      cardsHtml = `
+        <div class="empty-state">
+          <h3>No matching projects found</h3>
+          <p>Try selecting "All" or clearing your search term.</p>
+        </div>
+      `;
+    } else {
+      cardsHtml = `
+        <div class="cards-grid">
+          ${filtered.map(proj => {
+            const statusClass = `status-${proj.status.toLowerCase().replace(/\s+/g, '-')}`;
+            return `
+              <article class="project-card">
+                <div class="card-top">
+                  <h3 class="card-title">${proj.title}</h3>
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    ${proj.game ? `<span class="filter-game-badge">${proj.game}</span>` : ''}
+                    <span class="status-badge ${statusClass}">${proj.status}</span>
+                  </div>
+                </div>
+                <p class="card-desc">${proj.description}</p>
+                <div class="tech-tag-list">
+                  ${proj.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                </div>
+                <div class="card-footer">
+                  ${proj.githubUrl ? `
+                    <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="card-link">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                      GitHub Repo
+                    </a>
+                  ` : '<span></span>'}
+                  ${proj.guideUrl ? `
+                    <a href="${proj.guideUrl}" class="card-link">
+                      Read Guide &rarr;
+                    </a>
+                  ` : ''}
+                </div>
+              </article>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    this.projectViewport.innerHTML = `
+      <header class="explorer-header">
+        <h2 class="explorer-title">${targetTitle}</h2>
+        <p class="explorer-desc">${targetDesc}</p>
+      </header>
+      ${pillsHtml}
+      ${cardsHtml}
+    `;
+
+    // Attach click handlers to Game Filter Pills
+    this.projectViewport.querySelectorAll('.filter-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        this.projectState.activeGame = pill.getAttribute('data-game');
+        this.renderProjectsContent();
+      });
+    });
   }
 
+  /* ==========================================================================
+     TUTORIALS EXPLORER (SIDEBAR + READER)
+     ========================================================================== */
   renderTutorialBreadcrumbs() {
     if (!this.tutorialBreadcrumbs) return;
-    const { level, categoryId, subcategoryId, guideId } = this.tutorialState;
-    const category = tutorialCategories.find(c => c.id === categoryId);
+    const { categoryId, subcategoryId, guideId } = this.tutorialState;
+    const category = tutorialTree.find(c => c.id === categoryId);
     const subcategory = category?.subcategories?.find(s => s.id === subcategoryId);
     const guide = subcategory?.guides?.find(g => g.id === guideId);
 
-    if (this.tutorialBackBtn) {
-      this.tutorialBackBtn.style.display = level > 1 ? 'inline-flex' : 'none';
-    }
-
     let crumbs = [
-      { label: 'Tutorials', hash: '#/tutorials', active: level === 1 }
+      { label: 'Tutorials', hash: '#/tutorials', active: !category }
     ];
 
-    if (category && level >= 2) {
+    if (category) {
       crumbs.push({
         label: category.title,
         hash: `#/tutorials/${category.id}`,
-        active: level === 2
+        active: !subcategory
       });
     }
 
-    if (subcategory && level >= 3) {
+    if (subcategory) {
       crumbs.push({
         label: subcategory.title,
         hash: `#/tutorials/${category.id}/${subcategory.id}`,
-        active: level === 3
+        active: !guide
       });
     }
 
-    if (guide && level === 4) {
+    if (guide) {
       crumbs.push({
         label: guide.title,
         hash: `#/tutorials/${category.id}/${subcategory.id}/${guide.id}`,
@@ -409,58 +473,123 @@ class App {
     }).join('');
   }
 
-  renderTutorialView() {
+  renderTutorialSidebar() {
+    if (!this.tutorialSidebar) return;
+    const { categoryId, subcategoryId, guideId } = this.tutorialState;
+
+    this.tutorialSidebar.innerHTML = `
+      <div class="sidebar-heading">Navigation</div>
+      <div class="sidebar-nav-group">
+        <a href="#/tutorials" class="sidebar-cat-btn ${!categoryId ? 'active' : ''}">
+          <span class="sidebar-cat-content">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            All Guides
+          </span>
+        </a>
+      </div>
+
+      <div class="sidebar-heading" style="margin-top: 0.75rem;">Categories</div>
+      <div class="sidebar-nav-group">
+        ${tutorialTree.map(cat => {
+          const isCurrentCat = categoryId === cat.id;
+          return `
+            <div>
+              <a href="#/tutorials/${cat.id}" class="sidebar-cat-btn ${isCurrentCat && !subcategoryId ? 'active' : ''} ${isCurrentCat ? 'expanded' : ''}">
+                <span class="sidebar-cat-content">
+                  ${cat.icon}
+                  ${cat.title}
+                </span>
+                <svg class="sidebar-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+              <div class="sidebar-sub-list ${isCurrentCat ? 'open' : ''}">
+                ${cat.subcategories.map(sub => {
+                  const isCurrentSub = isCurrentCat && subcategoryId === sub.id;
+                  return `
+                    <a href="#/tutorials/${cat.id}/${sub.id}" class="sidebar-sub-link ${isCurrentSub && !guideId ? 'active' : ''}">
+                      <span>${sub.title}</span>
+                      <span class="category-badge-count">${sub.guides.length}</span>
+                    </a>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  renderTutorialContent() {
     if (!this.tutorialViewport) return;
-    const { level, categoryId, subcategoryId, guideId } = this.tutorialState;
+    const { categoryId, subcategoryId, guideId, searchQuery } = this.tutorialState;
 
-    if (level === 1) {
-      // Level 1: Categories
-      this.tutorialViewport.innerHTML = `
-        <div class="cards-grid">
-          ${tutorialCategories.map(cat => `
-            <a href="#/tutorials/${cat.id}" class="category-card">
-              <div class="category-icon">${cat.icon}</div>
-              <h3 class="category-title">${cat.title}</h3>
-              <p class="category-desc">${cat.summary}</p>
-              <div class="category-badge-count">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                ${cat.subcategories.length} Sub-categories & Guides &rarr;
-              </div>
-            </a>
-          `).join('')}
+    // Full Guide Reader
+    if (guideId && categoryId && subcategoryId) {
+      const category = tutorialTree.find(c => c.id === categoryId);
+      const sub = category?.subcategories?.find(s => s.id === subcategoryId);
+      const guide = sub?.guides?.find(g => g.id === guideId);
+      if (guide) {
+        this.renderFullGuide(guide);
+        return;
+      }
+    }
+
+    // Guides Overview List
+    let targetTitle = "Technical Guides & Tutorials";
+    let targetDesc = "Step-by-step documentation for installing mod loaders, converting legacy IRO files, and tuning subwoofer enclosures.";
+    let allGuides = [];
+
+    if (categoryId) {
+      const category = tutorialTree.find(c => c.id === categoryId);
+      if (category) {
+        if (subcategoryId) {
+          const sub = category.subcategories.find(s => s.id === subcategoryId);
+          if (sub) {
+            targetTitle = `${category.title} // ${sub.title}`;
+            targetDesc = `All walkthroughs under ${sub.title}.`;
+            allGuides = sub.guides.map(g => ({ ...g, catId: category.id, subId: sub.id }));
+          }
+        } else {
+          targetTitle = category.title;
+          category.subcategories.forEach(sub => {
+            allGuides.push(...sub.guides.map(g => ({ ...g, catId: category.id, subId: sub.id })));
+          });
+        }
+      }
+    } else {
+      tutorialTree.forEach(cat => {
+        cat.subcategories.forEach(sub => {
+          allGuides.push(...sub.guides.map(g => ({ ...g, catId: cat.id, subId: sub.id })));
+        });
+      });
+    }
+
+    if (searchQuery) {
+      allGuides = allGuides.filter(g => 
+        g.title.toLowerCase().includes(searchQuery) ||
+        g.summary.toLowerCase().includes(searchQuery)
+      );
+    }
+
+    let guidesListHtml = '';
+    if (allGuides.length === 0) {
+      guidesListHtml = `
+        <div class="empty-state">
+          <h3>No matching tutorials found</h3>
+          <p>Try searching for a different guide.</p>
         </div>
       `;
-    } else if (level === 2) {
-      // Level 2: Subcategories
-      const category = tutorialCategories.find(c => c.id === categoryId);
-      if (!category) return;
-      this.tutorialViewport.innerHTML = `
-        <div class="cards-grid">
-          ${category.subcategories.map(sub => `
-            <a href="#/tutorials/${category.id}/${sub.id}" class="category-card">
-              <h3 class="category-title">${sub.title}</h3>
-              <p class="category-desc">${sub.description}</p>
-              <div class="category-badge-count">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                ${sub.guides.length} Technical Guides &rarr;
-              </div>
-            </a>
-          `).join('')}
-        </div>
-      `;
-    } else if (level === 3) {
-      // Level 3: Guides List
-      const category = tutorialCategories.find(c => c.id === categoryId);
-      const subcategory = category?.subcategories?.find(s => s.id === subcategoryId);
-      if (!subcategory) return;
-
-      this.tutorialViewport.innerHTML = `
+    } else {
+      guidesListHtml = `
         <div class="guides-list">
-          ${subcategory.guides.map(guide => `
-            <a href="#/tutorials/${category.id}/${subcategory.id}/${guide.id}" class="guide-list-item">
+          ${allGuides.map(guide => `
+            <a href="#/tutorials/${guide.catId}/${guide.subId}/${guide.id}" class="guide-list-item">
               <div class="guide-info">
-                <h4 class="guide-item-title">${guide.title}</h4>
-                <p class="category-desc" style="margin: 0;">${guide.summary}</p>
+                <div style="display: flex; align-items: center; gap: 0.6rem;">
+                  <h4 class="guide-item-title">${guide.title}</h4>
+                  ${guide.game ? `<span class="filter-game-badge">${guide.game}</span>` : ''}
+                </div>
+                <p class="category-desc" style="margin: 0.25rem 0 0;">${guide.summary}</p>
                 <div class="guide-item-meta">
                   <span class="difficulty-badge">${guide.difficulty}</span>
                   <span>•</span>
@@ -468,25 +597,24 @@ class App {
                 </div>
               </div>
               <span class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
-                Read Guide &rarr;
+                Read &rarr;
               </span>
             </a>
           `).join('')}
         </div>
       `;
-    } else if (level === 4) {
-      // Level 4: Full Reader
-      this.renderLevel4GuideReader(categoryId, subcategoryId, guideId);
     }
+
+    this.tutorialViewport.innerHTML = `
+      <header class="explorer-header">
+        <h2 class="explorer-title">${targetTitle}</h2>
+        <p class="explorer-desc">${targetDesc}</p>
+      </header>
+      ${guidesListHtml}
+    `;
   }
 
-  renderLevel4GuideReader(categoryId, subcategoryId, guideId) {
-    const category = tutorialCategories.find(c => c.id === categoryId);
-    const subcategory = category?.subcategories?.find(s => s.id === subcategoryId);
-    const guide = subcategory?.guides?.find(g => g.id === guideId);
-
-    if (!guide) return;
-
+  renderFullGuide(guide) {
     let stepsHtml = guide.steps.map(step => {
       let calloutHtml = '';
       if (step.callout) {
@@ -531,6 +659,7 @@ class App {
       <article class="tutorial-reader">
         <header class="reader-header">
           <div class="reader-meta-bar" style="margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.85rem;">
+            ${guide.game ? `<span class="filter-game-badge" style="margin-right: 0.5rem;">${guide.game}</span>` : ''}
             <span class="difficulty-badge">${guide.difficulty}</span>
             <span>•</span>
             <span>${guide.readingTime}</span>
@@ -571,7 +700,7 @@ class App {
   }
 }
 
-// Start application
+// Start application on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   new App();
 });
