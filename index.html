@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="OdinJ - Game Modding, Audio/Hardware Engineering, Reverse Engineering, and Developer Platforms.">
+  <title>OdinJ // Flagship Hub &amp; Knowledge Base</title>
+  
+  <!-- Modern Preconnects & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient Atmospheric Background Glow -->
+  <div class="bg-ambient" aria-hidden="true">
+    <div class="ambient-blob-1"></div>
+    <div class="ambient-blob-2"></div>
+  </div>
+
+  <!-- Sticky Top Navigation Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="#" class="brand-link">
+        <span class="brand-icon">OJ</span>
+        <span>OdinJ.dev</span>
+      </a>
+
+      <!-- Desktop & Mobile Navigation Links -->
+      <nav>
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#" class="nav-link active">Home</a></li>
+          <li><a href="#projects" class="nav-link">Projects &amp; Achievements</a></li>
+          <li><a href="#tutorials" class="nav-link">Tutorials</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+        </ul>
+      </nav>
+
+      <!-- Search & GitHub Actions -->
+      <div class="header-actions">
+        <div class="search-container">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="global-search" class="search-input" placeholder="Search systems..." aria-label="Search systems and guides">
+        </div>
+        <a href="https://github.com/odinj2010" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub Profile">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section">
+      <div class="container hero-content">
+        <div class="hero-badge">
+          <span class="hero-badge-pulse"></span>
+          <span>Open Source Systems &amp; Low-Level Engineering</span>
+        </div>
+        <h1 class="hero-title">
+          Engineering high-performance <span class="gradient-text">game systems, modding frameworks</span> &amp; embedded DSP.
+        </h1>
+        <p class="hero-description">
+          Welcome to my flagship hub. Here you will find active open-source repositories, reverse engineering toolchains, memory patchers for classic PC titles, polyphonic audio hardware, and deep technical walkthroughs.
+        </p>
+        <div class="hero-cta-group">
+          <a href="#projects" class="btn btn-primary">
+            Explore Projects &amp; Tools &rarr;
+          </a>
+          <a href="#tutorials" class="btn btn-secondary">
+            Browse Tutorial Guides
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">FFVIISE</span>
+            <span class="stat-label">Mod Loader Engine</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">3+ Tiers</span>
+            <span class="stat-label">Tutorial Knowledge Base</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">Zero Deps</span>
+            <span class="stat-label">Vanilla Static Architecture</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">GitHub Pages Ready</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects & Achievements Showcase Section -->
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Showcase</span>
+          <h2 class="section-title">Projects &amp; Achievements</h2>
+          <p class="section-subtitle">
+            Explore native game hook engines, conversion toolkits, low-level DSP audio circuitry, and developer utilities.
+          </p>
+        </div>
+
+        <!-- Filter Tags -->
+        <div class="filter-bar" id="project-filter-tags">
+          <!-- Dynamic Filter Buttons injected via app.js -->
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid" id="projects-grid">
+          <!-- Dynamic Project Cards injected via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Hierarchical Tutorial Engine (Deep Nested Drill-Down) -->
+    <section id="tutorials" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Knowledge Engine</span>
+          <h2 class="section-title">Hierarchical Technical Guides</h2>
+          <p class="section-subtitle">
+            Deep multi-tier documentation covering game engine hooks, asset injection, STM32 audio pipelines, and deployment setups.
+          </p>
+        </div>
+
+        <!-- Tutorial Engine Interactive Shell -->
+        <div class="tutorial-engine">
+          <div class="tutorial-nav-bar">
+            <!-- Dynamic Breadcrumbs -->
+            <nav class="breadcrumbs" id="tutorial-breadcrumbs" aria-label="Tutorial breadcrumb trail">
+              <!-- Rendered dynamically by app.js -->
+            </nav>
+
+            <div class="tutorial-actions-bar">
+              <button id="tutorial-back-btn" class="nav-back-btn" style="display: none;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back Up One Level
+              </button>
+            </div>
+          </div>
+
+          <!-- Content Viewport -->
+          <div class="tutorial-content-viewport" id="tutorial-viewport">
+            <!-- Dynamic Drill-Down Views (Categories -> Sub-categories -> Guides -> Full Reader) -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Profile</span>
+          <h2 class="section-title">Architectural Philosophy</h2>
+          <p class="section-subtitle">
+            Crafting software and hardware at the boundary of performance, precision, and longevity.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+          <div class="project-card">
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.75rem; color: var(--accent-blue);">Low-Level Systems</h3>
+            <p style="color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem;">
+              Dedicated to bare-metal performance, memory inspection, assembly-level patching, and microcontrollers. Building tools that bypass overhead and give creators direct control over hardware and gaming platforms.
+            </p>
+          </div>
+          <div class="project-card">
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.75rem; color: var(--accent-purple);">Hardware &amp; Audio DSP</h3>
+            <p style="color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem;">
+              From Eurorack voltage control calibration to STM32 double-buffered DMA I2S pipelines, designing high-resolution analog &amp; digital audio workstations with sub-millisecond responsiveness.
+            </p>
+          </div>
+          <div class="project-card">
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.75rem; color: var(--accent-green);">Zero-Friction Tooling</h3>
+            <p style="color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem;">
+              Writing complete, self-contained, and dependency-free toolchains that remain reliable and operational decades into the future without relying on ephemeral runtime dependencies.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 OdinJ. All rights reserved. Deployed to GitHub Pages.</p>
+      <ul class="footer-links">
+        <li><a href="https://github.com/odinj2010" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#tutorials">Tutorials</a></li>
+        <li><a href="#">Back to Top &uarr;</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Core JavaScript Module -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
