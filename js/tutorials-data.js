@@ -150,6 +150,51 @@ export const projectTree = [
             tech: ["Java", "Minecraft Modding"],
             githubUrl: "https://github.com/odinj2010/StickyResources",
             curseforgeUrl: "https://www.curseforge.com/minecraft/mc-mods/sticky-resources"
+          },
+          {
+            id: "ff7-nexus-mods",
+            title: "FFVII Nexus Mods",
+            platform: "Final Fantasy VII",
+            status: "Active",
+            description: "A collection of custom mods hosted on Nexus Mods for the original Final Fantasy VII.<br><br><b>Included Mods:</b><br><a href='https://www.nexusmods.com/finalfantasy7/mods/161' target='_blank' style='color: var(--accent);'>Mod #161</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7/mods/159' target='_blank' style='color: var(--accent);'>Mod #159</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7/mods/158' target='_blank' style='color: var(--accent);'>Mod #158</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7/mods/157' target='_blank' style='color: var(--accent);'>Mod #157</a>",
+            tech: ["Game Mods", "Nexus Mods", "FFVII"],
+            nexusUrl: "https://www.nexusmods.com/profile/NfgOdin"
+          },
+          {
+            id: "ffx-nexus-mods",
+            title: "FFX/X-2 HD Remaster Mods",
+            platform: "Final Fantasy X/X-2 HD Remaster",
+            status: "Active",
+            description: "Custom enhancements and modifications for Final Fantasy X/X-2 HD Remaster on Nexus Mods.<br><br><b>Included Mods:</b><br><a href='https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/327' target='_blank' style='color: var(--accent);'>Mod #327</a> &bull; <a href='https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/321' target='_blank' style='color: var(--accent);'>Mod #321</a> &bull; <a href='https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/320' target='_blank' style='color: var(--accent);'>Mod #320</a> &bull; <a href='https://www.nexusmods.com/finalfantasyxx2hdremaster/mods/315' target='_blank' style='color: var(--accent);'>Mod #315</a>",
+            tech: ["Game Mods", "Nexus Mods", "FFX/X-2"],
+            nexusUrl: "https://www.nexusmods.com/profile/NfgOdin"
+          },
+          {
+            id: "ff8-nexus-mods",
+            title: "FFVIII Remastered Mods",
+            platform: "Final Fantasy VIII Remastered",
+            status: "Active",
+            description: "Custom enhancements and modifications for Final Fantasy VIII Remastered.<br><br><b>Included Mods:</b><br><a href='https://www.nexusmods.com/finalfantasy8remastered/mods/101' target='_blank' style='color: var(--accent);'>Mod #101</a> &bull; <a href='https://www.nexusmods.com/finalfantasy8remastered/mods/100' target='_blank' style='color: var(--accent);'>Mod #100</a> &bull; <a href='https://www.nexusmods.com/finalfantasy8remastered/mods/99' target='_blank' style='color: var(--accent);'>Mod #99</a> &bull; <a href='https://www.nexusmods.com/finalfantasy8remastered/mods/98' target='_blank' style='color: var(--accent);'>Mod #98</a> &bull; <a href='https://www.nexusmods.com/finalfantasy8remastered/mods/97' target='_blank' style='color: var(--accent);'>Mod #97</a> &bull; <a href='https://www.nexusmods.com/finalfantasy8remastered/mods/96' target='_blank' style='color: var(--accent);'>Mod #96</a> &bull; <a href='https://www.nexusmods.com/finalfantasy8remastered/mods/95' target='_blank' style='color: var(--accent);'>Mod #95</a>",
+            tech: ["Game Mods", "Nexus Mods", "FFVIII"],
+            nexusUrl: "https://www.nexusmods.com/profile/NfgOdin"
+          },
+          {
+            id: "skyrim-nexus-mods",
+            title: "Skyrim SE Mods",
+            platform: "Skyrim SE",
+            status: "Active",
+            description: "Custom enhancements for The Elder Scrolls V: Skyrim Special Edition.<br><br><b>Included Mods:</b><br><a href='https://www.nexusmods.com/skyrimspecialedition/mods/158649' target='_blank' style='color: var(--accent);'>Mod #158649</a>",
+            tech: ["Game Mods", "Nexus Mods", "Skyrim SE"],
+            nexusUrl: "https://www.nexusmods.com/profile/NfgOdin"
+          },
+          {
+            id: "ff7r-nexus-mods",
+            title: "FFVII Remake Mods",
+            platform: "Final Fantasy VII Remake",
+            status: "Active",
+            description: "An extensive collection of custom modifications for Final Fantasy VII Remake.<br><br><b>Included Mods:</b><br><a href='https://www.nexusmods.com/finalfantasy7remake/mods/1429' target='_blank' style='color: var(--accent);'>Mod #1429</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1426' target='_blank' style='color: var(--accent);'>Mod #1426</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1425' target='_blank' style='color: var(--accent);'>Mod #1425</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1424' target='_blank' style='color: var(--accent);'>Mod #1424</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1423' target='_blank' style='color: var(--accent);'>Mod #1423</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1421' target='_blank' style='color: var(--accent);'>Mod #1421</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1420' target='_blank' style='color: var(--accent);'>Mod #1420</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1419' target='_blank' style='color: var(--accent);'>Mod #1419</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1417' target='_blank' style='color: var(--accent);'>Mod #1417</a> &bull; <a href='https://www.nexusmods.com/finalfantasy7remake/mods/1415' target='_blank' style='color: var(--accent);'>Mod #1415</a>",
+            tech: ["Game Mods", "Nexus Mods", "FFVII Remake"],
+            nexusUrl: "https://www.nexusmods.com/profile/NfgOdin"
           }
         ]
       },

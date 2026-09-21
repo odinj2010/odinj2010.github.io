@@ -295,6 +295,27 @@ body {
   border-color: var(--text-secondary);
 }
 
+.nexus-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.nexus-btn:hover {
+  background-color: var(--bg-tertiary);
+  border-color: #da8e35;
+  color: #da8e35;
+}
+
 .mobile-nav-toggle {
   display: none;
   background: none;

@@ -454,6 +454,12 @@ class App {
                         GitHub
                       </a>
                     ` : ''}
+                    ${proj.nexusUrl ? `
+                      <a href="${proj.nexusUrl}" target="_blank" rel="noopener noreferrer" class="card-link" style="color: #da8e35;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Nexus Mods
+                      </a>
+                    ` : ''}
                     ${proj.curseforgeUrl ? `
                       <a href="${proj.curseforgeUrl}" target="_blank" rel="noopener noreferrer" class="card-link" style="color: #f16436;">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M2 5h20c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-2.5c-.7 0-1.35.37-1.7 1-.7 1.25-1.8 2-3.8 2h-4c-2 0-3.1-.75-3.8-2-.35-.63-1-1-1.7-1H2c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1zm6 8h8v3h-8v-3zm-3 5h14c.55 0 1 .45 1 1v2H4v-2c0-.55.45-1 1-1z"/></svg>
