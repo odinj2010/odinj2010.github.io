@@ -456,7 +456,7 @@ class App {
                     ` : ''}
                     ${proj.curseforgeUrl ? `
                       <a href="${proj.curseforgeUrl}" target="_blank" rel="noopener noreferrer" class="card-link" style="color: #f16436;">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.87 2.05L12 8.92 5.13 2.05 2.05 5.13 8.92 12l-6.87 6.87 3.08 3.08L12 15.08l6.87 6.87 3.08-3.08L15.08 12l6.87-6.87-3.08-3.08z"/></svg>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M2 5h20c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-2.5c-.7 0-1.35.37-1.7 1-.7 1.25-1.8 2-3.8 2h-4c-2 0-3.1-.75-3.8-2-.35-.63-1-1-1.7-1H2c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1zm6 8h8v3h-8v-3zm-3 5h14c.55 0 1 .45 1 1v2H4v-2c0-.55.45-1 1-1z"/></svg>
                         CurseForge
                       </a>
                     ` : ''}
