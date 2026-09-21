@@ -66,7 +66,7 @@ export const projectTree = [
         projects: [
           {
             id: "ffx-mod-manager",
-            title: "FFX-Mod-Manager",
+            title: "Spira Mod Manager (Final Fantasy X and X-2 HD Remastered Mod Manager)",
             platform: "Final Fantasy X",
             status: "Active",
             description: "A clean, fast, and secure standalone desktop mod manager for Final Fantasy X / X-2 HD Remaster on Steam. Handles automated mod injection and profile switching.",
