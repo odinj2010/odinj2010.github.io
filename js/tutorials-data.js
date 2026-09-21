@@ -133,11 +133,12 @@ export const projectTree = [
         projects: [
           {
             id: "riftlink",
-            title: "RiftLink (Minecraft 1.21.1)",
+            title: "RiftLink",
             platform: "Minecraft",
+            game: "Minecraft",
             status: "Active",
             description: "A modern gameplay, dimensional mechanics, and custom utility mod currently in active development for Minecraft 1.21.1 on the NeoForge mod loader platform.",
-            tech: ["Java", "NeoForge", "Minecraft 1.21.1"],
+            tech: ["Java", "NeoForge", "Minecraft", "1.21.1"],
             githubUrl: "https://github.com/odinj2010/RiftLink",
             guideUrl: "#/tutorials/modding/mods/installing-riftlink"
           },
@@ -145,9 +146,10 @@ export const projectTree = [
             id: "sticky-resources",
             title: "StickyResources",
             platform: "Minecraft",
+            game: "Minecraft",
             status: "Active",
-            description: "Custom Java-based gameplay enhancement and resource automation mod for Minecraft.",
-            tech: ["Java", "Minecraft Modding"],
+            description: "Custom Java-based gameplay enhancement and resource automation mod for Minecraft 1.20.1 on the Forge mod loader platform.",
+            tech: ["Java", "Forge", "Minecraft", "1.20.1"],
             githubUrl: "https://github.com/odinj2010/StickyResources",
             curseforgeUrl: "https://www.curseforge.com/minecraft/mc-mods/sticky-resources"
           },
