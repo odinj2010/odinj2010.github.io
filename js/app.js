@@ -145,8 +145,8 @@ class App {
     if (submitBtn && amountInput) {
       submitBtn.addEventListener('click', () => {
         const val = parseFloat(amountInput.value) || 5;
-        // PayPal.me redirect link format: https://paypal.me/NfgOdin/<amount>USD
-        const paypalUrl = `https://www.paypal.com/paypalme/NfgOdin/${val}`;
+        // PayPal.me redirect link format: https://paypal.me/NFG/<amount>
+        const paypalUrl = `https://www.paypal.com/paypalme/NFG/${val}`;
         window.open(paypalUrl, '_blank', 'noopener,noreferrer');
       });
     }
