@@ -214,7 +214,7 @@ class App {
   }
 
   /* ==========================================================================
-     PROJECTS EXPLORER (SIDEBAR + GAME FILTERS + CONTENT)
+     PROJECTS EXPLORER (SIDEBAR + PLATFORM FILTERS + CONTENT)
      ========================================================================== */
   renderProjectBreadcrumbs() {
     if (!this.projectBreadcrumbs) return;
@@ -252,9 +252,59 @@ class App {
     }).join('');
   }
 
+  // Helper to gather all projects under the currently active category/subcategory
+  getCurrentScopeProjects() {
+    const { categoryId, subcategoryId } = this.projectState;
+    let projects = [];
+
+    if (categoryId) {
+      const category = projectTree.find(c => c.id === categoryId);
+      if (category) {
+        if (subcategoryId) {
+          const sub = category.subcategories.find(s => s.id === subcategoryId);
+          if (sub) {
+            projects = sub.projects;
+          }
+        } else {
+          category.subcategories.forEach(sub => projects.push(...sub.projects));
+        }
+      }
+    } else {
+      projectTree.forEach(cat => {
+        cat.subcategories.forEach(sub => projects.push(...sub.projects));
+      });
+    }
+    return projects;
+  }
+
   renderProjectSidebar() {
     if (!this.projectSidebar) return;
-    const { categoryId, subcategoryId } = this.projectState;
+    const { categoryId, subcategoryId, activeGame } = this.projectState;
+
+    // Gather available platforms/games within the current category scope
+    const currentProjects = this.getCurrentScopeProjects();
+    const platformsSet = new Set();
+    currentProjects.forEach(p => {
+      const plat = p.platform || p.game;
+      if (plat) platformsSet.add(plat);
+    });
+    const availablePlatforms = ['All', ...Array.from(platformsSet)];
+
+    // If activeGame is set to something that isn't available in this scope, reset to 'All'
+    if (activeGame !== 'All' && !platformsSet.has(activeGame)) {
+      this.projectState.activeGame = 'All';
+    }
+
+    const platformPillsHtml = availablePlatforms.length > 2 ? `
+      <div class="sidebar-heading" style="margin-top: 0.85rem;">Platform / Game</div>
+      <div class="sidebar-platform-group">
+        ${availablePlatforms.map(plat => `
+          <button type="button" class="sidebar-platform-btn ${plat === this.projectState.activeGame ? 'active' : ''}" data-platform="${plat}">
+            <span>${plat === 'All' ? 'All Platforms' : plat}</span>
+          </button>
+        `).join('')}
+      </div>
+    ` : '';
 
     this.projectSidebar.innerHTML = `
       <div class="sidebar-heading">Navigation</div>
@@ -267,7 +317,9 @@ class App {
         </a>
       </div>
 
-      <div class="sidebar-heading" style="margin-top: 0.75rem;">Categories</div>
+      ${platformPillsHtml}
+
+      <div class="sidebar-heading" style="margin-top: 0.85rem;">Categories</div>
       <div class="sidebar-nav-group">
         ${projectTree.map(cat => {
           const isCurrentCat = categoryId === cat.id;
@@ -296,6 +348,15 @@ class App {
         }).join('')}
       </div>
     `;
+
+    // Attach click listeners to sidebar platform buttons
+    this.projectSidebar.querySelectorAll('.sidebar-platform-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.projectState.activeGame = btn.getAttribute('data-platform');
+        this.renderProjectSidebar();
+        this.renderProjectsContent();
+      });
+    });
   }
 
   renderProjectsContent() {
@@ -328,15 +389,23 @@ class App {
       });
     }
 
-    // Collect Unique Game / Platform tags
-    const gamesSet = new Set();
-    allProjects.forEach(p => { if (p.game) gamesSet.add(p.game); });
-    const availableGames = ['All', ...Array.from(gamesSet)];
+    // Collect Unique Game / Platform tags in this scope
+    const platformsSet = new Set();
+    allProjects.forEach(p => {
+      const plat = p.platform || p.game;
+      if (plat) platformsSet.add(plat);
+    });
+    const availablePlatforms = ['All', ...Array.from(platformsSet)];
 
-    // Filter by Game Pill
+    // Safety check: ensure activeGame is valid for current view
+    if (activeGame !== 'All' && !platformsSet.has(activeGame)) {
+      this.projectState.activeGame = 'All';
+    }
+
+    // Filter by Platform/Game
     let filtered = allProjects;
-    if (activeGame !== 'All') {
-      filtered = filtered.filter(p => p.game === activeGame);
+    if (this.projectState.activeGame !== 'All') {
+      filtered = filtered.filter(p => (p.platform || p.game) === this.projectState.activeGame);
     }
 
     // Filter by Search Query
@@ -348,25 +417,13 @@ class App {
       );
     }
 
-    // Render Filter Pills HTML
-    const pillsHtml = availableGames.length > 2 ? `
-      <div class="filter-pills-row">
-        <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-right: 0.25rem;">Game / Platform:</span>
-        ${availableGames.map(game => `
-          <button type="button" class="filter-pill ${game === activeGame ? 'active' : ''}" data-game="${game}">
-            ${game}
-          </button>
-        `).join('')}
-      </div>
-    ` : '';
-
     // Render Cards HTML
     let cardsHtml = '';
     if (filtered.length === 0) {
       cardsHtml = `
         <div class="empty-state">
           <h3>No matching projects found</h3>
-          <p>Try selecting "All" or clearing your search term.</p>
+          <p>Try selecting "All Platforms" or clearing your search term.</p>
         </div>
       `;
     } else {
@@ -374,12 +431,13 @@ class App {
         <div class="cards-grid">
           ${filtered.map(proj => {
             const statusClass = `status-${proj.status.toLowerCase().replace(/\s+/g, '-')}`;
+            const platformTag = proj.platform || proj.game;
             return `
               <article class="project-card">
                 <div class="card-top">
                   <h3 class="card-title">${proj.title}</h3>
                   <div style="display: flex; align-items: center; gap: 0.5rem;">
-                    ${proj.game ? `<span class="filter-game-badge">${proj.game}</span>` : ''}
+                    ${platformTag ? `<span class="filter-game-badge">${platformTag}</span>` : ''}
                     <span class="status-badge ${statusClass}">${proj.status}</span>
                   </div>
                 </div>
@@ -412,18 +470,8 @@ class App {
         <h2 class="explorer-title">${targetTitle}</h2>
         <p class="explorer-desc">${targetDesc}</p>
       </header>
-      ${pillsHtml}
       ${cardsHtml}
     `;
-
-    // Attach click handlers to Game Filter Pills
-    this.projectViewport.querySelectorAll('.filter-pill').forEach(pill => {
-      pill.addEventListener('click', () => {
-        this.projectState.activeGame = pill.getAttribute('data-game');
-        this.renderProjectsContent();
-      });
-    });
-  }
 
   /* ==========================================================================
      TUTORIALS EXPLORER (SIDEBAR + READER)

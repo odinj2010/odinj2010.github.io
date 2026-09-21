@@ -584,6 +584,41 @@ body {
   margin-left: 1.1rem;
 }
 
+/* Sidebar Platform / Game Filter Buttons */
+.sidebar-platform-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.15rem 0.25rem 0.5rem;
+}
+
+.sidebar-platform-btn {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.sidebar-platform-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: var(--bg-tertiary);
+}
+
+.sidebar-platform-btn.active {
+  background: rgba(88, 166, 255, 0.18);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  font-weight: 700;
+}
+
 .sidebar-sub-list.open {
   display: flex;
 }

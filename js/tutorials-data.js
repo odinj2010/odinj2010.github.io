@@ -2,14 +2,107 @@
    AUTHENTIC DATA STORE (js/tutorials-data.js)
    --------------------------------------------------------------------------
    Structured hierarchical data for NfgOdin (NFG):
-   1. Projects categorized with subcategories & game tags
-   2. Tutorials structured with matching hierarchy
+   1. Order: AI -> Software -> Modding
+   2. All projects marked 'Active' (none 'Completed')
+   3. digit.ai placed under AI
+   4. 'Hardware & SBC' renamed to 'Raspberry Pi' (filter tag: 'Raspberry Pi 5')
    ========================================================================== */
 
 /**
- * Projects data structured by domain -> subcategory -> items (with game tags)
+ * Projects data structured: AI -> Software -> Modding
  */
 export const projectTree = [
+  {
+    id: "ai",
+    title: "AI",
+    icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
+    description: "Hierarchical reinforcement learning frameworks, autonomous game-playing agents, and AI desktop companions.",
+    subcategories: [
+      {
+        id: "rl",
+        title: "Reinforcement Learning",
+        description: "Emulation hooks and autonomous agent training algorithms.",
+        projects: [
+          {
+            id: "pokemon-yellow-ai",
+            title: "PokemonYellow-HRL-AI",
+            platform: "Pokemon Yellow",
+            status: "Active",
+            description: "Hierarchical Reinforcement Learning (HRL) framework training an intelligent autonomous agent to navigate, battle, and beat Pokémon Yellow via Game Boy emulation hooks.",
+            tech: ["Python", "Reinforcement Learning", "Gym / Emulation API"],
+            githubUrl: "https://github.com/odinj2010/PokemonYellow-HRL-AI",
+            guideUrl: "#/tutorials/ai/rl/hrl-environment-setup"
+          }
+        ]
+      },
+      {
+        id: "assistants",
+        title: "AI Companions",
+        description: "Desktop companions and generative assistance tooling.",
+        projects: [
+          {
+            id: "digit-ai",
+            title: "digit.ai",
+            platform: "Desktop",
+            status: "Active",
+            description: "Desktop companion application and local assistant interface built for desktop productivity.",
+            tech: ["Python", "AI Desktop Companion"],
+            githubUrl: "https://github.com/odinj2010/digit.ai"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "software",
+    title: "Software",
+    icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>`,
+    description: "Standalone desktop software, mod management utilities, audio acoustics CAD, and Raspberry Pi system tooling.",
+    subcategories: [
+      {
+        id: "desktop",
+        title: "Desktop Applications",
+        description: "Standalone GUI software and engineering workstations.",
+        projects: [
+          {
+            id: "ffx-mod-manager",
+            title: "FFX-Mod-Manager",
+            platform: "Final Fantasy X",
+            status: "Active",
+            description: "A clean, fast, and secure standalone desktop mod manager for Final Fantasy X / X-2 HD Remaster on Steam. Handles automated mod injection and profile switching.",
+            tech: ["Python", "GUI Tooling", "Steam Modding"],
+            githubUrl: "https://github.com/odinj2010/FFX-Mod-Manager"
+          },
+          {
+            id: "runebox",
+            title: "RuneBox - Audio CAD & Acoustics Lab",
+            platform: "Audio CAD",
+            status: "Active",
+            description: "Commercial-grade car audio subwoofer enclosure CAD & acoustics laboratory featuring pure Python 3D vector visualization, wiring schematics, and precision cut sheets.",
+            tech: ["Python", "3D Vector Graphics", "Acoustics CAD"],
+            githubUrl: "https://github.com/odinj2010/RuneBox",
+            guideUrl: "#/tutorials/software/desktop/enclosure-tuning"
+          }
+        ]
+      },
+      {
+        id: "raspberry-pi",
+        title: "Raspberry Pi",
+        description: "Embedded Linux controllers, hardware daemons, and system tooling for single-board computers.",
+        projects: [
+          {
+            id: "sbc-core",
+            title: "SBC-Core",
+            platform: "Pi 5",
+            status: "Active",
+            description: "Core utility suite, daemon controller, and hardware interface system built specifically for Raspberry Pi 5 single-board computer environments.",
+            tech: ["Python", "Raspberry Pi 5", "Linux / Hardware"],
+            githubUrl: "https://github.com/odinj2010/SBC-Core"
+          }
+        ]
+      }
+    ]
+  },
   {
     id: "modding",
     title: "Modding",
@@ -24,8 +117,8 @@ export const projectTree = [
           {
             id: "ffviise-mod-loader",
             title: "FFVIISE Mod Loader",
-            game: "Final Fantasy VII",
-            status: "Released",
+            platform: "Final Fantasy VII",
+            status: "Active",
             description: "A lightweight, portable, and high-performance native mod loader for the Final Fantasy VII Steam Edition re-release, bypassing third-party overhead.",
             tech: ["C++", "Win32 API", "Game Hooks"],
             githubUrl: "https://github.com/odinj2010/FFVIISE_Mod_Loader",
@@ -41,7 +134,7 @@ export const projectTree = [
           {
             id: "riftlink",
             title: "RiftLink (Minecraft 1.21.1)",
-            game: "Minecraft",
+            platform: "Minecraft",
             status: "Active",
             description: "A modern gameplay, dimensional mechanics, and custom utility mod developed for Minecraft 1.21.1 on the NeoForge mod loader platform.",
             tech: ["Java", "NeoForge", "Minecraft 1.21.1"],
@@ -51,7 +144,7 @@ export const projectTree = [
           {
             id: "sticky-resources",
             title: "StickyResources",
-            game: "Minecraft",
+            platform: "Minecraft",
             status: "Active",
             description: "Custom Java-based gameplay enhancement and resource automation mod for Minecraft.",
             tech: ["Java", "Minecraft Modding"],
@@ -67,8 +160,8 @@ export const projectTree = [
           {
             id: "ffx-sphere-grid-tool",
             title: "FFX Sphere Grid Tool",
-            game: "Final Fantasy X",
-            status: "Completed",
+            platform: "Final Fantasy X",
+            status: "Active",
             description: "Specialized visual editor and binary parser for the iconic Final Fantasy X Sphere Grid layout, character paths, and stat nodes.",
             tech: ["Python", "Binary Editor", "FFX Modding"],
             githubUrl: "https://github.com/odinj2010/FFX_Sphere_Grid_Tool"
@@ -76,8 +169,8 @@ export const projectTree = [
           {
             id: "ffx-phyre-tool",
             title: "FFX-Phyre-Tool (glTF 2.0)",
-            game: "Final Fantasy X",
-            status: "Released",
+            platform: "Final Fantasy X",
+            status: "Active",
             description: "Extract and repack 3D models and textures from Final Fantasy X/X-2 HD Remaster directly into the modern open glTF 2.0 standard for Blender workflows.",
             tech: ["Python", "glTF 2.0", "PhyreEngine 3D"],
             githubUrl: "https://github.com/odinj2010/FFX-Phyre-Tool",
@@ -86,8 +179,8 @@ export const projectTree = [
           {
             id: "7th-heaven-converter",
             title: "7thHeavenToFFVIIModLoader",
-            game: "Final Fantasy VII",
-            status: "Released",
+            platform: "Final Fantasy VII",
+            status: "Active",
             description: "Automated archive extraction and manifest conversion utility translating legacy 7th Heaven .iro files into native unpacked folder structures.",
             tech: ["Python", "IRO Archives", "Data Extraction"],
             githubUrl: "https://github.com/odinj2010/7thHeavenToFFVIIModLoader",
@@ -96,8 +189,8 @@ export const projectTree = [
           {
             id: "ffviise-modding-tool",
             title: "FFVIISE Modding Tool",
-            game: "Final Fantasy VII",
-            status: "Released",
+            platform: "Final Fantasy VII",
+            status: "Active",
             description: "Dedicated authoring and packing tool for configuring mods targeting the 2026 Steam edition of Final Fantasy VII.",
             tech: ["Python", "Asset Packing", "Steam Edition"],
             githubUrl: "https://github.com/odinj2010/FFVIISE_Modding_Tool"
@@ -105,8 +198,8 @@ export const projectTree = [
           {
             id: "ffx-audio-tool",
             title: "FFX_Audio_Tool",
-            game: "Final Fantasy X",
-            status: "Completed",
+            platform: "Final Fantasy X",
+            status: "Active",
             description: "Stream extraction and conversion tool for proprietary audio banks inside Final Fantasy X / X-2 HD Remaster.",
             tech: ["Python", "Audio Extraction", "Binary Parsing"],
             githubUrl: "https://github.com/odinj2010/FFX_Audio_Tool"
@@ -114,8 +207,8 @@ export const projectTree = [
           {
             id: "ffx-shop-tool",
             title: "FFX_Shop_Tool",
-            game: "Final Fantasy X",
-            status: "Completed",
+            platform: "Final Fantasy X",
+            status: "Active",
             description: "Binary data parser and inventory editor for shop tables and merchants in Final Fantasy X.",
             tech: ["Python", "Game Data Tables"],
             githubUrl: "https://github.com/odinj2010/FFX_Shop_Tool"
@@ -123,11 +216,44 @@ export const projectTree = [
           {
             id: "ffx-ai-tool",
             title: "FFX_AI_Tool",
-            game: "Final Fantasy X",
-            status: "Completed",
+            platform: "Final Fantasy X",
+            status: "Active",
             description: "Bytecode decompiler and behavior script inspector for battle enemy AI routines in Final Fantasy X.",
             tech: ["Python", "Bytecode Decompilation"],
             githubUrl: "https://github.com/odinj2010/FFX_AI_Tool"
+          }
+        ]
+      }
+    ]
+  }
+];
+
+/**
+ * Tutorials data structured: AI -> Software -> Modding
+ */
+export const tutorialTree = [
+  {
+    id: "ai",
+    title: "AI",
+    icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
+    subcategories: [
+      {
+        id: "rl",
+        title: "Reinforcement Learning",
+        guides: [
+          {
+            id: "hrl-environment-setup",
+            title: "Setting Up the Pokemon Yellow Gym Environment",
+            platform: "Pokemon Yellow",
+            readingTime: "7 min read",
+            difficulty: "Intermediate",
+            summary: "Configuring emulator interfaces and reward functions for hierarchical RL training.",
+            steps: [
+              {
+                title: "1. Memory Bus Bridge",
+                description: "The agent hooks directly into the emulator memory bus to monitor player coordinates, health, and combat events in real time."
+              }
+            ]
           }
         ]
       }
@@ -137,92 +263,34 @@ export const projectTree = [
     id: "software",
     title: "Software",
     icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>`,
-    description: "Desktop applications, standalone managers, CAD acoustics simulation suites, and single-board computer software.",
     subcategories: [
       {
         id: "desktop",
         title: "Desktop Applications",
-        description: "Standalone GUI tools and companion applications.",
-        projects: [
+        guides: [
           {
-            id: "ffx-mod-manager",
-            title: "FFX-Mod-Manager",
-            game: "Final Fantasy X",
-            status: "Released",
-            description: "A clean, fast, and secure standalone desktop mod manager for Final Fantasy X / X-2 HD Remaster on Steam. Handles automated mod injection and profile switching.",
-            tech: ["Python", "GUI Tooling", "Steam Modding"],
-            githubUrl: "https://github.com/odinj2010/FFX-Mod-Manager"
-          },
-          {
-            id: "runebox",
-            title: "RuneBox - Audio CAD & Acoustics Lab",
-            game: "Audio CAD",
-            status: "Active",
-            description: "Commercial-grade car audio subwoofer enclosure CAD & acoustics laboratory featuring pure Python 3D vector visualization, wiring schematics, and precision cut sheets.",
-            tech: ["Python", "3D Vector Graphics", "Acoustics CAD"],
-            githubUrl: "https://github.com/odinj2010/RuneBox",
-            guideUrl: "#/tutorials/software/desktop/enclosure-tuning"
-          },
-          {
-            id: "digit-ai",
-            title: "digit.ai",
-            game: "General",
-            status: "Active",
-            description: "Desktop companion application and local assistant interface built for desktop productivity.",
-            tech: ["Python", "Desktop App"],
-            githubUrl: "https://github.com/odinj2010/digit.ai"
-          }
-        ]
-      },
-      {
-        id: "hardware",
-        title: "Hardware & SBC",
-        description: "Embedded Linux scripts, Raspberry Pi daemons, and physical interfaces.",
-        projects: [
-          {
-            id: "sbc-core",
-            title: "SBC-Core",
-            game: "Raspberry Pi 5",
-            status: "Active",
-            description: "Core utility suite, daemon controller, and hardware interface system built specifically for Raspberry Pi 5 single-board computer environments.",
-            tech: ["Python", "Raspberry Pi 5", "Linux / Hardware"],
-            githubUrl: "https://github.com/odinj2010/SBC-Core"
+            id: "enclosure-tuning",
+            title: "Simulating Port Velocity & Box Volume in RuneBox",
+            platform: "Audio CAD",
+            readingTime: "8 min read",
+            difficulty: "Intermediate",
+            summary: "Learn how RuneBox calculates acoustic compliance, port resonant frequencies, and generates fabrication cut sheets.",
+            steps: [
+              {
+                title: "1. Acoustic Compliance & Tuning",
+                description: "Balance net volume and port area to prevent turbulence while maximizing sub-bass efficiency.",
+                callout: {
+                  type: "tip",
+                  title: "CAD Visualization",
+                  content: "RuneBox computes pure 3D vector graphics to preview internal box partitions and port bends."
+                }
+              }
+            ]
           }
         ]
       }
     ]
   },
-  {
-    id: "ai",
-    title: "AI",
-    icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
-    description: "Hierarchical reinforcement learning algorithms and autonomous game-playing agents.",
-    subcategories: [
-      {
-        id: "rl",
-        title: "Reinforcement Learning",
-        description: "Emulation hooks and agent training algorithms.",
-        projects: [
-          {
-            id: "pokemon-yellow-ai",
-            title: "PokemonYellow-HRL-AI",
-            game: "Pokemon Yellow",
-            status: "Completed",
-            description: "Hierarchical Reinforcement Learning (HRL) framework training an intelligent autonomous agent to navigate, battle, and beat Pokémon Yellow via Game Boy emulation hooks.",
-            tech: ["Python", "Reinforcement Learning", "Gym / Emulation API"],
-            githubUrl: "https://github.com/odinj2010/PokemonYellow-HRL-AI",
-            guideUrl: "#/tutorials/ai/rl/hrl-environment-setup"
-          }
-        ]
-      }
-    ]
-  }
-];
-
-/**
- * Tutorials data aligned with the project tree
- */
-export const tutorialTree = [
   {
     id: "modding",
     title: "Modding",
@@ -235,7 +303,7 @@ export const tutorialTree = [
           {
             id: "ffviise-loader",
             title: "Setting Up FFVIISE Mod Loader",
-            game: "Final Fantasy VII",
+            platform: "Final Fantasy VII",
             readingTime: "5 min read",
             difficulty: "Beginner",
             summary: "How to install the native FFVIISE mod loader directly into your Steam Final Fantasy VII installation.",
@@ -276,7 +344,7 @@ export const tutorialTree = [
           {
             id: "installing-riftlink",
             title: "Installing RiftLink on NeoForge",
-            game: "Minecraft",
+            platform: "Minecraft",
             readingTime: "4 min read",
             difficulty: "Beginner",
             summary: "Quick guide to adding RiftLink to your NeoForge Minecraft profile.",
@@ -300,7 +368,7 @@ export const tutorialTree = [
           {
             id: "7thheaven-migration",
             title: "Converting IRO Mods with 7thHeavenToFFVIIModLoader",
-            game: "Final Fantasy VII",
+            platform: "Final Fantasy VII",
             readingTime: "6 min read",
             difficulty: "Intermediate",
             summary: "Convert classic 7th Heaven .iro packages into folder structures ready for the native mod loader.",
@@ -322,7 +390,7 @@ python convert.py --input "path/to/mod.iro" --output "path/to/mods/ExtractedMod"
           {
             id: "phyre-gltf-export",
             title: "Exporting 3D Models to glTF with FFX-Phyre-Tool",
-            game: "Final Fantasy X",
+            platform: "Final Fantasy X",
             readingTime: "7 min read",
             difficulty: "Intermediate",
             summary: "Extract 3D models and textures from Final Fantasy X/X-2 HD Remaster for use in Blender or modern engines.",
@@ -335,65 +403,6 @@ python convert.py --input "path/to/mod.iro" --output "path/to/mods/ExtractedMod"
                   filename: "Run Extraction",
                   code: `python phyre_tool.py --extract "model.phyre" --out "exported_model.gltf"`
                 }
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: "software",
-    title: "Software",
-    icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>`,
-    subcategories: [
-      {
-        id: "desktop",
-        title: "Desktop Applications",
-        guides: [
-          {
-            id: "enclosure-tuning",
-            title: "Simulating Port Velocity & Box Volume in RuneBox",
-            game: "Audio CAD",
-            readingTime: "8 min read",
-            difficulty: "Intermediate",
-            summary: "Learn how RuneBox calculates acoustic compliance, port resonant frequencies, and generates fabrication cut sheets.",
-            steps: [
-              {
-                title: "1. Acoustic Compliance & Tuning",
-                description: "Balance net volume and port area to prevent turbulence while maximizing sub-bass efficiency.",
-                callout: {
-                  type: "tip",
-                  title: "CAD Visualization",
-                  content: "RuneBox computes pure 3D vector graphics to preview internal box partitions and port bends."
-                }
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: "ai",
-    title: "AI",
-    icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
-    subcategories: [
-      {
-        id: "rl",
-        title: "Reinforcement Learning",
-        guides: [
-          {
-            id: "hrl-environment-setup",
-            title: "Setting Up the Pokemon Yellow Gym Environment",
-            game: "Pokemon Yellow",
-            readingTime: "7 min read",
-            difficulty: "Intermediate",
-            summary: "Configuring emulator interfaces and reward functions for hierarchical RL training.",
-            steps: [
-              {
-                title: "1. Memory Bus Bridge",
-                description: "The agent hooks directly into the emulator memory bus to monitor player coordinates, health, and combat events in real time."
               }
             ]
           }
