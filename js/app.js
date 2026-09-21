@@ -15,9 +15,10 @@ class App {
     
     // Project Explorer State
     this.projectState = {
-      categoryId: null,      // e.g. "modding", "software", "ai" (null = All)
-      subcategoryId: null,   // e.g. "loaders", "mods", "tools" (null = All in Category)
-      activeGame: 'All',     // "All" or game filter
+      categoryId: null,        // e.g. "modding", "software", "ai" (null = All)
+      subcategoryId: null,     // e.g. "loaders", "mods", "tools" (null = All in Category)
+      activeGame: 'All',       // specific game when selected from dropdown
+      activePlatform: 'All',   // 'All', 'github', 'curseforge', 'nexus'
       searchQuery: ''
     };
 
@@ -310,30 +311,27 @@ class App {
     if (!this.projectSidebar) return;
     const { categoryId, subcategoryId, activeGame } = this.projectState;
 
-    // Gather available platforms/games within the current category scope
-    const currentProjects = this.getCurrentScopeProjects();
-    const platformsSet = new Set();
-    currentProjects.forEach(p => {
-      const plat = p.platform || p.game;
-      if (plat) platformsSet.add(plat);
-    });
-    const availablePlatforms = ['All', ...Array.from(platformsSet)];
-
-    // If activeGame is set to something that isn't available in this scope, reset to 'All'
-    if (activeGame !== 'All' && !platformsSet.has(activeGame)) {
-      this.projectState.activeGame = 'All';
-    }
-
-    const platformPillsHtml = availablePlatforms.length > 2 ? `
-      <div class="sidebar-heading" style="margin-top: 0.85rem;">Platform / Game</div>
+    const activePlatform = this.projectState.activePlatform || 'All';
+    const platformPillsHtml = `
+      <div class="sidebar-heading" style="margin-top: 0.85rem;">Platform Filter</div>
       <div class="sidebar-platform-group">
-        ${availablePlatforms.map(plat => `
-          <button type="button" class="sidebar-platform-btn ${plat === this.projectState.activeGame ? 'active' : ''}" data-platform="${plat}">
-            <span>${plat === 'All' ? 'All Platforms' : plat}</span>
-          </button>
-        `).join('')}
+        <button type="button" class="sidebar-platform-btn ${activePlatform === 'All' ? 'active' : ''}" data-platform="All">
+          <span>All</span>
+        </button>
+        <button type="button" class="sidebar-platform-btn ${activePlatform === 'github' ? 'active' : ''}" data-platform="github">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </button>
+        <button type="button" class="sidebar-platform-btn ${activePlatform === 'curseforge' ? 'active' : ''}" data-platform="curseforge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M2 5h20c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-2.5c-.7 0-1.35.37-1.7 1-.7 1.25-1.8 2-3.8 2h-4c-2 0-3.1-.75-3.8-2-.35-.63-1-1-1.7-1H2c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1zm6 8h8v3h-8v-3zm-3 5h14c.55 0 1 .45 1 1v2H4v-2c0-.55.45-1 1-1z"/></svg>
+          <span>Curse</span>
+        </button>
+        <button type="button" class="sidebar-platform-btn ${activePlatform === 'nexus' ? 'active' : ''}" data-platform="nexus">
+          <svg width="13" height="14" viewBox="0 0 24 26" fill="currentColor"><path d="M6.98826 24.495C6.79343 24.4706 6.59794 24.4233 6.3908 24.3501C6.01427 24.2172 5.70001 24.0384 5.46836 23.8975C4.95807 23.5873 4.43921 23.1981 3.88232 22.7082C3.63916 22.4941 3.40229 22.2694 3.17787 22.0399L2.98506 21.8434C2.85076 21.716 2.73601 21.5732 2.64187 21.4194C2.4658 21.138 2.32507 20.7623 2.30378 20.2704C2.29092 20.1102 2.28356 19.9489 2.28195 19.7882C2.27834 19.4379 2.30083 19.0765 2.3489 18.7137C2.44705 17.9728 2.66397 17.3068 2.84205 16.8094C2.85665 16.7685 2.87151 16.7276 2.88664 16.6866C2.83697 16.5506 2.78983 16.4137 2.74565 16.2765C2.49003 15.4831 2.32239 14.6568 2.24714 13.8205C2.168 12.9397 2.1905 12.0498 2.31409 11.1763C2.34006 10.9925 2.37086 10.8085 2.40594 10.6254C2.08632 10.1296 1.68101 9.4239 1.42928 8.5827L1.42446 8.56706C1.36996 8.38783 1.24222 7.96838 1.31292 7.4192C1.33916 7.21658 1.38496 7.01424 1.45325 6.79971C1.57965 6.40236 1.74555 6.07087 1.87583 5.82649C2.16573 5.28334 2.52645 4.73258 2.9789 4.1428C3.17774 3.88364 3.38542 3.63222 3.59658 3.3953L3.78096 3.18752C3.87697 3.072 3.98275 2.96939 4.09656 2.88085C4.36664 2.66474 4.74102 2.48365 5.2477 2.45853C5.4136 2.44318 5.58352 2.43514 5.75357 2.43471H5.76656C6.10653 2.43471 6.45788 2.46499 6.81098 2.52469C7.34082 2.61437 7.82647 2.77481 8.25669 2.94471C8.5435 2.81298 8.83822 2.69473 9.13467 2.59285C9.87554 2.33785 10.6459 2.17641 11.4245 2.11298C12.2399 2.0464 13.07 2.08758 13.8718 2.23438C14.0583 2.26854 14.2452 2.30872 14.4309 2.35464C15.0615 1.89099 15.6421 1.57227 16.2398 1.36032L16.253 1.35544C16.3931 1.30321 16.6846 1.19458 17.0708 1.19458C17.1543 1.19458 17.2387 1.19975 17.3213 1.21008C17.5163 1.23447 17.7118 1.28183 17.9188 1.35487C18.2956 1.4879 18.6097 1.6667 18.8413 1.80776C19.3518 2.11801 19.8706 2.50718 20.4274 2.99709C20.6704 3.21091 20.9074 3.43577 21.132 3.66537L21.3245 3.86154C21.4205 3.95266 21.5065 4.05153 21.5821 4.15672C21.8249 4.48706 22.0144 4.95645 22.0181 5.61798C22.0307 5.85361 22.0312 6.09412 22.0198 6.33491C21.9951 6.86156 21.9209 7.36338 21.7994 7.82631C21.7101 8.16641 21.6035 8.51153 21.4818 8.85507C21.7187 9.4968 21.8972 10.1619 22.0139 10.8385C22.2584 12.2556 22.2311 13.7213 21.9384 15.1263C22.118 15.4056 22.2704 15.664 22.4028 15.9141C22.633 16.3488 22.8156 16.7967 22.9455 17.2451C22.9937 17.4116 23.121 17.8515 23.0371 18.4149C23.0079 18.6107 22.96 18.8083 22.8907 19.0179C22.6488 19.7506 22.2721 20.3476 21.938 20.8496C21.5703 21.4019 21.1653 21.9265 20.7336 22.4091L20.5775 22.5851C20.4803 22.7026 20.3727 22.8062 20.2572 22.8956C19.9876 23.1097 19.6146 23.2889 19.1111 23.3142C18.9451 23.3297 18.775 23.3374 18.605 23.338H18.5916C18.2341 23.338 17.864 23.3044 17.4919 23.2383C16.8958 23.1324 16.3515 22.9361 15.8781 22.7375C15.6208 22.8471 15.3586 22.9457 15.0954 23.0316C14.3418 23.2773 13.5601 23.4267 12.7718 23.4755C11.9527 23.5266 11.1215 23.4682 10.3187 23.304C10.2214 23.284 10.1241 23.2625 10.027 23.2394C9.33217 23.7661 8.70834 24.1182 8.06963 24.3448L8.05651 24.3495C7.91645 24.4019 7.62495 24.5104 7.23879 24.5104C7.15523 24.5104 7.07088 24.5052 6.98826 24.495Z"/></svg>
+          <span>Nexus</span>
+        </button>
       </div>
-    ` : '';
+    `;
 
     this.projectSidebar.innerHTML = `
       <div class="sidebar-heading">Navigation</div>
@@ -408,7 +406,7 @@ class App {
     // Attach click listeners to sidebar platform buttons
     this.projectSidebar.querySelectorAll('.sidebar-platform-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        this.projectState.activeGame = btn.getAttribute('data-platform');
+        this.projectState.activePlatform = btn.getAttribute('data-platform');
         this.renderProjectSidebar();
         this.renderProjectsContent();
       });
@@ -417,7 +415,7 @@ class App {
 
   renderProjectsContent() {
     if (!this.projectViewport) return;
-    const { categoryId, subcategoryId, activeGame, searchQuery } = this.projectState;
+    const { categoryId, subcategoryId, activeGame, activePlatform, searchQuery } = this.projectState;
 
     let targetTitle = "All Projects & Tools";
     let targetDesc = "Explore software tools, game modding frameworks, and AI experiments built by NfgOdin.";
@@ -445,23 +443,21 @@ class App {
       });
     }
 
-    // Collect Unique Game / Platform tags in this scope
-    const platformsSet = new Set();
-    allProjects.forEach(p => {
-      const plat = p.platform || p.game;
-      if (plat) platformsSet.add(plat);
-    });
-    const availablePlatforms = ['All', ...Array.from(platformsSet)];
-
-    // Safety check: ensure activeGame is valid for current view
-    if (activeGame !== 'All' && !platformsSet.has(activeGame)) {
-      this.projectState.activeGame = 'All';
+    // Filter by Specific Game (from sidebar nested dropdown)
+    let filtered = allProjects;
+    if (activeGame && activeGame !== 'All') {
+      filtered = filtered.filter(p => (p.platform || p.game) === activeGame);
     }
 
-    // Filter by Platform/Game
-    let filtered = allProjects;
-    if (this.projectState.activeGame !== 'All') {
-      filtered = filtered.filter(p => (p.platform || p.game) === this.projectState.activeGame);
+    // Filter by Platform (All, GitHub, CurseForge, Nexus)
+    if (activePlatform && activePlatform !== 'All') {
+      if (activePlatform === 'github') {
+        filtered = filtered.filter(p => !!p.githubUrl);
+      } else if (activePlatform === 'curseforge') {
+        filtered = filtered.filter(p => !!p.curseforgeUrl);
+      } else if (activePlatform === 'nexus') {
+        filtered = filtered.filter(p => !!p.nexusUrl);
+      }
     }
 
     // Filter by Search Query

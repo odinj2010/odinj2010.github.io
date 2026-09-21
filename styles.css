@@ -635,11 +635,11 @@ body {
   margin-left: 1.1rem;
 }
 
-/* Sidebar Platform / Game Filter Buttons */
+/* Sidebar Platform / Filter Buttons */
 .sidebar-platform-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.4rem;
   padding: 0.15rem 0.25rem 0.5rem;
 }
 
@@ -650,11 +650,18 @@ body {
   font-family: inherit;
   font-size: 0.78rem;
   font-weight: 600;
-  padding: 0.3rem 0.65rem;
+  padding: 0.35rem 0.65rem;
   border-radius: var(--radius-full);
   cursor: pointer;
   transition: all 0.15s ease;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.sidebar-platform-btn svg {
+  flex-shrink: 0;
 }
 
 .sidebar-platform-btn:hover {
@@ -668,6 +675,24 @@ body {
   border-color: var(--accent-blue);
   color: var(--accent-blue);
   font-weight: 700;
+}
+
+.sidebar-platform-btn.active[data-platform="nexus"] {
+  background: rgba(218, 142, 53, 0.18);
+  border-color: #da8e35;
+  color: #da8e35;
+}
+
+.sidebar-platform-btn.active[data-platform="curseforge"] {
+  background: rgba(241, 100, 54, 0.18);
+  border-color: #f16436;
+  color: #f16436;
+}
+
+.sidebar-platform-btn.active[data-platform="github"] {
+  background: rgba(240, 246, 252, 0.15);
+  border-color: var(--text-primary);
+  color: var(--text-primary);
 }
 
 .sidebar-sub-list.open {
