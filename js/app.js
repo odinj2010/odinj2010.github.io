@@ -749,7 +749,11 @@ class App {
   }
 }
 
-// Start application on DOM Ready
-document.addEventListener('DOMContentLoaded', () => {
+// Start application on DOM Ready or immediately if already loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    new App();
+  });
+} else {
   new App();
-});
+}
