@@ -1,53 +1,32 @@
 /* ==========================================================================
    AUTHENTIC DATA STORE (js/tutorials-data.js)
    --------------------------------------------------------------------------
-   Structured hierarchical data for Jonathan Roberts (NfgOdin / NFG):
-   1. Projects grouped into Dedicated Categories & Subcategories
-   2. Tutorials with 3+ level nested drilldown
+   Structured hierarchical data for NfgOdin (NFG):
+   Alphabetical Order for Both Projects and Tutorials:
+   1. AI
+   2. Loaders
+   3. Mods
+   4. Software
+   5. Tools
    ========================================================================== */
 
 /**
- * Categorized Projects Hierarchy for dedicated screens
+ * Categorized Projects Hierarchy in Alphabetical Order
  */
 export const projectCategories = [
   {
-    id: "software",
-    title: "Software",
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>`,
-    description: "Desktop software, standalone mod managers, CAD acoustics tools, and Raspberry Pi software.",
+    id: "ai",
+    title: "AI",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
+    description: "Hierarchical reinforcement learning algorithms and autonomous game playing agents.",
     projects: [
       {
-        id: "ffx-mod-manager",
-        title: "FFX-Mod-Manager",
-        status: "Released",
-        description: "A clean, fast, and secure standalone desktop mod manager for Final Fantasy X / X-2 HD Remaster on Steam. Handles automated mod injection and profile switching.",
-        tech: ["Python", "GUI Tooling", "Steam Modding"],
-        githubUrl: "https://github.com/odinj2010/FFX-Mod-Manager"
-      },
-      {
-        id: "runebox",
-        title: "RuneBox - Audio CAD & Acoustics Lab",
-        status: "Active",
-        description: "Commercial-grade car audio subwoofer enclosure CAD & acoustics laboratory featuring pure Python 3D vector visualization, wiring schematics, and precision cut sheets.",
-        tech: ["Python", "3D Vector Graphics", "Acoustics CAD"],
-        githubUrl: "https://github.com/odinj2010/RuneBox",
-        guideUrl: "#/tutorials/audio-engineering/runebox-cad/enclosure-tuning"
-      },
-      {
-        id: "sbc-core",
-        title: "SBC-Core",
-        status: "Active",
-        description: "Core utility suite, daemon controller, and hardware interface system built specifically for Raspberry Pi 5 single-board computer environments.",
-        tech: ["Python", "Raspberry Pi 5", "Linux / Hardware"],
-        githubUrl: "https://github.com/odinj2010/SBC-Core"
-      },
-      {
-        id: "digit-ai",
-        title: "digit.ai",
-        status: "Active",
-        description: "Desktop companion application and local assistant interface built for desktop productivity.",
-        tech: ["Python", "Desktop App"],
-        githubUrl: "https://github.com/odinj2010/digit.ai"
+        id: "pokemon-yellow-ai",
+        title: "PokemonYellow-HRL-AI",
+        status: "Completed",
+        description: "Hierarchical Reinforcement Learning (HRL) framework training an intelligent autonomous agent to navigate, battle, and beat Pokémon Yellow via Game Boy emulation hooks.",
+        tech: ["Python", "Reinforcement Learning", "Gym / Emulation API"],
+        githubUrl: "https://github.com/odinj2010/PokemonYellow-HRL-AI"
       }
     ]
   },
@@ -64,7 +43,7 @@ export const projectCategories = [
         description: "A lightweight, portable, and high-performance native mod loader for the Final Fantasy VII Steam Edition re-release, bypassing third-party overhead.",
         tech: ["C++", "Win32 API", "Game Hooks"],
         githubUrl: "https://github.com/odinj2010/FFVIISE_Mod_Loader",
-        guideUrl: "#/tutorials/game-modding/ffvii-steam/ffviise-loader"
+        guideUrl: "#/tutorials/loaders/ffvii-steam/ffviise-loader"
       }
     ]
   },
@@ -93,6 +72,47 @@ export const projectCategories = [
     ]
   },
   {
+    id: "software",
+    title: "Software",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>`,
+    description: "Desktop software, standalone mod managers, CAD acoustics tools, and Raspberry Pi software.",
+    projects: [
+      {
+        id: "ffx-mod-manager",
+        title: "FFX-Mod-Manager",
+        status: "Released",
+        description: "A clean, fast, and secure standalone desktop mod manager for Final Fantasy X / X-2 HD Remaster on Steam. Handles automated mod injection and profile switching.",
+        tech: ["Python", "GUI Tooling", "Steam Modding"],
+        githubUrl: "https://github.com/odinj2010/FFX-Mod-Manager"
+      },
+      {
+        id: "runebox",
+        title: "RuneBox - Audio CAD & Acoustics Lab",
+        status: "Active",
+        description: "Commercial-grade car audio subwoofer enclosure CAD & acoustics laboratory featuring pure Python 3D vector visualization, wiring schematics, and precision cut sheets.",
+        tech: ["Python", "3D Vector Graphics", "Acoustics CAD"],
+        githubUrl: "https://github.com/odinj2010/RuneBox",
+        guideUrl: "#/tutorials/software/runebox-cad/enclosure-tuning"
+      },
+      {
+        id: "sbc-core",
+        title: "SBC-Core",
+        status: "Active",
+        description: "Core utility suite, daemon controller, and hardware interface system built specifically for Raspberry Pi 5 single-board computer environments.",
+        tech: ["Python", "Raspberry Pi 5", "Linux / Hardware"],
+        githubUrl: "https://github.com/odinj2010/SBC-Core"
+      },
+      {
+        id: "digit-ai",
+        title: "digit.ai",
+        status: "Active",
+        description: "Desktop companion application and local assistant interface built for desktop productivity.",
+        tech: ["Python", "Desktop App"],
+        githubUrl: "https://github.com/odinj2010/digit.ai"
+      }
+    ]
+  },
+  {
     id: "tools",
     title: "Tools",
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
@@ -105,7 +125,7 @@ export const projectCategories = [
         description: "Archive extraction and manifest conversion utility translating legacy .iro files from 7th Heaven into native directory trees ready for FFVII Mod Loader.",
         tech: ["Python", "IRO Archives", "Data Extraction"],
         githubUrl: "https://github.com/odinj2010/7thHeavenToFFVIIModLoader",
-        guideUrl: "#/tutorials/game-modding/ffvii-steam/7thheaven-migration"
+        guideUrl: "#/tutorials/tools/7th-heaven-conversion/7thheaven-migration"
       },
       {
         id: "ffx-phyre-tool",
@@ -114,7 +134,7 @@ export const projectCategories = [
         description: "A modern utility to seamlessly extract and repack 3D models and textures for Final Fantasy X/X-2 HD Remaster using the modern glTF 2.0 open standard.",
         tech: ["Python", "glTF 2.0", "PhyreEngine 3D"],
         githubUrl: "https://github.com/odinj2010/FFX-Phyre-Tool",
-        guideUrl: "#/tutorials/game-modding/ffx-modding/phyre-gltf-export"
+        guideUrl: "#/tutorials/tools/ffx-modding/phyre-gltf-export"
       },
       {
         id: "ffviise-modding-tool",
@@ -157,55 +177,39 @@ export const projectCategories = [
         githubUrl: "https://github.com/odinj2010/FFX_AI_Tool"
       }
     ]
-  },
-  {
-    id: "ai",
-    title: "AI",
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
-    description: "Hierarchical reinforcement learning algorithms and autonomous game playing agents.",
-    projects: [
-      {
-        id: "pokemon-yellow-ai",
-        title: "PokemonYellow-HRL-AI",
-        status: "Completed",
-        description: "Hierarchical Reinforcement Learning (HRL) framework training an intelligent autonomous agent to navigate, battle, and beat Pokémon Yellow via Game Boy emulation hooks.",
-        tech: ["Python", "Reinforcement Learning", "Gym / Emulation API"],
-        githubUrl: "https://github.com/odinj2010/PokemonYellow-HRL-AI"
-      }
-    ]
   }
 ];
 
 /**
- * Hierarchical Tutorial Engine Data Tree
+ * Hierarchical Tutorial Engine Data Tree in Alphabetical Order:
+ * 1. AI
+ * 2. Loaders
+ * 3. Mods
+ * 4. Software
+ * 5. Tools
  */
 export const tutorialCategories = [
   {
-    id: "software",
-    title: "Software",
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>`,
-    summary: "Guides for desktop software, acoustics CAD, and Raspberry Pi system setup.",
+    id: "ai",
+    title: "AI",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
+    summary: "Reinforcement learning workflows, local model execution, and AI tooling guides.",
     subcategories: [
       {
-        id: "runebox-cad",
-        title: "RuneBox Acoustics Lab",
-        description: "Designing high-precision subwoofer enclosures, port tuning, and wiring configurations.",
+        id: "rl-gameboy",
+        title: "Pokemon Yellow HRL Framework",
+        description: "Training autonomous reinforcement learning agents in Game Boy emulated environments.",
         guides: [
           {
-            id: "enclosure-tuning",
-            title: "Simulating Port Velocity & Box Volume in RuneBox",
-            readingTime: "8 min read",
+            id: "hrl-environment-setup",
+            title: "Setting Up the Pokemon Yellow Gym Environment",
+            readingTime: "7 min read",
             difficulty: "Intermediate",
-            summary: "Learn how RuneBox calculates acoustic compliance, port resonant frequencies, and generates fabrication cut sheets.",
+            summary: "Configuring the emulator interface and reward functions for hierarchical RL training.",
             steps: [
               {
-                title: "1. The Mathematics of Enclosure Tuning",
-                description: "Subwoofer box design requires balancing net internal volume, driver displacement, and port resonance to avoid turbulence and achieve optimal frequency response curves.",
-                callout: {
-                  type: "tip",
-                  title: "Acoustic Modeling",
-                  content: "RuneBox computes pure 3D vector visualizations alongside Thiele/Small parameter response curves."
-                }
+                title: "1. Emulation Bridge",
+                description: "The agent interfaces with the Game Boy memory bus using Python hooks to read game state, battle status, and player coordinates directly."
               }
             ]
           }
@@ -265,7 +269,7 @@ export const tutorialCategories = [
   {
     id: "mods",
     title: "Mods",
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 2 18 2 18 6 6 6 6 2"/><rect width="20" height="14" x="2" y="6" rx="2"/><line x1="6" x2="6.01" y1="13" y2="13"/><line x1="10" x2="10.01" y1="13" y2="13"/><line x1="15" x2="19" y1="12" y2="12"/><line x1="17" x2="17" y1="10" y2="14"/></svg>`,
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 2 18 2 18 6 6 6 6 2"/><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="6" x2="6.01" y1="13" y2="13"/><line x1="10" x2="10.01" y1="13" y2="13"/><line x1="15" x2="19" y1="12" y2="12"/><line x1="17" x2="17" y1="10" y2="14"/></svg>`,
     summary: "Installation and configuration guides for gameplay mods and sandbox mechanics.",
     subcategories: [
       {
@@ -287,6 +291,39 @@ export const tutorialCategories = [
               {
                 title: "2. Placing the Mod",
                 description: "Drop the downloaded RiftLink `.jar` file directly into your `.minecraft/mods` directory."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "software",
+    title: "Software",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>`,
+    summary: "Guides for desktop software, acoustics CAD, and Raspberry Pi system setup.",
+    subcategories: [
+      {
+        id: "runebox-cad",
+        title: "RuneBox Acoustics Lab",
+        description: "Designing high-precision subwoofer enclosures, port tuning, and wiring configurations.",
+        guides: [
+          {
+            id: "enclosure-tuning",
+            title: "Simulating Port Velocity & Box Volume in RuneBox",
+            readingTime: "8 min read",
+            difficulty: "Intermediate",
+            summary: "Learn how RuneBox calculates acoustic compliance, port resonant frequencies, and generates fabrication cut sheets.",
+            steps: [
+              {
+                title: "1. The Mathematics of Enclosure Tuning",
+                description: "Subwoofer box design requires balancing net internal volume, driver displacement, and port resonance to avoid turbulence and achieve optimal frequency response curves.",
+                callout: {
+                  type: "tip",
+                  title: "Acoustic Modeling",
+                  content: "RuneBox computes pure 3D vector visualizations alongside Thiele/Small parameter response curves."
+                }
               }
             ]
           }
@@ -357,34 +394,6 @@ python convert.py --input "path/to/mod.iro" --output "path/to/mods/ExtractedMod"
 cd FFX-Phyre-Tool
 python phyre_tool.py --extract "model.phyre" --out "exported_model.gltf"`
                 }
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: "ai",
-    title: "AI",
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
-    summary: "Reinforcement learning workflows, local model execution, and AI tooling guides.",
-    subcategories: [
-      {
-        id: "rl-gameboy",
-        title: "Pokemon Yellow HRL Framework",
-        description: "Training autonomous reinforcement learning agents in Game Boy emulated environments.",
-        guides: [
-          {
-            id: "hrl-environment-setup",
-            title: "Setting Up the Pokemon Yellow Gym Environment",
-            readingTime: "7 min read",
-            difficulty: "Intermediate",
-            summary: "Configuring the emulator interface and reward functions for hierarchical RL training.",
-            steps: [
-              {
-                title: "1. Emulation Bridge",
-                description: "The agent interfaces with the Game Boy memory bus using Python hooks to read game state, battle status, and player coordinates directly."
               }
             ]
           }

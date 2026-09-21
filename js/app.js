@@ -89,6 +89,67 @@ class App {
         this.renderProjectsView();
       });
     }
+
+    // Donation Modal Handlers
+    this.initDonationModal();
+  }
+
+  initDonationModal() {
+    const openBtn = document.getElementById('open-donate-modal');
+    const closeBtn = document.getElementById('close-donate-modal');
+    const backdrop = document.getElementById('donate-modal-backdrop');
+    const amountInput = document.getElementById('donate-amount-input');
+    const presetBtns = document.querySelectorAll('.donate-preset-btn');
+    const submitBtn = document.getElementById('donate-submit-btn');
+
+    if (openBtn && backdrop) {
+      openBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        backdrop.classList.add('open');
+      });
+    }
+
+    if (closeBtn && backdrop) {
+      closeBtn.addEventListener('click', () => backdrop.classList.remove('open'));
+    }
+
+    if (backdrop) {
+      backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) backdrop.classList.remove('open');
+      });
+    }
+
+    // Preset selection
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        presetBtns.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        if (amountInput) amountInput.value = btn.getAttribute('data-val');
+      });
+    });
+
+    if (amountInput) {
+      amountInput.addEventListener('input', () => {
+        const val = amountInput.value;
+        presetBtns.forEach(b => {
+          if (b.getAttribute('data-val') === val) {
+            b.classList.add('selected');
+          } else {
+            b.classList.remove('selected');
+          }
+        });
+      });
+    }
+
+    // Submit PayPal donation redirect
+    if (submitBtn && amountInput) {
+      submitBtn.addEventListener('click', () => {
+        const val = parseFloat(amountInput.value) || 5;
+        // PayPal.me redirect link format: https://paypal.me/NfgOdin/<amount>USD
+        const paypalUrl = `https://www.paypal.com/paypalme/NfgOdin/${val}`;
+        window.open(paypalUrl, '_blank', 'noopener,noreferrer');
+      });
+    }
   }
 
   /* ==========================================================================
