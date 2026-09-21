@@ -136,7 +136,7 @@ export const projectTree = [
             title: "RiftLink (Minecraft 1.21.1)",
             platform: "Minecraft",
             status: "Active",
-            description: "A modern gameplay, dimensional mechanics, and custom utility mod developed for Minecraft 1.21.1 on the NeoForge mod loader platform.",
+            description: "A modern gameplay, dimensional mechanics, and custom utility mod currently in active development for Minecraft 1.21.1 on the NeoForge mod loader platform.",
             tech: ["Java", "NeoForge", "Minecraft 1.21.1"],
             githubUrl: "https://github.com/odinj2010/RiftLink",
             guideUrl: "#/tutorials/modding/mods/installing-riftlink"

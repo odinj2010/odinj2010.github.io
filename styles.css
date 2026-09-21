@@ -250,6 +250,31 @@ body {
   gap: 1rem;
 }
 
+.curseforge-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.curseforge-btn svg {
+  color: #f16436;
+}
+
+.curseforge-btn:hover {
+  background-color: var(--bg-tertiary);
+  border-color: #f16436;
+  color: #f16436;
+}
+
 .github-btn {
   display: inline-flex;
   align-items: center;
